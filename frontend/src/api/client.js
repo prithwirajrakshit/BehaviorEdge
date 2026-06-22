@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_BASE = 'behavioredge-production.up.railway.app'
+const API_BASE = 'https://behavioredge-production.up.railway.app'
 
 const api = axios.create({ baseURL: API_BASE })
 
