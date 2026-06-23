@@ -32,7 +32,7 @@ const GLOW_COLORS = {
   orange: { hue: 38,  saturation: 92, lightness: 60 }, // var(--amber)
   amber:  { hue: 38,  saturation: 92, lightness: 60 }, // alias of orange — matches var(--amber)
   blue:   { hue: 217, saturation: 91, lightness: 65 },
-  pink:   { hue: 322, saturation: 100, lightness: 65 }, // magenta/pink accent, not in index.css theme tokens
+  pink:   { hue: 322, saturation: 100, lightness: 80 }, // magenta/pink accent, not in index.css theme tokens
 }
 
 export function GlowCard({
@@ -71,9 +71,9 @@ export function GlowCard({
     '--backdrop': 'var(--bg-card)',
     '--backup-border': 'var(--border)',
     '--size': '220',
-    '--bg-spot-opacity': '0.10',
+    '--bg-spot-opacity': '0.30',
     '--border-spot-opacity': '0.9',
-    '--bloom-opacity': '0.28',
+    '--bloom-opacity': '0.50',
     '--border-size': 'calc(var(--border, 1.5) * 1px)',
     '--spotlight-size': 'calc(var(--size, 220) * 1px)',
     // Card-relative spotlight on the card's own background.
