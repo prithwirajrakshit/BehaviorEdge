@@ -268,20 +268,33 @@ h6 {
   transition: border-color 0.25s, box-shadow 0.25s;
 }
 
-/* Border glow pseudo-elements — use viewport coords + background-attachment:fixed
-   so the radial gradient traces the border edge as cursor moves */
+/* Size presets — min-height hints only, never a forced aspect ratio.
+   GlowCard wraps arbitrary dashboard content (metrics, panels, forms),
+   so unlike a fixed-aspect gallery card it should size to its content
+   and just get a comfortable floor at each preset. */
+.glow-card--sm   { min-height: 120px; }
+.glow-card--md   { min-height: 200px; }
+.glow-card--lg   { min-height: 320px; }
+.glow-card--full { min-height: 100%; height: 100%; }
+
+/* Border glow pseudo-elements.
+   backgroundAttachment:fixed + a matching backgroundSize/backgroundPosition
+   on the element itself (set inline via React, see GlowCard.jsx) is what
+   keeps this gradient anchored to the viewport — that's what makes the
+   spotlight trace smoothly along the border as the cursor moves, instead
+   of recalculating relative to the card on every frame. */
 [data-glow]::before,
 [data-glow]::after {
   pointer-events: none;
   content: "";
   position: absolute;
-  inset: calc(var(--border-size, 2px) * -1);
-  border: var(--border-size, 2px) solid transparent;
-  border-radius: calc(var(--radius, 14) * 1px);
+  inset: calc(var(--border-size, 1.5px) * -1);
+  border: var(--border-size, 1.5px) solid transparent;
+  border-radius: calc(var(--radius, 16) * 1px);
   background-attachment: fixed;
-  background-size: 100% 100%;
+  background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
   background-repeat: no-repeat;
-  background-position: 0 0;
+  background-position: 50% 50%;
   mask:
     linear-gradient(transparent, transparent),
     linear-gradient(white, white);
@@ -296,21 +309,21 @@ h6 {
 
 [data-glow]::before {
   background-image: radial-gradient(
-    140px 140px at
-    calc(var(--xv, -500) * 1px)
-    calc(var(--yv, -500) * 1px),
-    hsl(322 100% 65% / 1),
+    calc(var(--spotlight-size, 220px) * 0.75) calc(var(--spotlight-size, 220px) * 0.75) at
+    calc(var(--x, -999) * 1px)
+    calc(var(--y, -999) * 1px),
+    hsl(var(--hue, 262) calc(var(--saturation, 85) * 1%) calc(var(--lightness, 55) * 1%) / var(--border-spot-opacity, 0.9)),
     transparent 100%
   );
-  filter: brightness(2);
+  filter: brightness(1.8);
 }
 
 [data-glow]::after {
   background-image: radial-gradient(
-    80px 80px at
-    calc(var(--xv, -500) * 1px)
-    calc(var(--yv, -500) * 1px),
-    hsl(0 100% 100% / 0.35),
+    calc(var(--spotlight-size, 220px) * 0.5) calc(var(--spotlight-size, 220px) * 0.5) at
+    calc(var(--x, -999) * 1px)
+    calc(var(--y, -999) * 1px),
+    hsl(0 100% 100% / var(--border-light-opacity, 0.25)),
     transparent 100%
   );
 }
@@ -321,9 +334,9 @@ h6 {
   inset: 0;
   will-change: filter;
   opacity: var(--outer, 1);
-  border-radius: calc(var(--radius, 14) * 1px);
-  border: 3px solid transparent;
-  filter: blur(4px);
+  border-radius: calc(var(--radius, 16) * 1px);
+  border: none;
+  filter: blur(calc(var(--border-size, 1.5px) * 10));
   background: none;
   pointer-events: none;
   z-index: 0;
@@ -333,14 +346,14 @@ h6 {
 [data-glow] > [data-glow]::before {
   content: "";
   position: absolute;
-  inset: -4px;
-  border-radius: calc(var(--radius, 14) * 1px);
+  inset: -10px;
+  border-radius: calc(var(--radius, 16) * 1px);
   background-attachment: fixed;
   background-image: radial-gradient(
-    160px 160px at
-    calc(var(--xv, -500) * 1px)
-    calc(var(--yv, -500) * 1px),
-    hsl(322 100% 65% / 0.5),
+    calc(var(--spotlight-size, 220px) * 0.9) calc(var(--spotlight-size, 220px) * 0.9) at
+    calc(var(--x, -999) * 1px)
+    calc(var(--y, -999) * 1px),
+    hsl(var(--hue, 262) calc(var(--saturation, 85) * 1%) calc(var(--lightness, 55) * 1%) / 0.45),
     transparent 100%
   );
   mask:
@@ -359,4 +372,14 @@ h6 {
 .glow-card > *:not([data-glow]) {
   position: relative;
   z-index: 1;
+}
+
+/* Respect reduced-motion preference: keep the static border, drop the
+   pointer-tracked spotlight so nothing animates/recalculates on move */
+@media (prefers-reduced-motion: reduce) {
+  [data-glow]::before,
+  [data-glow]::after,
+  [data-glow] > [data-glow]::before {
+    display: none;
+  }
 }
