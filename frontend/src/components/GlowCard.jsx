@@ -70,7 +70,7 @@ export function GlowCard({
     '--border': '1.5',
     '--backdrop': 'var(--bg-card)',
     '--backup-border': 'var(--border)',
-    '--size': '220',
+    '--size': '150',
     '--bg-spot-opacity': '0.30',
     '--border-spot-opacity': '0.9',
     '--bloom-opacity': '0.50',
