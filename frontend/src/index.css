@@ -283,6 +283,7 @@ h6 {
    masking the same gradient clipped to content-box and to border-box with
    `exclude` (xor) so only the strip between the two boxes stays visible. */
 [data-glow]::before {
+  mix-blend-mode: screen;
   pointer-events: none;
   content: "";
   position: absolute;
@@ -300,7 +301,7 @@ h6 {
   -webkit-mask-composite: xor;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
-  filter: brightness(1.8);
+  filter: brightness(2.5);
 }
 
 /* Soft outer bloom — blurred halo behind the card, same --x/--y as the
@@ -309,6 +310,7 @@ h6 {
    GlowCard.jsx) so its blur radius isn't clipped by the card's own
    border-radius/overflow. */
 [data-glow-bloom] {
+  mix-blend-mode: screen;
   pointer-events: none;
   position: absolute;
   inset: -20px;
