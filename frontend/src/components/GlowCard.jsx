@@ -32,6 +32,7 @@ const GLOW_COLORS = {
   orange: { hue: 38,  saturation: 92, lightness: 60 }, // var(--amber)
   amber:  { hue: 38,  saturation: 92, lightness: 60 }, // alias of orange — matches var(--amber)
   blue:   { hue: 217, saturation: 91, lightness: 65 },
+  pink:   { hue: 322, saturation: 100, lightness: 65 }, // magenta/pink accent, not in index.css theme tokens
 }
 
 export function GlowCard({
@@ -39,7 +40,7 @@ export function GlowCard({
   className = '',
   style = {},
   size = 'md',       // 'sm' | 'md' | 'lg' | 'full' — sets a sensible min-height, never forces aspect ratio
-  glowColor = 'purple', // 'purple' | 'green' | 'red' | 'orange' | 'amber' | 'blue' — matches index.css theme tokens
+  glowColor = 'purple', // 'purple' | 'green' | 'red' | 'orange' | 'amber' | 'blue' | 'pink' — matches index.css theme tokens (pink is a standalone accent, not a theme token)
   width,
   height,
   as: Tag = 'div',
