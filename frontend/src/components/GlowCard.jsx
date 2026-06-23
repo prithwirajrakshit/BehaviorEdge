@@ -32,7 +32,7 @@ const GLOW_COLORS = {
   orange: { hue: 38,  saturation: 92, lightness: 60 }, // var(--amber)
   amber:  { hue: 38,  saturation: 92, lightness: 60 }, // alias of orange — matches var(--amber)
   blue:   { hue: 217, saturation: 91, lightness: 65 },
-  pink:   { hue: 322, saturation: 100, lightness: 80 }, // magenta/pink accent, not in index.css theme tokens
+  pink:   { hue: 322, saturation: 100, lightness: 65 }, // magenta/pink accent, not in index.css theme tokens
 }
 
 export function GlowCard({
