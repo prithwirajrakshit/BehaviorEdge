@@ -2,87 +2,82 @@ import { useEffect, useRef } from 'react'
 
 /**
  * GlowCard
- * A card with a cursor-tracking spotlight glow on its background and border.
+ * A card with a single cursor-tracking spotlight glow — a soft glow on the
+ * background plus a matching bright trace along the border, both anchored
+ * to the cursor's position relative to THIS card.
  *
- * Two coordinate systems are used, and they must NOT be mixed:
+ * Everything here uses one coordinate system: --x/--y, the cursor position
+ * relative to the card's own top-left corner, with default background
+ * attachment ('scroll'). That keeps the gradient's "at" position locked to
+ * the element's own box no matter where the card sits on the page or how
+ * wide it is.
  *
- *  1. Card-local (--x/--y): cursor position relative to this card's own
- *     top-left corner. Used for the background spotlight. background-attachment
- *     stays at its default ('scroll'), so the gradient is positioned relative
- *     to the element's own box — this is what makes the glow appear right
- *     under the cursor as it moves over the card, fading out near the edges.
+ * An earlier version of this tried to use background-attachment:fixed with
+ * viewport coordinates for the border trace, on the theory that it would
+ * make the edge-trace smoother. In practice that doesn't render reliably
+ * once a card has padding/mask/border-radius and isn't perfectly square —
+ * it produced a glow that stayed near the viewport corner nearest the cursor
+ * rather than tracking the card. Card-local coordinates for both layers is
+ * the version that's actually been verified to track correctly on cards of
+ * any width/position, including this app's full-width chart panels.
  *
- *  2. Viewport-fixed (--xv/--yv): raw clientX/clientY. Used only by the
- *     ::before/::after border-glow pseudo-elements in index.css, which use
- *     background-attachment: fixed. That's what lets the border-trace glow
- *     read correctly across the card's edge as the cursor crosses it, instead
- *     of jumping discontinuously the way a card-local coordinate would if
- *     applied to a fixed-attachment background.
- *
- * Mixing these (e.g. card-local coords on a fixed-attachment background, or
- * vice versa) is what produces a glow that looks like a giant static blob
- * sitting in one spot instead of tracking the cursor — so keep the two
- * separate rather than "simplifying" to one coordinate system.
- *
- * Color is intentionally NOT a prop — every card on the site pulls the same
- * fixed theme purple from index.css so the glow always matches --accent.
+ * glowColor maps to this app's real theme tokens (see index.css :root) so a
+ * status card (e.g. a rejected trade, negative P&L) reads correctly at a
+ * glance instead of always glowing the default purple.
  */
+const GLOW_COLORS = {
+  purple: { hue: 262, saturation: 83, lightness: 65 }, // var(--accent)
+  green:  { hue: 160, saturation: 84, lightness: 55 }, // var(--green)
+  red:    { hue: 350, saturation: 89, lightness: 65 }, // var(--red)
+  orange: { hue: 38,  saturation: 92, lightness: 60 }, // var(--amber)
+  amber:  { hue: 38,  saturation: 92, lightness: 60 }, // alias of orange — matches var(--amber)
+  blue:   { hue: 217, saturation: 91, lightness: 65 },
+}
+
 export function GlowCard({
   children,
   className = '',
   style = {},
   size = 'md',       // 'sm' | 'md' | 'lg' | 'full' — sets a sensible min-height, never forces aspect ratio
+  glowColor = 'purple', // 'purple' | 'green' | 'red' | 'orange' | 'amber' | 'blue' — matches index.css theme tokens
   width,
   height,
   as: Tag = 'div',
   ...rest
 }) {
   const cardRef = useRef(null)
-  const innerRef = useRef(null)
+  const { hue, saturation, lightness } = GLOW_COLORS[glowColor] || GLOW_COLORS.purple
 
   useEffect(() => {
     const syncPointer = (e) => {
       if (!cardRef.current) return
       const rect = cardRef.current.getBoundingClientRect()
-
-      // Card-local — drives the background spotlight (default attachment)
       const x = e.clientX - rect.left
       const y = e.clientY - rect.top
-      cardRef.current.style.setProperty('--x', x.toFixed(2))
-      cardRef.current.style.setProperty('--y', y.toFixed(2))
-
-      // Viewport-fixed — drives the border-trace pseudo-elements only
-      cardRef.current.style.setProperty('--xv', e.clientX.toFixed(2))
-      cardRef.current.style.setProperty('--yv', e.clientY.toFixed(2))
-      cardRef.current.style.setProperty('--xp', (e.clientX / window.innerWidth).toFixed(2))
+      cardRef.current.style.setProperty('--x', `${x.toFixed(2)}px`)
+      cardRef.current.style.setProperty('--y', `${y.toFixed(2)}px`)
     }
     document.addEventListener('pointermove', syncPointer, { passive: true })
     return () => document.removeEventListener('pointermove', syncPointer)
   }, [])
 
   const inlineStyles = {
-    '--base': '262',          // theme purple hue, matches --accent (#7c3aed) in index.css
-    '--spread': '0',          // 0 = hue stays fixed at --base; no sweeping across other colors
-    '--radius': '16',         // matches .card's 16px radius elsewhere on the site
+    '--hue': hue,
+    '--saturation': saturation,
+    '--lightness': lightness,
+    '--radius': '16',          // matches .card's 16px radius elsewhere on the site
     '--border': '1.5',
     '--backdrop': 'var(--bg-card)',
     '--backup-border': 'var(--border)',
     '--size': '220',
-    '--outer': '1',
-    '--saturation': '85',
-    '--lightness': '65',
     '--bg-spot-opacity': '0.10',
     '--border-spot-opacity': '0.9',
-    '--border-light-opacity': '0.25',
+    '--bloom-opacity': '0.28',
     '--border-size': 'calc(var(--border, 1.5) * 1px)',
     '--spotlight-size': 'calc(var(--size, 220) * 1px)',
-    '--hue': 'calc(var(--base) + (var(--xp, 0.5) * var(--spread, 0)))',
-    // Card-relative spotlight — NO backgroundAttachment:fixed here.
-    // Uses --x/--y (card-local), so it tracks the cursor across this card.
+    // Card-relative spotlight on the card's own background.
     backgroundImage: `radial-gradient(
-      var(--spotlight-size) var(--spotlight-size) at
-      calc(var(--x, -999) * 1px)
-      calc(var(--y, -999) * 1px),
+      var(--spotlight-size) var(--spotlight-size) at var(--x, -999px) var(--y, -999px),
       hsl(var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%) / var(--bg-spot-opacity)), transparent
     )`,
     backgroundColor: 'var(--backdrop, transparent)',
@@ -104,7 +99,7 @@ export function GlowCard({
       className={`glow-card glow-card--${size} ${className}`}
       {...rest}
     >
-      <div ref={innerRef} data-glow />
+      <div data-glow-bloom />
       {children}
     </Tag>
   )

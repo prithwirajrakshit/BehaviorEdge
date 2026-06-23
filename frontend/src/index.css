@@ -277,19 +277,11 @@ h6 {
 .glow-card--lg   { min-height: 320px; }
 .glow-card--full { min-height: 100%; height: 100%; }
 
-/* Border glow — uses VIEWPORT-FIXED coordinates (--xv/--yv) with
-   background-attachment:fixed, so the glow traces continuously along
-   the card's edge as the cursor crosses it. The card's own background
-   spotlight (set inline by GlowCard.jsx) intentionally uses card-local
-   --x/--y instead, with default attachment — don't swap these two
-   coordinate systems, see the comment in GlowCard.jsx.
-
-   Ring technique: `padding` reserves a border-width strip, then `mask`
-   paints that strip only — by masking with the same gradient clipped to
-   content-box and to border-box, set to `exclude` (xor) so only the
-   strip between the two boxes remains visible. (The transparent/white
-   double-gradient `mask-composite: intersect` trick some references use
-   does not render reliably across browsers — this does.) */
+/* Border glow ring — card-local coordinates only (--x/--y from
+   GlowCard.jsx), default background attachment. Ring technique: `padding`
+   reserves a border-width strip, then `mask` paints that strip only, by
+   masking the same gradient clipped to content-box and to border-box with
+   `exclude` (xor) so only the strip between the two boxes stays visible. */
 [data-glow]::before {
   pointer-events: none;
   content: "";
@@ -298,14 +290,9 @@ h6 {
   border-radius: calc(var(--radius, 16) * 1px);
   padding: var(--border-size, 1.5px);
   box-sizing: border-box;
-  background-attachment: fixed;
-  background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
   background-image: radial-gradient(
     calc(var(--spotlight-size, 220px) * 0.75) calc(var(--spotlight-size, 220px) * 0.75) at
-    calc(var(--xv, -999) * 1px)
-    calc(var(--yv, -999) * 1px),
+    var(--x, -999px) var(--y, -999px),
     hsl(var(--hue, 262) calc(var(--saturation, 85) * 1%) calc(var(--lightness, 55) * 1%) / var(--border-spot-opacity, 0.9)),
     transparent 100%
   );
@@ -316,33 +303,28 @@ h6 {
   filter: brightness(1.8);
 }
 
-/* Soft outer bloom — blurred halo that rises off the edge nearest the
-   cursor. This is the [data-glow] child div rendered inside the card
-   (see GlowCard.jsx), kept separate from ::before so the blur radius
-   doesn't get clipped by the card's own border-radius + overflow. */
-[data-glow] [data-glow] {
+/* Soft outer bloom — blurred halo behind the card, same --x/--y as the
+   ring above so both layers sit at exactly the same point under the
+   cursor. Rendered via a dedicated [data-glow-bloom] child (see
+   GlowCard.jsx) so its blur radius isn't clipped by the card's own
+   border-radius/overflow. */
+[data-glow-bloom] {
   pointer-events: none;
   position: absolute;
   inset: -24px;
   z-index: 0;
   border-radius: calc(var(--radius, 16) * 1px);
-  background-attachment: fixed;
-  background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
   background-image: radial-gradient(
     calc(var(--spotlight-size, 220px) * 0.9) calc(var(--spotlight-size, 220px) * 0.9) at
-    calc(var(--xv, -999) * 1px)
-    calc(var(--yv, -999) * 1px),
-    hsl(var(--hue, 262) calc(var(--saturation, 85) * 1%) calc(var(--lightness, 55) * 1%) / var(--border-light-opacity, 0.45)),
+    var(--x, -999px) var(--y, -999px),
+    hsl(var(--hue, 262) calc(var(--saturation, 85) * 1%) calc(var(--lightness, 55) * 1%) / var(--bloom-opacity, 0.28)),
     transparent 70%
   );
   filter: blur(16px);
-  opacity: var(--outer, 1);
 }
 
 /* Card content always above the bloom layer */
-.glow-card > *:not([data-glow]) {
+.glow-card > *:not([data-glow-bloom]) {
   position: relative;
   z-index: 1;
 }
@@ -351,7 +333,7 @@ h6 {
    pointer-tracked spotlight so nothing animates/recalculates on move */
 @media (prefers-reduced-motion: reduce) {
   [data-glow]::before,
-  [data-glow] [data-glow] {
+  [data-glow-bloom] {
     display: none;
   }
 }
