@@ -267,9 +267,6 @@ h6 {
 .glow-card {
   transition: border-color 0.25s, box-shadow 0.25s;
 }
-.glow-card:hover {
-  box-shadow: 0 0 30px rgba(124, 58, 237, 0.08);
-}
 
 [data-glow]::before,
 [data-glow]::after {
@@ -279,6 +276,7 @@ h6 {
   inset: calc(var(--border-size, 2px) * -1);
   border: var(--border-size, 2px) solid transparent;
   border-radius: calc(var(--radius, 14) * 1px);
+  background-attachment: fixed;
   background-size: calc(100% + (2 * var(--border-size, 2px))) calc(100% + (2 * var(--border-size, 2px)));
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -291,7 +289,7 @@ h6 {
     linear-gradient(transparent, transparent),
     linear-gradient(white, white);
   -webkit-mask-clip: padding-box, border-box;
-  -webkit-mask-composite: source-in;
+  -webkit-mask-composite: destination-in;
 }
 
 [data-glow]::before {
@@ -299,7 +297,7 @@ h6 {
     calc(var(--spotlight-size, 150px) * 0.75) calc(var(--spotlight-size, 150px) * 0.75) at
     calc(var(--x, 0) * 1px)
     calc(var(--y, 0) * 1px),
-    hsl(var(--hue, 210) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) / var(--border-spot-opacity, 1)),
+    hsl(322 100% 65% / var(--border-spot-opacity, 1)),
     transparent 100%
   );
   filter: brightness(2);
@@ -310,11 +308,12 @@ h6 {
     calc(var(--spotlight-size, 150px) * 0.5) calc(var(--spotlight-size, 150px) * 0.5) at
     calc(var(--x, 0) * 1px)
     calc(var(--y, 0) * 1px),
-    hsl(0 100% 100% / var(--border-light-opacity, 1)),
+    hsl(0 100% 100% / var(--border-light-opacity, 0.4)),
     transparent 100%
   );
 }
 
+/* Inner data-glow div — outer bloom/halo effect */
 [data-glow] [data-glow] {
   position: absolute;
   inset: 0;
@@ -326,9 +325,16 @@ h6 {
   background: none;
   pointer-events: none;
   border: none;
+  z-index: 0;
 }
 
 [data-glow] > [data-glow]::before {
   inset: -10px;
   border-width: 10px;
+}
+
+/* Make sure card content sits above the inner bloom div */
+.glow-card > *:not([data-glow]) {
+  position: relative;
+  z-index: 1;
 }

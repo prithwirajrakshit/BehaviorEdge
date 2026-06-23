@@ -1,64 +1,34 @@
 import { useEffect, useRef } from 'react'
 
-// spread: 0 locks the glow to a single fixed hue — no rainbow shift as the cursor moves
-const glowColorMap = {
-  blue: { base: 220, spread: 0 },
-  purple: { base: 322, spread: 0 },   // pinkish-magenta — the Luminary signature glow
-  pink: { base: 322, spread: 0 },
-  green: { base: 150, spread: 0 },
-  red: { base: 350, spread: 0 },
-  orange: { base: 30, spread: 0 },
-  violet: { base: 322, spread: 0 },
-}
+// Single pinkish-purple color, spread=0 means no hue shift as cursor moves
+const GLOW_BASE = 322   // hsl 322 = pinkish-magenta
+const GLOW_SPREAD = 0
 
-/**
- * GlowCard — a spotlight-following card with a glowing cursor-tracked border.
- *
- * Props:
- *  - children: card content
- *  - className: extra classes
- *  - glowColor: 'blue' | 'purple' | 'green' | 'red' | 'orange' | 'violet'
- *  - width / height: inline sizing overrides
- */
 export function GlowCard({
   children,
   className = '',
   style = {},
-  glowColor = 'purple',
+  glowColor,  // kept for API compat but ignored — always pink-purple
   width,
   height,
 }) {
   const cardRef = useRef(null)
 
   useEffect(() => {
-    let frameId;
     const syncPointer = (e) => {
-      if (frameId) cancelAnimationFrame(frameId)
-      frameId = requestAnimationFrame(() => {
-        if (!cardRef.current) return
-        const rect = cardRef.current.getBoundingClientRect()
-        const x = e.clientX - rect.left
-        const y = e.clientY - rect.top
-        const xp = (x / rect.width).toFixed(2)
-        const yp = (y / rect.height).toFixed(2)
-        cardRef.current.style.setProperty('--x', x.toFixed(2))
-        cardRef.current.style.setProperty('--xp', xp)
-        cardRef.current.style.setProperty('--y', y.toFixed(2))
-        cardRef.current.style.setProperty('--yp', yp)
-      })
+      if (!cardRef.current) return
+      cardRef.current.style.setProperty('--x', e.clientX.toFixed(2))
+      cardRef.current.style.setProperty('--xp', (e.clientX / window.innerWidth).toFixed(2))
+      cardRef.current.style.setProperty('--y', e.clientY.toFixed(2))
+      cardRef.current.style.setProperty('--yp', (e.clientY / window.innerHeight).toFixed(2))
     }
-    document.addEventListener('pointermove', syncPointer, { passive: true })
-    return () => {
-      document.removeEventListener('pointermove', syncPointer)
-      if (frameId) cancelAnimationFrame(frameId)
-    }
+    document.addEventListener('pointermove', syncPointer)
+    return () => document.removeEventListener('pointermove', syncPointer)
   }, [])
 
-  const { base, spread } = glowColorMap[glowColor] || glowColorMap.purple
-
   const inlineStyles = {
-    '--base': base,
-    '--spread': spread,
+    '--base': GLOW_BASE,
+    '--spread': GLOW_SPREAD,
     '--radius': '14',
     '--border': '1.5',
     '--backdrop': 'var(--bg-card)',
@@ -72,11 +42,12 @@ export function GlowCard({
       var(--spotlight-size) var(--spotlight-size) at
       calc(var(--x, 0) * 1px)
       calc(var(--y, 0) * 1px),
-      hsl(var(--hue, 210) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 70) * 1%) / var(--bg-spot-opacity, 0.06)), transparent
+      hsl(var(--hue, 322) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 70) * 1%) / var(--bg-spot-opacity, 0.08)), transparent
     )`,
     backgroundColor: 'var(--backdrop, transparent)',
     backgroundSize: 'calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)))',
     backgroundPosition: '50% 50%',
+    backgroundAttachment: 'fixed',
     border: 'var(--border-size) solid var(--backup-border)',
     position: 'relative',
     touchAction: 'none',
