@@ -311,7 +311,7 @@ h6 {
 [data-glow-bloom] {
   pointer-events: none;
   position: absolute;
-  inset: -24px;
+  inset: -20px;
   z-index: 0;
   border-radius: calc(var(--radius, 16) * 1px);
   background-image: radial-gradient(
@@ -320,7 +320,7 @@ h6 {
     hsl(var(--hue, 262) calc(var(--saturation, 85) * 1%) calc(var(--lightness, 55) * 1%) / var(--bloom-opacity, 0.28)),
     transparent 70%
   );
-  filter: blur(16px);
+  filter: blur(14px);
 }
 
 /* Card content always above the bloom layer */
