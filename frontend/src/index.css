@@ -277,98 +277,71 @@ h6 {
 .glow-card--lg   { min-height: 320px; }
 .glow-card--full { min-height: 100%; height: 100%; }
 
-/* Border glow pseudo-elements.
-   backgroundAttachment:fixed + a matching backgroundSize/backgroundPosition
-   on the element itself (set inline via React, see GlowCard.jsx) is what
-   keeps this gradient anchored to the viewport — that's what makes the
-   spotlight trace smoothly along the border as the cursor moves, instead
-   of recalculating relative to the card on every frame. */
-[data-glow]::before,
-[data-glow]::after {
+/* Border glow — uses VIEWPORT-FIXED coordinates (--xv/--yv) with
+   background-attachment:fixed, so the glow traces continuously along
+   the card's edge as the cursor crosses it. The card's own background
+   spotlight (set inline by GlowCard.jsx) intentionally uses card-local
+   --x/--y instead, with default attachment — don't swap these two
+   coordinate systems, see the comment in GlowCard.jsx.
+
+   Ring technique: `padding` reserves a border-width strip, then `mask`
+   paints that strip only — by masking with the same gradient clipped to
+   content-box and to border-box, set to `exclude` (xor) so only the
+   strip between the two boxes remains visible. (The transparent/white
+   double-gradient `mask-composite: intersect` trick some references use
+   does not render reliably across browsers — this does.) */
+[data-glow]::before {
   pointer-events: none;
   content: "";
   position: absolute;
-  inset: calc(var(--border-size, 1.5px) * -1);
-  border: var(--border-size, 1.5px) solid transparent;
+  inset: 0;
+  border-radius: calc(var(--radius, 16) * 1px);
+  padding: var(--border-size, 1.5px);
+  box-sizing: border-box;
+  background-attachment: fixed;
+  background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-image: radial-gradient(
+    calc(var(--spotlight-size, 220px) * 0.75) calc(var(--spotlight-size, 220px) * 0.75) at
+    calc(var(--xv, -999) * 1px)
+    calc(var(--yv, -999) * 1px),
+    hsl(var(--hue, 262) calc(var(--saturation, 85) * 1%) calc(var(--lightness, 55) * 1%) / var(--border-spot-opacity, 0.9)),
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  filter: brightness(1.8);
+}
+
+/* Soft outer bloom — blurred halo that rises off the edge nearest the
+   cursor. This is the [data-glow] child div rendered inside the card
+   (see GlowCard.jsx), kept separate from ::before so the blur radius
+   doesn't get clipped by the card's own border-radius + overflow. */
+[data-glow] [data-glow] {
+  pointer-events: none;
+  position: absolute;
+  inset: -24px;
+  z-index: 0;
   border-radius: calc(var(--radius, 16) * 1px);
   background-attachment: fixed;
   background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  mask:
-    linear-gradient(transparent, transparent),
-    linear-gradient(white, white);
-  mask-clip: padding-box, border-box;
-  mask-composite: intersect;
-  -webkit-mask:
-    linear-gradient(transparent, transparent),
-    linear-gradient(white, white);
-  -webkit-mask-clip: padding-box, border-box;
-  -webkit-mask-composite: destination-in;
-}
-
-[data-glow]::before {
-  background-image: radial-gradient(
-    calc(var(--spotlight-size, 220px) * 0.75) calc(var(--spotlight-size, 220px) * 0.75) at
-    calc(var(--x, -999) * 1px)
-    calc(var(--y, -999) * 1px),
-    hsl(var(--hue, 262) calc(var(--saturation, 85) * 1%) calc(var(--lightness, 55) * 1%) / var(--border-spot-opacity, 0.9)),
-    transparent 100%
-  );
-  filter: brightness(1.8);
-}
-
-[data-glow]::after {
-  background-image: radial-gradient(
-    calc(var(--spotlight-size, 220px) * 0.5) calc(var(--spotlight-size, 220px) * 0.5) at
-    calc(var(--x, -999) * 1px)
-    calc(var(--y, -999) * 1px),
-    hsl(0 100% 100% / var(--border-light-opacity, 0.25)),
-    transparent 100%
-  );
-}
-
-/* Inner data-glow div — soft outer halo, clipped to border area only */
-[data-glow] [data-glow] {
-  position: absolute;
-  inset: 0;
-  will-change: filter;
-  opacity: var(--outer, 1);
-  border-radius: calc(var(--radius, 16) * 1px);
-  border: none;
-  filter: blur(calc(var(--border-size, 1.5px) * 10));
-  background: none;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-
-[data-glow] > [data-glow]::before {
-  content: "";
-  position: absolute;
-  inset: -10px;
-  border-radius: calc(var(--radius, 16) * 1px);
-  background-attachment: fixed;
   background-image: radial-gradient(
     calc(var(--spotlight-size, 220px) * 0.9) calc(var(--spotlight-size, 220px) * 0.9) at
-    calc(var(--x, -999) * 1px)
-    calc(var(--y, -999) * 1px),
-    hsl(var(--hue, 262) calc(var(--saturation, 85) * 1%) calc(var(--lightness, 55) * 1%) / 0.45),
-    transparent 100%
+    calc(var(--xv, -999) * 1px)
+    calc(var(--yv, -999) * 1px),
+    hsl(var(--hue, 262) calc(var(--saturation, 85) * 1%) calc(var(--lightness, 55) * 1%) / var(--border-light-opacity, 0.45)),
+    transparent 70%
   );
-  mask:
-    linear-gradient(transparent, transparent),
-    linear-gradient(white, white);
-  mask-clip: padding-box, border-box;
-  mask-composite: intersect;
-  -webkit-mask:
-    linear-gradient(transparent, transparent),
-    linear-gradient(white, white);
-  -webkit-mask-clip: padding-box, border-box;
-  -webkit-mask-composite: destination-in;
+  filter: blur(16px);
+  opacity: var(--outer, 1);
 }
 
-/* Card content always above inner bloom */
+/* Card content always above the bloom layer */
 .glow-card > *:not([data-glow]) {
   position: relative;
   z-index: 1;
@@ -378,8 +351,7 @@ h6 {
    pointer-tracked spotlight so nothing animates/recalculates on move */
 @media (prefers-reduced-motion: reduce) {
   [data-glow]::before,
-  [data-glow]::after,
-  [data-glow] > [data-glow]::before {
+  [data-glow] [data-glow] {
     display: none;
   }
 }
