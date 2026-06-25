@@ -27,7 +27,6 @@ import { useEffect, useRef } from 'react'
 // colors keep a small/zero spread so a red "rejected trade" or green P&L card
 // still reads correctly at a glance.
 const GLOW_COLORS = {
-<<<<<<< HEAD
   purple: { hue: 320, saturation: 70, lightness: 65, spread: 30 }, // palette magenta-pink (#df93ca/#e7b8da family) — DEFAULT
   green:  { hue: 160, saturation: 84, lightness: 55, spread: 25 }, // var(--green)
   red:    { hue: 350, saturation: 89, lightness: 65, spread: 20 }, // var(--red)
@@ -35,15 +34,6 @@ const GLOW_COLORS = {
   amber:  { hue: 38,  saturation: 92, lightness: 60, spread: 20 }, // alias of orange — matches var(--amber)
   blue:   { hue: 217, saturation: 91, lightness: 65, spread: 40 },
   pink:   { hue: 322, saturation: 75, lightness: 70, spread: 20 }, // palette light pink (#df93ca family)
-=======
-  purple: { hue: 262, saturation: 83, lightness: 65 }, // var(--accent)
-  green:  { hue: 160, saturation: 84, lightness: 55 }, // var(--green)
-  red:    { hue: 350, saturation: 89, lightness: 65 }, // var(--red)
-  orange: { hue: 38,  saturation: 92, lightness: 60 }, // var(--amber)
-  amber:  { hue: 38,  saturation: 92, lightness: 60 }, // alias of orange — matches var(--amber)
-  blue:   { hue: 217, saturation: 91, lightness: 65 },
-  pink:   { hue: 322, saturation: 100, lightness: 65 }, // magenta/pink accent, not in index.css theme tokens
->>>>>>> 6e9a47aaf4e78348ded74323a5d2e1800a0fa224
 }
 
 export function GlowCard({
