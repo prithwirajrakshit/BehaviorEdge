@@ -286,6 +286,7 @@ h6 {
    on the edge rather than a painted stroke. The card body itself is left
    dark — only this border strip glows. */
 [data-glow]::before {
+  mix-blend-mode: screen;
   pointer-events: none;
   content: "";
   position: absolute;
@@ -304,6 +305,7 @@ h6 {
   -webkit-mask-composite: xor;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
+<<<<<<< HEAD
   mix-blend-mode: screen;
 }
 
@@ -312,6 +314,18 @@ h6 {
    hotspot, giving the trace its bright core under the cursor. Also screened
    so the two layers stack as additive light. */
 [data-glow]::after {
+=======
+  filter: brightness(2.5);
+}
+
+/* Soft outer bloom — blurred halo behind the card, same --x/--y as the
+   ring above so both layers sit at exactly the same point under the
+   cursor. Rendered via a dedicated [data-glow-bloom] child (see
+   GlowCard.jsx) so its blur radius isn't clipped by the card's own
+   border-radius/overflow. */
+[data-glow-bloom] {
+  mix-blend-mode: screen;
+>>>>>>> 6e9a47aaf4e78348ded74323a5d2e1800a0fa224
   pointer-events: none;
   content: "";
   position: absolute;

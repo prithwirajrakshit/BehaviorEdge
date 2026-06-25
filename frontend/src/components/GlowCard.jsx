@@ -27,6 +27,7 @@ import { useEffect, useRef } from 'react'
 // colors keep a small/zero spread so a red "rejected trade" or green P&L card
 // still reads correctly at a glance.
 const GLOW_COLORS = {
+<<<<<<< HEAD
   purple: { hue: 320, saturation: 70, lightness: 65, spread: 30 }, // palette magenta-pink (#df93ca/#e7b8da family) — DEFAULT
   green:  { hue: 160, saturation: 84, lightness: 55, spread: 25 }, // var(--green)
   red:    { hue: 350, saturation: 89, lightness: 65, spread: 20 }, // var(--red)
@@ -34,6 +35,15 @@ const GLOW_COLORS = {
   amber:  { hue: 38,  saturation: 92, lightness: 60, spread: 20 }, // alias of orange — matches var(--amber)
   blue:   { hue: 217, saturation: 91, lightness: 65, spread: 40 },
   pink:   { hue: 322, saturation: 75, lightness: 70, spread: 20 }, // palette light pink (#df93ca family)
+=======
+  purple: { hue: 262, saturation: 83, lightness: 65 }, // var(--accent)
+  green:  { hue: 160, saturation: 84, lightness: 55 }, // var(--green)
+  red:    { hue: 350, saturation: 89, lightness: 65 }, // var(--red)
+  orange: { hue: 38,  saturation: 92, lightness: 60 }, // var(--amber)
+  amber:  { hue: 38,  saturation: 92, lightness: 60 }, // alias of orange — matches var(--amber)
+  blue:   { hue: 217, saturation: 91, lightness: 65 },
+  pink:   { hue: 322, saturation: 100, lightness: 65 }, // magenta/pink accent, not in index.css theme tokens
+>>>>>>> 6e9a47aaf4e78348ded74323a5d2e1800a0fa224
 }
 
 export function GlowCard({
@@ -86,8 +96,15 @@ export function GlowCard({
     '--border': '1.5',
     '--backdrop': 'var(--bg-card)',
     '--backup-border': 'var(--border)',
+<<<<<<< HEAD
     '--size': '200',
     '--border-spot-opacity': '0.9',
+=======
+    '--size': '150',
+    '--bg-spot-opacity': '0.30',
+    '--border-spot-opacity': '0.9',
+    '--bloom-opacity': '0.50',
+>>>>>>> 6e9a47aaf4e78348ded74323a5d2e1800a0fa224
     '--border-size': 'calc(var(--border, 1.5) * 1px)',
     '--spotlight-size': 'calc(var(--size, 200) * 1px)',
     // No in-body spotlight — body uses the solid card backdrop so only the
