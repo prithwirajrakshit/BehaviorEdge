@@ -97,7 +97,7 @@ export default function Login({ onLogin }) {
             marginBottom: 20,
             minHeight: 130,
           }}>
-            {/* Outer soft glow ring */}
+            {/* Outer soft glow — static radial glow only (no pulsing border) */}
             <div style={{
               position: 'absolute',
               width: 220,
@@ -105,7 +105,6 @@ export default function Login({ onLogin }) {
               borderRadius: '50%',
               background: 'radial-gradient(circle, rgba(192,38,211,0.12) 0%, rgba(124,58,237,0.07) 50%, transparent 72%)',
               pointerEvents: 'none',
-              animation: 'pulse-glow 4s ease-in-out infinite',
             }} />
             {/* Inner concentrated glow */}
             <div style={{

@@ -17,8 +17,8 @@
   --red-glow:      rgba(244, 63, 94, 0.15);
   --amber:         #f59e0b;
   --text-primary:  #f0ecff;
-  --text-secondary:#7c6fa0;
-  --text-muted:    #3d2f5a;
+  --text-secondary:#c8c0e0;   /* brightened so labels stay legible at low brightness (was #7c6fa0) */
+  --text-muted:    #6e6294;   /* brightened so micro-text/captions stay legible (was #3d2f5a) */
 }
 
 * { box-sizing: border-box; }
@@ -281,50 +281,60 @@ h6 {
    GlowCard.jsx), default background attachment. Ring technique: `padding`
    reserves a border-width strip, then `mask` paints that strip only, by
    masking the same gradient clipped to content-box and to border-box with
-   `exclude` (xor) so only the strip between the two boxes stays visible. */
+   `exclude` (xor) so only the strip between the two boxes stays visible.
+   mix-blend-mode:screen blends it like a video overlay so it reads as light
+   on the edge rather than a painted stroke. The card body itself is left
+   dark — only this border strip glows. */
 [data-glow]::before {
   pointer-events: none;
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 2;
   border-radius: calc(var(--radius, 16) * 1px);
   padding: var(--border-size, 1.5px);
   box-sizing: border-box;
   background-image: radial-gradient(
-    calc(var(--spotlight-size, 220px) * 0.75) calc(var(--spotlight-size, 220px) * 0.75) at
+    calc(var(--spotlight-size, 200px) * 0.75) calc(var(--spotlight-size, 200px) * 0.75) at
     var(--x, -999px) var(--y, -999px),
-    hsl(var(--hue, 262) calc(var(--saturation, 85) * 1%) calc(var(--lightness, 55) * 1%) / var(--border-spot-opacity, 0.9)),
+    hsl(var(--hue, 320) calc(var(--saturation, 70) * 1%) calc(var(--lightness, 65) * 1%) / var(--border-spot-opacity, 0.9)),
     transparent 100%
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
-  filter: brightness(1.8);
+  mix-blend-mode: screen;
 }
 
-/* Soft outer bloom — blurred halo behind the card, same --x/--y as the
-   ring above so both layers sit at exactly the same point under the
-   cursor. Rendered via a dedicated [data-glow-bloom] child (see
-   GlowCard.jsx) so its blur radius isn't clipped by the card's own
-   border-radius/overflow. */
-[data-glow-bloom] {
+/* White-hot inner border trace — the second layer. Sits on top of ::before's
+   colored sweep: same masked-ring technique but a tighter, near-white
+   hotspot, giving the trace its bright core under the cursor. Also screened
+   so the two layers stack as additive light. */
+[data-glow]::after {
   pointer-events: none;
+  content: "";
   position: absolute;
-  inset: -20px;
-  z-index: 0;
+  inset: 0;
+  z-index: 2;
   border-radius: calc(var(--radius, 16) * 1px);
+  padding: var(--border-size, 1.5px);
+  box-sizing: border-box;
   background-image: radial-gradient(
-    calc(var(--spotlight-size, 220px) * 0.9) calc(var(--spotlight-size, 220px) * 0.9) at
+    calc(var(--spotlight-size, 200px) * 0.5) calc(var(--spotlight-size, 200px) * 0.5) at
     var(--x, -999px) var(--y, -999px),
-    hsl(var(--hue, 262) calc(var(--saturation, 85) * 1%) calc(var(--lightness, 55) * 1%) / var(--bloom-opacity, 0.28)),
-    transparent 70%
+    hsl(0 0% 100% / 0.9),
+    transparent 100%
   );
-  filter: blur(14px);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  mix-blend-mode: screen;
 }
 
-/* Card content always above the bloom layer */
-.glow-card > *:not([data-glow-bloom]) {
+/* Card content always sits above the blended border traces */
+.glow-card > * {
   position: relative;
   z-index: 1;
 }
@@ -333,7 +343,58 @@ h6 {
    pointer-tracked spotlight so nothing animates/recalculates on move */
 @media (prefers-reduced-motion: reduce) {
   [data-glow]::before,
-  [data-glow-bloom] {
+  [data-glow]::after {
     display: none;
   }
+}
+
+/* ── Recharts — dark-theme overrides ────────────────────────── */
+.recharts-surface { fill: transparent !important; }
+.recharts-cartesian-grid line {
+  stroke: var(--border);
+  stroke-dasharray: 3 3;
+  opacity: 0.3;
+}
+
+/* ── Responsive grid utilities ──────────────────────────────── */
+.grid-metrics { display: grid; gap: 12px; grid-template-columns: repeat(5, 1fr); }
+.grid-charts  { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+.grid-summary { display: grid; gap: 16px; grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 1024px) {
+  .grid-metrics { grid-template-columns: repeat(3, 1fr); }
+  .grid-charts  { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .grid-metrics { grid-template-columns: repeat(2, 1fr); }
+  .grid-summary { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .grid-metrics { grid-template-columns: 1fr; }
+  .grid-summary { grid-template-columns: 1fr; }
+}
+
+/* ── Discipline Gauge animation ─────────────────────────────── */
+@keyframes gauge-appear {
+  from { stroke-dashoffset: var(--gauge-circumference); }
+}
+
+/* ── Chart area scan-line overlay (terminal monitor texture) ── */
+.chart-scanlines {
+  position: relative;
+}
+.chart-scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(124, 58, 237, 0.015) 2px,
+    rgba(124, 58, 237, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 3;
 }
