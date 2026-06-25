@@ -86,15 +86,12 @@ export function GlowCard({
     '--border': '1.5',
     '--backdrop': 'var(--bg-card)',
     '--backup-border': 'var(--border)',
-<<<<<<< HEAD
     '--size': '200',
     '--border-spot-opacity': '0.9',
-=======
     '--size': '150',
     '--bg-spot-opacity': '0.30',
     '--border-spot-opacity': '0.9',
     '--bloom-opacity': '0.50',
->>>>>>> 6e9a47aaf4e78348ded74323a5d2e1800a0fa224
     '--border-size': 'calc(var(--border, 1.5) * 1px)',
     '--spotlight-size': 'calc(var(--size, 200) * 1px)',
     // No in-body spotlight — body uses the solid card backdrop so only the
