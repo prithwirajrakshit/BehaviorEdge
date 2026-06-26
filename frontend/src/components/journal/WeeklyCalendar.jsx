@@ -132,10 +132,10 @@ export default function WeeklyCalendar({ trades, showToast }) {
         {
     /* Date navigators */
   }
-        <div className="flex items-center space-x-3 bg-slate-50 dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-gray-300">
+        <div className="flex items-center space-x-3 bg-slate-50/20 dark:bg-[#151225]/45 border border-slate-200/40 dark:border-violet-500/15 p-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-gray-300">
           <button
     onClick={handlePrevWeek}
-    className="p-1 px-2.5 bg-white dark:bg-[#222] hover:bg-slate-100 dark:hover:bg-[#333] hover:text-slate-900 dark:hover:text-white rounded-lg transition-all cursor-pointer border border-slate-200 dark:border-[#333]"
+    className="p-1 px-2.5 bg-white/10 dark:bg-white/5 hover:bg-slate-100/20 dark:hover:bg-white/10 text-slate-700 dark:text-gray-300 rounded-lg transition-all cursor-pointer border border-slate-200/20 dark:border-white/10"
     title="Go to previous week"
   >
             ← Previous Week
@@ -143,14 +143,14 @@ export default function WeeklyCalendar({ trades, showToast }) {
           
           <button
     onClick={handleToday}
-    className="p-1 px-3 bg-white dark:bg-[#222] hover:bg-slate-100 dark:hover:bg-[#333] hover:text-slate-900 dark:hover:text-white rounded-lg transition-all cursor-pointer border border-slate-200 dark:border-[#333]"
+    className="p-1 px-3 bg-white/10 dark:bg-white/5 hover:bg-slate-100/20 dark:hover:bg-white/10 text-slate-700 dark:text-gray-300 rounded-lg transition-all cursor-pointer border border-slate-200/20 dark:border-white/10"
   >
             Today
           </button>
 
           <button
     onClick={handleNextWeek}
-    className="p-1 px-2.5 bg-white dark:bg-[#222] hover:bg-slate-100 dark:hover:bg-[#333] hover:text-slate-900 dark:hover:text-white rounded-lg transition-all cursor-pointer border border-slate-200 dark:border-[#333]"
+    className="p-1 px-2.5 bg-white/10 dark:bg-white/5 hover:bg-slate-100/20 dark:hover:bg-white/10 text-slate-700 dark:text-gray-300 rounded-lg transition-all cursor-pointer border border-slate-200/20 dark:border-white/10"
     title="Go to next week"
   >
             Next Week →

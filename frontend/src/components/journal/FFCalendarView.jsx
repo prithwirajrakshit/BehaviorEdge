@@ -560,7 +560,7 @@ export default function FFCalendarView({ trades, showToast }) {
       placeholder="Search events by name e.g. CPI, Jobs..."
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}
-      className="w-full bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2d2d2d] focus:border-blue-500 focus:outline-none rounded-xl pl-9.5 pr-4 py-2 text-xs text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-gray-500"
+      className="w-full bg-slate-50/20 dark:bg-black/25 border border-slate-200/40 dark:border-violet-500/15 focus:border-blue-500 focus:outline-none rounded-xl pl-9.5 pr-4 py-2 text-xs text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-gray-500"
     />
               </div>
 
@@ -645,7 +645,7 @@ export default function FFCalendarView({ trades, showToast }) {
                     {
         /* Sticky Date Group Row */
       }
-                    <div className={`p-4 rounded-xl border flex justify-between items-center ${isTodayStr ? "bg-blue-50 dark:bg-blue-600/10 border-blue-200 dark:border-blue-500/30 text-blue-700 dark:text-blue-300" : "bg-slate-100 dark:bg-[#161616] border-slate-200 dark:border-[#252525] text-slate-700 dark:text-gray-300"}`}>
+                    <div className={`p-4 rounded-xl border flex justify-between items-center ${isTodayStr ? "bg-blue-50/20 dark:bg-blue-600/10 border-blue-200/40 dark:border-blue-500/25 text-blue-700 dark:text-blue-300" : "bg-slate-100/20 dark:bg-[#151225]/45 border-slate-200/40 dark:border-violet-500/15 text-slate-700 dark:text-gray-300"}`}>
                       <h3 className="text-xs font-extrabold uppercase tracking-widest flex items-center gap-2">
                         {isTodayStr && <span className="bg-blue-500 text-white font-mono text-[9px] px-1.5 py-0.5 rounded mr-1 animate-pulse">TODAY</span>}
                         <span>{formatDateHeader(dateKey)}</span>
