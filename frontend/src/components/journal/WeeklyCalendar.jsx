@@ -543,15 +543,33 @@ export default function WeeklyCalendar({ trades, showToast }) {
         <div className="h-64 w-full">
           {dailyNotes.length === 0 ? <div className="text-xs text-slate-400 dark:text-gray-600 font-mono text-center py-20">No daily notes logged yet to plot discipline trend.</div> : <ResponsiveContainer width="100%" height="100%">
               <LineChart data={[...dailyNotes].sort((a, b) => a.date.localeCompare(b.date))} margin={{ top: 10, bottom: 10, left: -20, right: 10 }}>
+                <defs>
+                  <filter id="calLineGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="stroke-slate-100 dark:stroke-[#222]" />
                 <XAxis dataKey="date" stroke="currentColor" className="text-slate-400 dark:text-gray-500" fontSize={10} tickLine={false} />
                 <YAxis stroke="currentColor" className="text-slate-400 dark:text-gray-500" fontSize={10} tickLine={false} domain={[1, 5]} ticks={[1, 2, 3, 4, 5]} />
                 <Tooltip
-    contentStyle={{ backgroundColor: "var(--tooltip-bg, #1a1a1a)", borderColor: "var(--tooltip-border, #333)", color: "currentColor", fontSize: "11px", fontFamily: "monospace" }}
-    itemStyle={{ color: "currentColor" }}
-    labelStyle={{ color: "currentColor" }}
-  />
-                <Line type="monotone" dataKey="discipline_score" name="Discipline Score" stroke="#ef4444" strokeWidth={2.5} activeDot={{ r: 6 }} />
+                  contentStyle={{ 
+                    backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                    borderColor: "rgba(124, 58, 237, 0.4)", 
+                    borderRadius: "12px",
+                    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                    borderWidth: "1px",
+                    padding: "8px 12px"
+                  }} 
+                  itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
+                  labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                />
+                <Line type="monotone" dataKey="discipline_score" name="Discipline Score" stroke="#fb7185" strokeWidth={3.5} dot={{ r: 4, stroke: "#fb7185", strokeWidth: 1, fill: "#0e0b18" }} activeDot={{ r: 6, fill: "#fb7185", stroke: "#be123c", strokeWidth: 2 }} filter="url(#calLineGlow)" />
               </LineChart>
             </ResponsiveContainer>}
         </div>

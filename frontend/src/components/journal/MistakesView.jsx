@@ -238,11 +238,37 @@ export default function MistakesView({ trades }) {
           <div className="h-64 w-full">
             {frequencyData.length === 0 ? <div className="text-xs text-center text-slate-450 dark:text-gray-600 font-mono py-24">No mistakes logged yet! Keep it clean.</div> : <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={frequencyData} layout="vertical" margin={{ left: 20 }}>
+                  <defs>
+                    <linearGradient id="mistakeRedGlow" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#be123c" stopOpacity={0.4} />
+                      <stop offset="100%" stopColor="#fb7185" stopOpacity={0.9} />
+                    </linearGradient>
+                    <filter id="mistakeBarGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="3.5" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="stroke-slate-100 dark:stroke-[#222]" />
                   <XAxis type="number" stroke="currentColor" className="text-slate-405 dark:text-gray-500" fontSize={10} tickLine={false} />
                   <YAxis dataKey="mistake" type="category" stroke="currentColor" className="text-slate-500 dark:text-gray-400" fontSize={10} tickLine={false} />
-                  <Tooltip contentStyle={{ backgroundColor: "var(--tooltip-bg, #1a1a1a)", borderColor: "var(--tooltip-border, #333)", color: "currentColor", fontSize: "11px", borderRadius: "8px" }} itemStyle={{ color: "currentColor" }} labelStyle={{ color: "currentColor" }} />
-                  <Bar dataKey="count" fill="#ef4444" radius={[0, 4, 4, 0]} barSize={14} />
+                  <Tooltip
+                    contentStyle={{ 
+                      backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      borderColor: "rgba(124, 58, 237, 0.4)", 
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      borderWidth: "1px",
+                      padding: "8px 12px"
+                    }} 
+                    itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
+                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                  />
+                  <Bar dataKey="count" fill="url(#mistakeRedGlow)" filter="url(#mistakeBarGlow)" radius={[0, 4, 4, 0]} barSize={14} />
                 </BarChart>
               </ResponsiveContainer>}
           </div>
@@ -259,11 +285,33 @@ export default function MistakesView({ trades }) {
           <div className="h-64 w-full col-span-1">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={confluenceCorrelationData} margin={{ top: 10, bottom: 10 }}>
+                <defs>
+                  <filter id="confluenceLineGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="stroke-slate-100 dark:stroke-[#222]" />
                 <XAxis dataKey="bucket" stroke="currentColor" className="text-slate-405 dark:text-gray-500" fontSize={10} tickLine={false} />
                 <YAxis stroke="currentColor" className="text-slate-405 dark:text-gray-500" fontSize={10} tickLine={false} label={{ value: "Win Rate %", angle: -90, position: "insideLeft", stroke: "currentColor", className: "text-slate-400 dark:text-gray-550", fontSize: "11" }} />
-                <Tooltip contentStyle={{ backgroundColor: "var(--tooltip-bg, #1a1a1a)", borderColor: "var(--tooltip-border, #333)", color: "currentColor", fontSize: "11px", borderRadius: "8px" }} itemStyle={{ color: "currentColor" }} labelStyle={{ color: "currentColor" }} />
-                <Line type="monotone" dataKey="winRate" stroke="#60a5fa" name="Win Rate %" strokeWidth={3} dot={{ r: 5 }} activeDot={{ r: 7 }} />
+                <Tooltip
+                  contentStyle={{ 
+                    backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                    borderColor: "rgba(124, 58, 237, 0.4)", 
+                    borderRadius: "12px",
+                    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                    borderWidth: "1px",
+                    padding: "8px 12px"
+                  }} 
+                  itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
+                  labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                />
+                <Line type="monotone" dataKey="winRate" stroke="#60a5fa" name="Win Rate %" strokeWidth={3.5} dot={{ r: 4, stroke: "#60a5fa", strokeWidth: 1, fill: "#0e0b18" }} activeDot={{ r: 6, fill: "#60a5fa", stroke: "#2563eb", strokeWidth: 2 }} filter="url(#confluenceLineGlow)" />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -286,11 +334,37 @@ export default function MistakesView({ trades }) {
             <div className="h-56 w-full sm:col-span-2">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={qualityStats}>
+                  <defs>
+                    <linearGradient id="qualityBlueGlow" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#60a5fa" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#2563eb" stopOpacity={0.4} />
+                    </linearGradient>
+                    <filter id="qualityBarGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="4" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="stroke-slate-100 dark:stroke-[#222]" />
                   <XAxis dataKey="quality" stroke="currentColor" className="text-slate-405 dark:text-gray-500" fontSize={10} tickLine={false} />
                   <YAxis stroke="currentColor" className="text-slate-405 dark:text-gray-500" fontSize={10} tickLine={false} />
-                  <Tooltip contentStyle={{ backgroundColor: "var(--tooltip-bg, #1a1a1a)", borderColor: "var(--tooltip-border, #333)", color: "currentColor", fontSize: "11px", borderRadius: "8px" }} itemStyle={{ color: "currentColor" }} labelStyle={{ color: "currentColor" }} />
-                  <Bar dataKey="avgPnL" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={25} />
+                  <Tooltip
+                    contentStyle={{ 
+                      backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      borderColor: "rgba(124, 58, 237, 0.4)", 
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      borderWidth: "1px",
+                      padding: "8px 12px"
+                    }} 
+                    itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
+                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                  />
+                  <Bar dataKey="avgPnL" fill="url(#qualityBlueGlow)" filter="url(#qualityBarGlow)" radius={[4, 4, 0, 0]} barSize={25} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -322,13 +396,43 @@ export default function MistakesView({ trades }) {
           <div className="h-56 w-full">
             {rrTrendData.length === 0 ? <div className="text-xs text-center text-slate-450 dark:text-gray-600 font-mono py-24">Set Planned & Actual Risk/Rewards to log trends.</div> : <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={rrTrendData}>
+                  <defs>
+                    <linearGradient id="rrPlannedGlow" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#cbd5e1" stopOpacity={0.8} />
+                      <stop offset="100%" stopColor="#64748b" stopOpacity={0.3} />
+                    </linearGradient>
+                    <linearGradient id="rrActualGlow" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#34d399" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#059669" stopOpacity={0.4} />
+                    </linearGradient>
+                    <filter id="rrBarGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="3.5" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="stroke-slate-100 dark:stroke-[#222]" />
                   <XAxis dataKey="pair" stroke="currentColor" className="text-slate-405 dark:text-gray-500" fontSize={9} tickLine={false} />
                   <YAxis stroke="currentColor" className="text-slate-405 dark:text-gray-500" fontSize={10} tickLine={false} />
-                  <Tooltip contentStyle={{ backgroundColor: "var(--tooltip-bg, #1a1a1a)", borderColor: "var(--tooltip-border, #333)", color: "currentColor", fontSize: "11px", borderRadius: "8px" }} itemStyle={{ color: "currentColor" }} labelStyle={{ color: "currentColor" }} />
+                  <Tooltip
+                    contentStyle={{ 
+                      backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      borderColor: "rgba(124, 58, 237, 0.4)", 
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      borderWidth: "1px",
+                      padding: "8px 12px"
+                    }} 
+                    itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
+                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                  />
                   <Legend verticalAlign="top" fontSize={10} wrapperStyle={{ color: "currentColor" }} />
-                  <Bar dataKey="planned" name="Planned R/R" fill="#94a3b8" radius={[3, 3, 0, 0]} />
-                  <Bar dataKey="actual" name="Actual R/R" fill="#10B981" radius={[3, 3, 0, 0]} />
+                  <Bar dataKey="planned" name="Planned R/R" fill="url(#rrPlannedGlow)" filter="url(#rrBarGlow)" radius={[3, 3, 0, 0]} />
+                  <Bar dataKey="actual" name="Actual R/R" fill="url(#rrActualGlow)" filter="url(#rrBarGlow)" radius={[3, 3, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>}
           </div>

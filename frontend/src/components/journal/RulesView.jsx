@@ -394,15 +394,37 @@ export default function RulesView({ trades, showToast }) {
             <div className="h-[180px] w-full mt-4">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="rulesRedGlow" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#fb7185" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#be123c" stopOpacity={0.4} />
+                    </linearGradient>
+                    <filter id="rulesBarGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="4" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="stroke-slate-100 dark:stroke-[#222]" />
                   <XAxis dataKey="name" stroke="currentColor" className="text-slate-405 dark:text-gray-500" fontSize={10} tickLine={false} />
                   <YAxis stroke="currentColor" className="text-slate-405 dark:text-gray-500" fontSize={10} domain={[0, 100]} tickLine={false} />
                   <Tooltip
-    contentStyle={{ backgroundColor: "var(--tooltip-bg, #1a1a1a)", borderColor: "var(--tooltip-border, #333)", color: "currentColor", fontSize: "11px", borderRadius: "8px" }}
-    labelStyle={{ color: "currentColor", fontSize: "10px" }}
-    itemStyle={{ fontSize: "11px", color: "currentColor" }}
-  />
-                  <Bar dataKey="Broken Rate (%)" fill="#ef4444" radius={[4, 4, 0, 0]} />
+                    contentStyle={{ 
+                      backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      borderColor: "rgba(124, 58, 237, 0.4)", 
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      borderWidth: "1px",
+                      padding: "8px 12px"
+                    }} 
+                    itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
+                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                  />
+                  <Bar dataKey="Broken Rate (%)" fill="url(#rulesRedGlow)" filter="url(#rulesBarGlow)" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

@@ -173,15 +173,13 @@ export default function Dashboard() {
             <LineChart data={scoreData}>
               <defs>
                 <linearGradient id="scoreGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.3} />
+                  <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.4} />
                   <stop offset="95%" stopColor="#7c3aed" stopOpacity={0} />
                 </linearGradient>
-                <filter id="lineGlow">
-                  <feGaussianBlur stdDeviation="3" result="blur" />
-                  <feFlood floodColor="#7c3aed" floodOpacity="0.6" result="color" />
-                  <feComposite in="color" in2="blur" operator="in" result="glow" />
+                <filter id="lineGlow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="4" result="blur" />
                   <feMerge>
-                    <feMergeNode in="glow" />
+                    <feMergeNode in="blur" />
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
@@ -196,10 +194,10 @@ export default function Dashboard() {
               </ReferenceLine>
               <Area type="monotone" dataKey="score" fill="url(#scoreGrad)" stroke="none" animationDuration={1200} animationEasing="ease-out" animationBegin={600} />
               <Line
-                type="monotone" dataKey="score" stroke="#7c3aed" strokeWidth={2.5}
-                dot={{ fill: '#7c3aed', r: 3, strokeWidth: 0 }}
+                type="monotone" dataKey="score" stroke="#a78bfa" strokeWidth={3.5}
+                dot={{ r: 4, stroke: "#a78bfa", strokeWidth: 1, fill: "#0e0b18" }}
                 activeDot={{
-                  r: 5, fill: '#a78bfa', stroke: '#7c3aed', strokeWidth: 2,
+                  r: 6, fill: '#c084fc', stroke: '#a78bfa', strokeWidth: 2,
                   filter: 'url(#lineGlow)',
                 }}
                 filter="url(#lineGlow)"
@@ -239,24 +237,22 @@ export default function Dashboard() {
               <defs>
                 {/* Per-zone vertical gradients — lighter top → darker bottom */}
                 <linearGradient id="eviRed" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#f43f5e" stopOpacity={0.95} />
-                  <stop offset="100%" stopColor="#f43f5e" stopOpacity={0.35} />
+                  <stop offset="0%" stopColor="#f43f5e" stopOpacity={0.9} />
+                  <stop offset="100%" stopColor="#be123c" stopOpacity={0.4} />
                 </linearGradient>
                 <linearGradient id="eviAmber" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#f59e0b" stopOpacity={0.95} />
-                  <stop offset="100%" stopColor="#f59e0b" stopOpacity={0.35} />
+                  <stop offset="0%" stopColor="#fbbf24" stopOpacity={0.9} />
+                  <stop offset="100%" stopColor="#d97706" stopOpacity={0.4} />
                 </linearGradient>
                 <linearGradient id="eviGreen" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#10b981" stopOpacity={0.95} />
-                  <stop offset="100%" stopColor="#10b981" stopOpacity={0.35} />
+                  <stop offset="0%" stopColor="#34d399" stopOpacity={0.9} />
+                  <stop offset="100%" stopColor="#059669" stopOpacity={0.4} />
                 </linearGradient>
-                {/* Bar glow filter — same technique as the line */}
-                <filter id="barGlow">
-                  <feGaussianBlur stdDeviation="2.5" result="blur" />
-                  <feFlood floodColor="#a78bfa" floodOpacity="0.35" result="color" />
-                  <feComposite in="color" in2="blur" operator="in" result="glow" />
+                {/* Bar glow filter — source-graphic multi-color glow */}
+                <filter id="barGlow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3.5" result="blur" />
                   <feMerge>
-                    <feMergeNode in="glow" />
+                    <feMergeNode in="blur" />
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>

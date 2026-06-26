@@ -658,17 +658,35 @@ export default function DashboardView({ showToast, onNavigate }) {
           <div className="h-72 w-full text-xs">
             {charts.cumulativePnl.length === 0 ? <div className="flex justify-center items-center h-full text-gray-400 dark:text-gray-600">No data available</div> : <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={charts.cumulativePnl} margin={{ left: -10, right: 10, top: 10, bottom: 5 }}>
+                  <defs>
+                    <filter id="lineGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="4" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" className="dark:stroke-[#2a2a2a]" />
                   <XAxis dataKey="date" stroke="#64748b" />
                   <YAxis stroke="#64748b" />
                   <Tooltip
-    contentStyle={{ backgroundColor: "#ffffff", borderColor: "#cbd5e1", color: "#0f172a" }}
-    itemStyle={{ color: "#0f172a" }}
-    labelStyle={{ color: "#0f172a" }}
-    labelClassName="font-mono text-xs"
-  />
+                    contentStyle={{ 
+                      backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      borderColor: "rgba(124, 58, 237, 0.4)", 
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      borderWidth: "1px",
+                      padding: "8px 12px"
+                    }} 
+                    itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
+                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                    labelClassName="font-mono text-xs"
+                  />
                   <ReferenceLine y={0} stroke="#ef4444" strokeDasharray="5 5" />
-                  <Line type="monotone" dataKey="pnl" name="Cum. PnL" stroke="#3b82f6" strokeWidth={3} dot={{ r: 3 }} />
+                  <Line type="monotone" dataKey="pnl" name="Cum. PnL" stroke="#38bdf8" strokeWidth={3.5} dot={{ r: 4, stroke: "#38bdf8", strokeWidth: 1, fill: "#0e0b18" }} filter="url(#lineGlow)" />
                 </LineChart>
               </ResponsiveContainer>}
           </div>
@@ -682,16 +700,42 @@ export default function DashboardView({ showToast, onNavigate }) {
           <div className="h-72 w-full text-xs">
             {charts.dailyPnl.length === 0 ? <div className="flex justify-center items-center h-full text-gray-400 dark:text-gray-600">No data available</div> : <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={charts.dailyPnl} margin={{ left: -10, right: 10, top: 10, bottom: 5 }}>
+                  <defs>
+                    <linearGradient id="dailyGreenGlow" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#34d399" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#059669" stopOpacity={0.4} />
+                    </linearGradient>
+                    <linearGradient id="dailyRedGlow" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#fb7185" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#be123c" stopOpacity={0.4} />
+                    </linearGradient>
+                    <filter id="dailyBarGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="4" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" className="dark:stroke-[#2a2a2a]" />
                   <XAxis dataKey="date" stroke="#64748b" />
                   <YAxis stroke="#64748b" />
                   <Tooltip
-    contentStyle={{ backgroundColor: "#ffffff", borderColor: "#cbd5e1", color: "#0f172a" }}
-    itemStyle={{ color: "#0f172a" }}
-    labelStyle={{ color: "#0f172a" }}
-  />
-                  <Bar dataKey="pnl" name="Daily PnL">
-                    {charts.dailyPnl.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.pnl >= 0 ? "#22c55e" : "#ef4444"} />)}
+                    contentStyle={{ 
+                      backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      borderColor: "rgba(124, 58, 237, 0.4)", 
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      borderWidth: "1px",
+                      padding: "8px 12px"
+                    }} 
+                    itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
+                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                  />
+                  <Bar dataKey="pnl" name="Daily PnL" filter="url(#dailyBarGlow)" radius={[4, 4, 0, 0]}>
+                    {charts.dailyPnl.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.pnl >= 0 ? "url(#dailyGreenGlow)" : "url(#dailyRedGlow)"} />)}
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>}
@@ -706,11 +750,37 @@ export default function DashboardView({ showToast, onNavigate }) {
           <div className="h-72 w-full text-xs">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={charts.winRateBySession} margin={{ left: -10, right: 10, top: 10, bottom: 5 }}>
+                <defs>
+                  <linearGradient id="sessionPurpleGlow" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#c084fc" stopOpacity={0.9} />
+                    <stop offset="100%" stopColor="#7c3aed" stopOpacity={0.4} />
+                  </linearGradient>
+                  <filter id="sessionBarGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" className="dark:stroke-[#2a2a2a]" />
                 <XAxis dataKey="session" stroke="#64748b" />
                 <YAxis stroke="#64748b" unit="%" />
-                <Tooltip contentStyle={{ backgroundColor: "#ffffff", borderColor: "#cbd5e1", color: "#0f172a" }} itemStyle={{ color: "#0f172a" }} labelStyle={{ color: "#0f172a" }} />
-                <Bar dataKey="winRate" name="Win Rate" fill="#a855f7" radius={[6, 6, 0, 0]} />
+                <Tooltip
+                  contentStyle={{ 
+                    backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                    borderColor: "rgba(124, 58, 237, 0.4)", 
+                    borderRadius: "12px",
+                    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                    borderWidth: "1px",
+                    padding: "8px 12px"
+                  }} 
+                  itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
+                  labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                />
+                <Bar dataKey="winRate" name="Win Rate" fill="url(#sessionPurpleGlow)" filter="url(#sessionBarGlow)" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -724,12 +794,42 @@ export default function DashboardView({ showToast, onNavigate }) {
           <div className="h-72 w-full text-xs">
             {charts.pnlBySetup.length === 0 ? <div className="flex justify-center items-center h-full text-gray-400 dark:text-gray-600">No setups logged</div> : <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={charts.pnlBySetup} layout="vertical" margin={{ left: 30, right: 10, top: 10, bottom: 5 }}>
+                  <defs>
+                    <linearGradient id="setupGreenGlow" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#059669" stopOpacity={0.4} />
+                      <stop offset="100%" stopColor="#34d399" stopOpacity={0.9} />
+                    </linearGradient>
+                    <linearGradient id="setupRedGlow" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#be123c" stopOpacity={0.4} />
+                      <stop offset="100%" stopColor="#fb7185" stopOpacity={0.9} />
+                    </linearGradient>
+                    <filter id="setupBarGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="4" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" className="dark:stroke-[#2a2a2a]" />
                   <YAxis dataKey="setup" stroke="#64748b" type="category" width={80} />
                   <XAxis stroke="#64748b" type="number" />
-                  <Tooltip contentStyle={{ backgroundColor: "#ffffff", borderColor: "#cbd5e1", color: "#0f172a" }} itemStyle={{ color: "#0f172a" }} labelStyle={{ color: "#0f172a" }} />
-                  <Bar dataKey="pnl" name="Setup PnL">
-                    {charts.pnlBySetup.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.pnl >= 0 ? "#10b981" : "#f43f5e"} />)}
+                  <Tooltip
+                    contentStyle={{ 
+                      backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      borderColor: "rgba(124, 58, 237, 0.4)", 
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      borderWidth: "1px",
+                      padding: "8px 12px"
+                    }} 
+                    itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
+                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                  />
+                  <Bar dataKey="pnl" name="Setup PnL" filter="url(#setupBarGlow)" radius={[0, 4, 4, 0]}>
+                    {charts.pnlBySetup.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.pnl >= 0 ? "url(#setupGreenGlow)" : "url(#setupRedGlow)"} />)}
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>}
@@ -744,11 +844,37 @@ export default function DashboardView({ showToast, onNavigate }) {
           <div className="h-72 w-full text-xs">
             {charts.mostCommonMistakes.length === 0 ? <div className="flex justify-center items-center h-full text-gray-400 dark:text-gray-600">Perfect track record! No mistakes logged.</div> : <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={charts.mostCommonMistakes} layout="vertical" margin={{ left: 40, right: 10, top: 10, bottom: 5 }}>
+                  <defs>
+                    <linearGradient id="mistakeRedGlow" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#be123c" stopOpacity={0.4} />
+                      <stop offset="100%" stopColor="#fb7185" stopOpacity={0.9} />
+                    </linearGradient>
+                    <filter id="mistakeBarGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="4" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" className="dark:stroke-[#2a2a2a]" />
                   <YAxis dataKey="mistake" stroke="#64748b" type="category" width={100} />
                   <XAxis stroke="#64748b" type="number" allowDecimals={false} />
-                  <Tooltip contentStyle={{ backgroundColor: "#ffffff", borderColor: "#cbd5e1", color: "#0f172a" }} itemStyle={{ color: "#0f172a" }} labelStyle={{ color: "#0f172a" }} />
-                  <Bar dataKey="count" name="Frequency" fill="#f43f5e" radius={[0, 6, 6, 0]} />
+                  <Tooltip
+                    contentStyle={{ 
+                      backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      borderColor: "rgba(124, 58, 237, 0.4)", 
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      borderWidth: "1px",
+                      padding: "8px 12px"
+                    }} 
+                    itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
+                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                  />
+                  <Bar dataKey="count" name="Frequency" fill="url(#mistakeRedGlow)" filter="url(#mistakeBarGlow)" radius={[0, 6, 6, 0]} />
                 </BarChart>
               </ResponsiveContainer>}
           </div>
@@ -796,16 +922,39 @@ export default function DashboardView({ showToast, onNavigate }) {
                 <div className="h-56 w-56">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
+                      <defs>
+                        <filter id="donutGlow" x="-20%" y="-20%" width="140%" height="140%">
+                          <feGaussianBlur stdDeviation="3" result="blur" />
+                          <feMerge>
+                            <feMergeNode in="blur" />
+                            <feMergeNode in="SourceGraphic" />
+                          </feMerge>
+                        </filter>
+                      </defs>
                       <Pie
-    data={donutData}
-    innerRadius={55}
-    outerRadius={80}
-    paddingAngle={4}
-    dataKey="value"
-  >
+                        data={donutData}
+                        innerRadius={55}
+                        outerRadius={80}
+                        paddingAngle={4}
+                        dataKey="value"
+                        filter="url(#donutGlow)"
+                      >
                         {donutData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)}
                       </Pie>
-                      <Tooltip contentStyle={{ backgroundColor: "#ffffff", borderColor: "#cbd5e1", color: "#0f172a" }} itemStyle={{ color: "#0f172a" }} labelStyle={{ color: "#0f172a" }} />
+                      <Tooltip
+                        contentStyle={{ 
+                          backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                          backdropFilter: "blur(12px)",
+                          WebkitBackdropFilter: "blur(12px)",
+                          borderColor: "rgba(124, 58, 237, 0.4)", 
+                          borderRadius: "12px",
+                          boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                          borderWidth: "1px",
+                          padding: "8px 12px"
+                        }} 
+                        itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
+                        labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                      />
                     </PieChart>
                   </ResponsiveContainer>
                 </div>

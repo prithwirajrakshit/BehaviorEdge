@@ -211,11 +211,33 @@ export default function FeesAnalytics({ showToast, trades }) {
           <div className="h-60 w-full text-xs">
             {feesData.cumulativeFees.length === 0 ? <div className="flex h-full items-center justify-center text-slate-400 dark:text-gray-600">No fee logs available</div> : <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={feesData.cumulativeFees} margin={{ left: -20, right: 10, top: 10, bottom: 5 }}>
+                  <defs>
+                    <filter id="feesLineGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="4" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" className="dark:stroke-[#222]" />
                   <XAxis dataKey="date" stroke="#64748b" />
                   <YAxis stroke="#64748b" />
-                  <Tooltip contentStyle={{ backgroundColor: "#ffffff", borderColor: "#cbd5e1", color: "#0f172a" }} itemStyle={{ color: "#0f172a" }} labelStyle={{ color: "#0f172a" }} />
-                  <Line type="monotone" dataKey="fees" name="Total Fees" stroke="#ef4444" strokeWidth={2.5} dot={{ r: 2 }} />
+                  <Tooltip
+                    contentStyle={{ 
+                      backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      borderColor: "rgba(124, 58, 237, 0.4)", 
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      borderWidth: "1px",
+                      padding: "8px 12px"
+                    }} 
+                    itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
+                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                  />
+                  <Line type="monotone" dataKey="fees" name="Total Fees" stroke="#fb7185" strokeWidth={3.5} dot={{ r: 4, stroke: "#fb7185", strokeWidth: 1, fill: "#0e0b18" }} filter="url(#feesLineGlow)" />
                 </LineChart>
               </ResponsiveContainer>}
           </div>
@@ -229,11 +251,37 @@ export default function FeesAnalytics({ showToast, trades }) {
           <div className="h-60 w-full text-xs">
             {feesData.dailyFees.length === 0 ? <div className="flex h-full items-center justify-center text-slate-400 dark:text-gray-600">No fee logs available</div> : <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={feesData.dailyFees} margin={{ left: -20, right: 10, top: 10, bottom: 5 }}>
+                  <defs>
+                    <linearGradient id="feesRedGlow" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#fb7185" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#be123c" stopOpacity={0.4} />
+                    </linearGradient>
+                    <filter id="feesBarGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="4" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" className="dark:stroke-[#222]" />
                   <XAxis dataKey="date" stroke="#64748b" />
                   <YAxis stroke="#64748b" />
-                  <Tooltip contentStyle={{ backgroundColor: "#ffffff", borderColor: "#cbd5e1", color: "#0f172a" }} itemStyle={{ color: "#0f172a" }} labelStyle={{ color: "#0f172a" }} />
-                  <Bar dataKey="fees" name="Daily Fee" fill="#ef4444" radius={[4, 4, 0, 0]} />
+                  <Tooltip
+                    contentStyle={{ 
+                      backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      borderColor: "rgba(124, 58, 237, 0.4)", 
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      borderWidth: "1px",
+                      padding: "8px 12px"
+                    }} 
+                    itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
+                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                  />
+                  <Bar dataKey="fees" name="Daily Fee" fill="url(#feesRedGlow)" filter="url(#feesBarGlow)" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>}
           </div>
@@ -247,11 +295,37 @@ export default function FeesAnalytics({ showToast, trades }) {
           <div className="h-60 w-full text-xs">
             {feesData.feesByContract.length === 0 ? <div className="flex h-full items-center justify-center text-slate-400 dark:text-gray-600">No fee logs available</div> : <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={feesData.feesByContract} layout="vertical" margin={{ left: 10, right: 10, top: 10, bottom: 5 }}>
+                  <defs>
+                    <linearGradient id="instrumentRedGlow" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#be123c" stopOpacity={0.4} />
+                      <stop offset="100%" stopColor="#fb7185" stopOpacity={0.9} />
+                    </linearGradient>
+                    <filter id="instrumentBarGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="4" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" className="dark:stroke-[#222]" />
                   <YAxis dataKey="pair" stroke="#64748b" type="category" width={60} />
                   <XAxis stroke="#64748b" type="number" />
-                  <Tooltip contentStyle={{ backgroundColor: "#ffffff", borderColor: "#cbd5e1", color: "#0f172a" }} itemStyle={{ color: "#0f172a" }} labelStyle={{ color: "#0f172a" }} />
-                  <Bar dataKey="fees" name="Fees Paid" fill="#b91c1c" radius={[0, 4, 4, 0]} />
+                  <Tooltip
+                    contentStyle={{ 
+                      backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      borderColor: "rgba(124, 58, 237, 0.4)", 
+                      borderRadius: "12px",
+                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      borderWidth: "1px",
+                      padding: "8px 12px"
+                    }} 
+                    itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
+                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                  />
+                  <Bar dataKey="fees" name="Fees Paid" fill="url(#instrumentRedGlow)" filter="url(#instrumentBarGlow)" radius={[0, 4, 4, 0]} />
                 </BarChart>
               </ResponsiveContainer>}
           </div>
