@@ -85,9 +85,9 @@ OTP_HTML_TEMPLATE = """
 def send_otp_email(to_email: str, otp_code: str) -> bool:
     """Send an OTP email to the given address. Returns True on success."""
     try:
-        resend.emails.send(
+        resend.Emails.send(
             {
-                "from": "BehaviorEdge <noreply@behavioredge.com>",
+                "from": "BehaviorEdge <onboarding@resend.dev>",
                 "to": [to_email],
                 "subject": "Your Password Reset Code",
                 "html": OTP_HTML_TEMPLATE.format(otp_code=otp_code),
