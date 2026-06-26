@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { OutcomeBadge, DirectionBadge, SessionBadge } from "./Badge";
 import { Eye, Clock, CheckSquare, X, Edit2, Star } from "lucide-react";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+
+export default function WeeklyCalendar({ trades, showToast }) {
   const todayStr = new Date().toISOString().substring(0, 10);
   const [pivotDate, setPivotDate] = useState(() => new Date());
   const [selectedTrade, setSelectedTrade] = useState(null);
