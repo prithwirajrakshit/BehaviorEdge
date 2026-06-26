@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from database import engine, Base
-from routers import auth, trades, profile, coach, dashboard, rules
+from routers import auth, trades, profile, coach, dashboard, rules, journal_trades, journal_elements
 import os
 
 Base.metadata.create_all(bind=engine)
@@ -33,6 +33,8 @@ app.include_router(profile.router)
 app.include_router(coach.router)
 app.include_router(dashboard.router)
 app.include_router(rules.router)
+app.include_router(journal_trades.router, prefix="/api")
+app.include_router(journal_elements.router, prefix="/api")
 
 @app.get("/")
 def root():

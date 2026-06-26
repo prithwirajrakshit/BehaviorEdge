@@ -5,6 +5,7 @@ import TradeLogger from './pages/TradeLogger'
 import AICoach from './pages/AICoach'
 import Calendar from './pages/Calendar'
 import Profile from './pages/Profile'
+import JournalWorkspace from './pages/JournalWorkspace'
 import Sidebar from './components/Sidebar'
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
     trade: <TradeLogger />,
     coach: <AICoach />,
     calendar: <Calendar />,
+    journal: <JournalWorkspace />,
     profile: <Profile />,
   }
 

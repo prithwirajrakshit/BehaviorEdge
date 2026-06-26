@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from database import get_db
-from models import User
+from models import User, Rule
 from schemas import UserCreate, UserLogin, Token, ForgotPassword, VerifyOtp, ResetPassword
 from passlib.context import CryptContext
 from jose import jwt
@@ -65,6 +65,23 @@ def signup(data: UserCreate, db: Session = Depends(get_db)):
     db.add(user)
     db.commit()
     db.refresh(user)
+
+    # Seed 8 default trading rules for the new user
+    default_rules = [
+        ("Only trade during my planned session", "Session Rules"),
+        ("Never move stop loss against my position", "Risk Rules"),
+        ("Wait for market structure shift confirmation before entry", "Entry Rules"),
+        ("Never risk more than 1% per trade", "Risk Rules"),
+        ("Do not trade after 2 consecutive losses in one session", "Mindset Rules"),
+        ("Only take trades with minimum 3 confluences", "Entry Rules"),
+        ("Always have a clear target before entering", "Exit Rules"),
+        ("Do not trade during high-impact news events", "Session Rules"),
+    ]
+    for text, cat in default_rules:
+        rule = Rule(user_id=user.id, rule_text=text, category=cat, is_active=True)
+        db.add(rule)
+    db.commit()
+
     token = create_token({"sub": user.username})
     return {"access_token": token, "token_type": "bearer"}
 

@@ -1,10 +1,11 @@
-import { LayoutDashboard, TrendingUp, Bot, Calendar, LogOut, Activity, User } from 'lucide-react'
+import { LayoutDashboard, TrendingUp, Bot, Calendar, LogOut, Activity, User, BookOpen } from 'lucide-react'
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard',    icon: LayoutDashboard },
   { id: 'trade',     label: 'Trade Logger', icon: TrendingUp },
   { id: 'coach',     label: 'AI Coach',     icon: Bot },
   { id: 'calendar',  label: 'Calendar',     icon: Calendar },
+  { id: 'journal',   label: 'Journal',      icon: BookOpen },
   { id: 'profile',   label: 'Profile',      icon: User },
 ]
 
