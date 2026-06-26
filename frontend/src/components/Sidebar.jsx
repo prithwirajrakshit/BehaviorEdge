@@ -1,4 +1,4 @@
-import { LayoutDashboard, TrendingUp, Bot, Calendar, LogOut, Activity, User, BookOpen } from 'lucide-react'
+import { LayoutDashboard, TrendingUp, Bot, Calendar, LogOut, Activity, User, BookOpen, X } from 'lucide-react'
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard',    icon: LayoutDashboard },
@@ -9,20 +9,11 @@ const navItems = [
   { id: 'profile',   label: 'Profile',      icon: User },
 ]
 
-export default function Sidebar({ page, setPage, onLogout }) {
+export default function Sidebar({ page, setPage, onLogout, isOpen, onClose }) {
   const username = localStorage.getItem('username') || 'Trader'
 
   return (
-    <div style={{
-      position: 'fixed', left: 0, top: 0, height: '100%', width: '240px',
-      backgroundColor: 'rgba(14, 11, 24, 0.97)',
-      backdropFilter: 'blur(20px)',
-      display: 'flex', flexDirection: 'column',
-      zIndex: 100,
-      borderRight: '1px solid rgba(124,58,237,0.4)',
-      // Always-on ambient pink/purple glow — bleeds outward into the main content area
-      boxShadow: '0 0 50px 4px rgba(124,58,237,0.18), inset -40px 0 60px -50px rgba(124,58,237,0.25)',
-    }}>
+    <div className={`sidebar-container ${isOpen ? 'open' : ''}`}>
       {/* Bright glowing line on the right edge — static, always visible */}
       <div style={{
         position: 'absolute', top: 0, right: -1, width: 2, height: '100%',
@@ -38,23 +29,30 @@ export default function Sidebar({ page, setPage, onLogout }) {
         pointerEvents: 'none',
       }} />
 
-      {/* Logo */}
+      {/* Logo and Mobile close button */}
       <div style={{ padding: '20px 24px 16px', borderBottom: '1px solid var(--border)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <img
-            src="/logo-64.png"
-            alt="BehaviorEdge"
-            style={{
-              width: 38, height: 38,
-              objectFit: 'contain',
-              filter: 'drop-shadow(0 0 8px rgba(192,38,211,0.6))',
-            }}
-          />
-          <div>
-            <div style={{ fontFamily: 'Inter', fontWeight: 800, fontSize: '1.05rem', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
-              Behavior<span style={{ color: 'var(--accent-light)' }}>Edge</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <img
+              src="/logo-64.png"
+              alt="BehaviorEdge"
+              style={{
+                width: 38, height: 38,
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 0 8px rgba(192,38,211,0.6))',
+              }}
+            />
+            <div>
+              <div style={{ fontFamily: 'Inter', fontWeight: 800, fontSize: '1.05rem', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
+                Behavior<span style={{ color: 'var(--accent-light)' }}>Edge</span>
+              </div>
             </div>
           </div>
+          
+          {/* Mobile close drawer button */}
+          <button onClick={onClose} className="mobile-close-btn" aria-label="Close menu">
+            <X size={18} />
+          </button>
         </div>
         <div style={{ marginTop: 8, fontFamily: 'JetBrains Mono', fontSize: '0.58rem', color: 'var(--text-muted)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
           Risk Regulation Platform

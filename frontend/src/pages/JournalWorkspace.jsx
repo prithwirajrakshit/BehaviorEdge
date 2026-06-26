@@ -210,7 +210,7 @@ export default function JournalWorkspace() {
   }
 
   return (
-    <div className="journal-workspace dark flex h-[calc(100vh-72px)] overflow-hidden" style={{ margin: '-36px -40px' }}>
+    <div className="journal-workspace-container journal-workspace dark">
       
       {/* Cohesive Sub-Sidebar inside the main viewport */}
       <aside className="w-56 flex flex-col border-r border-violet-500/20 bg-[#0e0b18]/60 backdrop-blur-md shrink-0 select-none overflow-y-auto">
@@ -258,6 +258,26 @@ export default function JournalWorkspace() {
 
       {/* Main viewport area */}
       <main className="flex-1 min-w-0 flex flex-col overflow-hidden bg-[#07050f]/30">
+        
+        {/* Mobile Horizontal Sub-Navigation */}
+        <div className="journal-mobile-nav">
+          {menuGroups.flatMap(g => g.items).map((item) => {
+            const active = currentPage === item.id
+            return (
+              <button
+                key={item.id}
+                onClick={() => {
+                  if (item.id !== 'add') setEditingTrade(null)
+                  setCurrentPage(item.id)
+                }}
+                className={`journal-mobile-nav-item ${active ? 'active' : ''}`}
+              >
+                <item.icon className="w-3.5 h-3.5" />
+                <span>{item.label}</span>
+              </button>
+            )
+          })}
+        </div>
         
         {/* Header Bar */}
         <header className="h-14 border-b border-violet-500/10 flex items-center justify-between px-6 bg-[#0e0b18]/40 shrink-0">

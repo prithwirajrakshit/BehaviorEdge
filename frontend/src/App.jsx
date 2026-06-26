@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Menu } from 'lucide-react'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import TradeLogger from './pages/TradeLogger'
@@ -11,11 +12,17 @@ import Sidebar from './components/Sidebar'
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [page, setPage] = useState('dashboard')
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) setLoggedIn(true)
   }, [])
+
+  // Automatically close sidebar drawer on mobile navigation
+  useEffect(() => {
+    setIsSidebarOpen(false)
+  }, [page])
 
   const handleLogin = () => setLoggedIn(true)
 
@@ -37,9 +44,37 @@ export default function App() {
   }
 
   return (
-    <div className="flex min-h-screen text-white" style={{ background: 'var(--bg-base)' }}>
-      <Sidebar page={page} setPage={setPage} onLogout={handleLogout} />
-      <main style={{ flex: 1, marginLeft: 240, padding: '36px 40px', minHeight: '100vh' }}>
+    <div className="app-container">
+      {/* Mobile Sticky Header */}
+      <header className="mobile-header">
+        <button onClick={() => setIsSidebarOpen(true)} className="mobile-menu-btn" aria-label="Open menu">
+          <Menu size={20} />
+        </button>
+        <div className="mobile-logo">
+          <img
+            src="/logo-64.png"
+            alt="BehaviorEdge"
+            style={{ width: 24, height: 24, objectFit: 'contain', filter: 'drop-shadow(0 0 4px rgba(192,38,211,0.6))' }}
+          />
+          <span>Behavior<span style={{ color: 'var(--accent-light)' }}>Edge</span></span>
+        </div>
+        <div style={{ width: 36 }} /> {/* Visual balance spacer */}
+      </header>
+
+      {/* Blurred mobile background overlay */}
+      {isSidebarOpen && (
+        <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)} />
+      )}
+
+      <Sidebar 
+        page={page} 
+        setPage={setPage} 
+        onLogout={handleLogout} 
+        isOpen={isSidebarOpen} 
+        onClose={() => setIsSidebarOpen(false)} 
+      />
+      
+      <main className="main-content">
         {pages[page]}
       </main>
     </div>
