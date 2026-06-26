@@ -1,3 +1,5 @@
+import { API_BASE } from '../../../api/client';
+
 export async function authFetch(url, options = {}) {
   const headers = {
     'Content-Type': 'application/json',
@@ -25,6 +27,6 @@ export async function authFetch(url, options = {}) {
     targetUrl = url.replace('/api/analytics/', '/api/journal/analytics/');
   }
   
-  const response = await fetch(targetUrl, { ...options, headers });
+  const response = await fetch(`${API_BASE}${targetUrl}`, { ...options, headers });
   return response;
 }
