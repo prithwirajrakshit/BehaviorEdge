@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Menu } from 'lucide-react'
+import { Menu, MoreVertical } from 'lucide-react'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import TradeLogger from './pages/TradeLogger'
@@ -13,6 +13,7 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [page, setPage] = useState('dashboard')
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -66,15 +67,25 @@ export default function App() {
         <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)} />
       )}
 
+      {/* Desktop Sidebar Toggle Button */}
+      <button 
+        onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)} 
+        className={`desktop-sidebar-toggle ${isSidebarCollapsed ? 'collapsed' : ''}`}
+        aria-label="Toggle sidebar"
+      >
+        <MoreVertical size={16} />
+      </button>
+
       <Sidebar 
         page={page} 
         setPage={setPage} 
         onLogout={handleLogout} 
         isOpen={isSidebarOpen} 
         onClose={() => setIsSidebarOpen(false)} 
+        isCollapsed={isSidebarCollapsed}
       />
       
-      <main className="main-content">
+      <main className={`main-content ${isSidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
         {pages[page]}
       </main>
     </div>

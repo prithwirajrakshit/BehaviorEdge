@@ -9,11 +9,11 @@ const navItems = [
   { id: 'profile',   label: 'Profile',      icon: User },
 ]
 
-export default function Sidebar({ page, setPage, onLogout, isOpen, onClose }) {
+export default function Sidebar({ page, setPage, onLogout, isOpen, onClose, isCollapsed }) {
   const username = localStorage.getItem('username') || 'Trader'
 
   return (
-    <div className={`sidebar-container ${isOpen ? 'open' : ''}`}>
+    <div className={`sidebar-container ${isOpen ? 'open' : ''} ${isCollapsed ? 'collapsed' : ''}`}>
       {/* Bright glowing line on the right edge — static, always visible */}
       <div style={{
         position: 'absolute', top: 0, right: -1, width: 2, height: '100%',

@@ -273,11 +273,11 @@ export default function DashboardView({ showToast, onNavigate }) {
       {
     /* 9 Stat Cards Grid */
   }
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-10 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
         {
     /* Total Net PnL */
   }
-        <div className="xl:col-span-2 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-2 sm:col-span-2 lg:col-span-2 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Total Net PnL</span>
             <Coins className="w-5 h-5 text-yellow-500" />
@@ -293,7 +293,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Win Rate % */
   }
-        <div className="xl:col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Win Rate</span>
             <Percent className="w-5 h-5 text-green-500" />
@@ -311,7 +311,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Total Trades */
   }
-        <div className="xl:col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Trades</span>
             <Activity className="w-5 h-5 text-blue-500" />
@@ -327,7 +327,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Profit Factor */
   }
-        <div className="xl:col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Prof. Factor</span>
             <TrendingUp className="w-5 h-5 text-purple-500" />
@@ -343,7 +343,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Average Win (USD) */
   }
-        <div className="xl:col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Avg Win</span>
             <TrendingUp className="w-5 h-5 text-green-400" />
@@ -359,7 +359,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Average Loss (USD) */
   }
-        <div className="xl:col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Avg Loss</span>
             <TrendingDown className="w-5 h-5 text-red-400" />
@@ -375,7 +375,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Best / Worst Trade (USD) */
   }
-        <div className="xl:col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Best Trade</span>
             <ShieldCheck className="w-5 h-5 text-emerald-400" />
@@ -391,7 +391,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Total Fees Paid */
   }
-        <div className="xl:col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Total Fees</span>
             <Calculator className="w-5 h-5 text-red-500" />
@@ -407,7 +407,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Rules Followed Rate % Card */
   }
-        <div className="xl:col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Rules Followed</span>
             <ShieldCheck className="w-5 h-5 text-blue-500" />

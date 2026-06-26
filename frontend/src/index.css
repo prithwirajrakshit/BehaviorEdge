@@ -632,6 +632,10 @@ h6 {
   transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s;
 }
 
+.main-content.sidebar-collapsed {
+  margin-left: 0 !important;
+}
+
 .sidebar-container {
   position: fixed;
   left: 0;
@@ -647,6 +651,50 @@ h6 {
   border-right: 1px solid rgba(124, 58, 237, 0.4);
   box-shadow: 0 0 50px 4px rgba(124, 58, 237, 0.18), inset -40px 0 60px -50px rgba(124, 58, 237, 0.25);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sidebar-container.collapsed {
+  transform: translateX(-100%) !important;
+}
+
+/* Glassmorphic 3-dot desktop sidebar toggle button */
+.desktop-sidebar-toggle {
+  position: fixed;
+  top: 20px;
+  left: 256px; /* 240px sidebar width + 16px padding gap */
+  z-index: 110;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: rgba(14, 11, 24, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(124, 58, 237, 0.35);
+  color: var(--text-secondary);
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.15);
+  transition: left 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.desktop-sidebar-toggle:hover {
+  background-color: rgba(124, 58, 237, 0.2);
+  color: var(--accent-light);
+  border-color: rgba(124, 58, 237, 0.6);
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.35);
+}
+
+.desktop-sidebar-toggle.collapsed {
+  left: 16px;
+}
+
+/* Hide desktop toggle button on mobile viewports */
+@media (max-width: 768px) {
+  .desktop-sidebar-toggle {
+    display: none !important;
+  }
 }
 
 .sidebar-overlay {
