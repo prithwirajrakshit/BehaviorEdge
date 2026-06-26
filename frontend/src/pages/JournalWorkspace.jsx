@@ -267,7 +267,7 @@ export default function JournalWorkspace() {
       {/* Cohesive Sub-Sidebar inside the main viewport */}
       <aside className="w-60 flex flex-col border-r border-violet-500/20 bg-[#0e0b18]/60 backdrop-blur-md shrink-0 select-none overflow-y-auto">
         {/* Workspace Title */}
-        <div className="p-4 border-b border-violet-500/10">
+        <div className="journal-sidebar-header p-4 border-b border-violet-500/10">
           <h3 className="font-bold text-sm text-violet-400 uppercase tracking-wider font-sans">
             Journal Workspace
           </h3>
