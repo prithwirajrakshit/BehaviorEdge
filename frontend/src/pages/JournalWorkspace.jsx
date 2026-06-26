@@ -66,6 +66,58 @@ export default function JournalWorkspace() {
     fetchTrades()
   }, [])
 
+  // Document-level pointer tracking to dynamically inject GlowCard spotlight borders
+  // into all flat container cards inside the Journal Workspace.
+  useEffect(() => {
+    const syncPointer = (e) => {
+      const workspace = document.querySelector('.journal-workspace')
+      if (!workspace) return
+      
+      // Select all card elements in the Journal Workspace
+      const cards = workspace.querySelectorAll(
+        '.bg-white, .dark\\:bg-\\[\\#1a1a1a\\], .dark\\:bg-zinc-900\\/50, .dark\\:bg-zinc-950, .dark\\:bg-\\[\\#0e0b18\\]\\/80, .dark\\:bg-\\[\\#0e0b18\\]\\/40'
+      )
+      
+      cards.forEach((card) => {
+        // Automatically inject data-glow and the glow-card class if not present
+        if (!card.hasAttribute('data-glow')) {
+          card.setAttribute('data-glow', 'true')
+          card.classList.add('glow-card')
+          card.classList.add('glow-card--full')
+          
+          // Set default custom properties matching GlowCard.jsx purple glow
+          card.style.setProperty('--hue-base', '320')
+          card.style.setProperty('--spread', '30')
+          card.style.setProperty('--saturation', '70')
+          card.style.setProperty('--lightness', '65')
+          card.style.setProperty('--radius', '16')
+          card.style.setProperty('--border', '1.5')
+          card.style.setProperty('--border-size', '1.5px')
+          card.style.setProperty('--spotlight-size', '150px')
+          card.style.setProperty('--border-spot-opacity', '0.9')
+          card.style.setProperty('--hue', 'calc(var(--hue-base) + (var(--xp, 0.5) * var(--spread, 0)))')
+        }
+        
+        const rect = card.getBoundingClientRect()
+        const x = e.clientX - rect.left
+        const y = e.clientY - rect.top
+        
+        // Normalize coordinates (0 to 1) for the hue sweep effect
+        const xp = rect.width > 0 ? Math.min(Math.max(x / rect.width, 0), 1) : 0.5
+        const yp = rect.height > 0 ? Math.min(Math.max(y / rect.height, 0), 1) : 0.5
+        
+        // Update live pointer coordinates
+        card.style.setProperty('--x', `${x.toFixed(2)}px`)
+        card.style.setProperty('--y', `${y.toFixed(2)}px`)
+        card.style.setProperty('--xp', xp.toFixed(3))
+        card.style.setProperty('--yp', yp.toFixed(3))
+      })
+    }
+    
+    document.addEventListener('pointermove', syncPointer, { passive: true })
+    return () => document.removeEventListener('pointermove', syncPointer)
+  }, [currentPage])
+
   const handleSaveTrade = async (payload) => {
     const isEdit = !!payload.id
     const endpoint = isEdit ? `/api/trades/${payload.id}` : '/api/trades'
@@ -213,13 +265,13 @@ export default function JournalWorkspace() {
     <div className="journal-workspace-container journal-workspace dark">
       
       {/* Cohesive Sub-Sidebar inside the main viewport */}
-      <aside className="w-56 flex flex-col border-r border-violet-500/20 bg-[#0e0b18]/60 backdrop-blur-md shrink-0 select-none overflow-y-auto">
+      <aside className="w-60 flex flex-col border-r border-violet-500/20 bg-[#0e0b18]/60 backdrop-blur-md shrink-0 select-none overflow-y-auto">
         {/* Workspace Title */}
         <div className="p-4 border-b border-violet-500/10">
-          <h3 className="font-semibold text-xs text-violet-400 uppercase tracking-widest font-mono">
+          <h3 className="font-bold text-sm text-violet-400 uppercase tracking-wider font-sans">
             Journal Workspace
           </h3>
-          <div className="mt-2 text-xs text-[#c8c0e0] font-sans">
+          <div className="mt-2 text-sm text-[#c8c0e0] font-sans">
             Equity: <strong className="text-white">${currentEquity.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
           </div>
         </div>
@@ -227,8 +279,8 @@ export default function JournalWorkspace() {
         {/* Navigation Items grouped */}
         <div className="flex-1 p-3 space-y-4">
           {menuGroups.map((group) => (
-            <div key={group.title} className="space-y-1">
-              <span className="px-3 text-[10px] font-bold text-violet-500/80 uppercase tracking-wider font-mono">
+            <div key={group.title} className="space-y-1.5">
+              <span className="px-3 text-xs font-bold text-violet-500/80 uppercase tracking-wider font-sans">
                 {group.title}
               </span>
               {group.items.map((item) => {
@@ -240,7 +292,7 @@ export default function JournalWorkspace() {
                       if (item.id !== 'add') setEditingTrade(null)
                       setCurrentPage(item.id)
                     }}
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left text-xs transition-all font-medium ${
+                    className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-left text-sm transition-all font-semibold ${
                       active
                         ? 'bg-violet-600/20 text-[#a78bfa] border-l-2 border-violet-500 shadow-[0_0_15px_rgba(124,58,237,0.1)]'
                         : 'text-violet-300/70 hover:text-white hover:bg-violet-500/5'
@@ -280,9 +332,9 @@ export default function JournalWorkspace() {
         </div>
         
         {/* Header Bar */}
-        <header className="h-14 border-b border-violet-500/10 flex items-center justify-between px-6 bg-[#0e0b18]/40 shrink-0">
+        <header className="h-16 border-b border-violet-500/10 flex items-center justify-between px-6 bg-[#0e0b18]/40 shrink-0">
           <div>
-            <h2 className="text-base font-semibold text-white tracking-wide">{getPageTitle()}</h2>
+            <h2 className="text-2xl font-medium text-white tracking-wide">{getPageTitle()}</h2>
           </div>
           
           <div className="flex gap-2 items-center">

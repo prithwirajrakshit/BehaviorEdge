@@ -416,6 +416,7 @@ h6 {
 .journal-workspace .dark\:bg-zinc-950,
 .journal-workspace .dark\:bg-\[\#0e0b18\]\/80,
 .journal-workspace .dark\:bg-\[\#0e0b18\]\/40 {
+  position: relative !important; /* Required for GlowCard spotlight borders */
   background: var(--bg-workspace-card) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
@@ -435,6 +436,17 @@ h6 {
 }
 
 /* Typography Adjustments (Legibility in dark glass theme) */
+.journal-workspace h2 {
+  font-size: 1.85rem !important; /* Scale up sub-view page titles */
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.journal-workspace h3 {
+  font-size: 1.35rem !important; /* Scale up card titles */
+  font-weight: 500 !important;
+}
+
 .journal-workspace .text-slate-800,
 .journal-workspace .text-slate-700,
 .journal-workspace .text-slate-900 {
