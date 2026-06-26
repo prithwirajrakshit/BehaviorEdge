@@ -156,7 +156,7 @@ export default function MistakesView({ trades }) {
       {
     /* Header Segment */
   }
-      <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-md dark:shadow-lg gap-4">
+      <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-md dark:shadow-lg gap-4">
         <div>
           <h2 className="text-xl font-bold text-slate-800 dark:text-white mt-2">Trading Performance Center</h2>
           <p className="text-xs text-slate-550 dark:text-gray-500 font-mono mt-1">Deep analysis covering emotional traps, confluence alignment, and setup optimization.</p>
@@ -167,7 +167,7 @@ export default function MistakesView({ trades }) {
     /* Row 1: Section 6 Mistake Stats Row */
   }
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-5 shadow-md dark:shadow-lg relative overflow-hidden flex flex-col justify-between">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-5 shadow-md dark:shadow-lg relative overflow-hidden flex flex-col justify-between">
           <div className="flex justify-between items-center text-slate-500 dark:text-gray-405 text-xs font-bold uppercase tracking-wider mb-2">
             <span>Absolute Error Loss</span>
             <ShieldAlert className="w-5 h-5 text-red-500" />
@@ -180,7 +180,7 @@ export default function MistakesView({ trades }) {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-5 shadow-md dark:shadow-lg relative overflow-hidden flex flex-col justify-between">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-5 shadow-md dark:shadow-lg relative overflow-hidden flex flex-col justify-between">
           <div className="flex justify-between items-center text-slate-500 dark:text-gray-405 text-xs font-bold uppercase tracking-wider mb-2">
             <span>Mistake Lost Margin</span>
             <AlertOctagon className="w-5 h-5 text-orange-500" />
@@ -193,7 +193,7 @@ export default function MistakesView({ trades }) {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-5 shadow-md dark:shadow-lg relative overflow-hidden flex flex-col justify-between">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-5 shadow-md dark:shadow-lg relative overflow-hidden flex flex-col justify-between">
           <div className="flex justify-between items-center text-slate-500 dark:text-gray-405 text-xs font-bold uppercase tracking-wider mb-2">
             <span>Avg Error Trade Loss</span>
             <TrendingUp className="w-5 h-5 text-yellow-500" />
@@ -206,7 +206,7 @@ export default function MistakesView({ trades }) {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-5 shadow-md dark:shadow-lg relative overflow-hidden flex flex-col justify-between">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-5 shadow-md dark:shadow-lg relative overflow-hidden flex flex-col justify-between">
           <div className="flex justify-between items-center text-slate-500 dark:text-gray-405 text-xs font-bold uppercase tracking-wider mb-2">
             <span>Avg Clean PnL</span>
             <Award className="w-5 h-5 text-emerald-500" />
@@ -227,7 +227,7 @@ export default function MistakesView({ trades }) {
         {
     /* Card 1: Behavior Frequency */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4">
           <div>
             <h3 className="text-sm font-bold text-slate-800 dark:text-white tracking-wide uppercase font-mono">🚫 Mistake Frequency Analysis</h3>
             <p className="text-[10px] text-slate-400 dark:text-gray-500 mt-1">Categorized tracking of behavioral/psychological mistakes</p>
@@ -274,7 +274,7 @@ export default function MistakesView({ trades }) {
         {
     /* Card 2: Confluence Alignment Graph */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4">
           <div>
             <h3 className="text-sm font-bold text-slate-800 dark:text-white tracking-wide uppercase font-mono">📈 Confluence Alignment vs. Win Rate</h3>
             <p className="text-[10px] text-slate-400 dark:text-gray-500 mt-1">Correlating your Confluence score segments with winning probabilities</p>
@@ -322,7 +322,7 @@ export default function MistakesView({ trades }) {
         {
     /* Card 3: Trade Quality Analytics */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4">
           <div>
             <h3 className="text-sm font-bold text-slate-800 dark:text-white tracking-wide uppercase font-mono">🎖️ Trade Quality Analytics</h3>
             <p className="text-[10px] text-slate-400 dark:text-gray-500 mt-1">Average PnL by setup quality bracket (A+ down to D)</p>
@@ -379,7 +379,7 @@ export default function MistakesView({ trades }) {
         {
     /* Card 4: R/R Efficiency Tracking */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4">
           <div className="flex justify-between items-center">
             <div>
               <h3 className="text-sm font-bold text-slate-800 dark:text-white tracking-wide uppercase font-mono">🎯 Planned vs. Actual R/R</h3>
@@ -443,7 +443,7 @@ export default function MistakesView({ trades }) {
         {
     /* Setup Type Leaderboard */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4 lg:col-span-1 flex flex-col justify-between">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4 lg:col-span-1 flex flex-col justify-between">
           <div>
             <h3 className="text-sm font-bold text-slate-800 dark:text-white tracking-wide uppercase font-mono">🏆 Setup Leaderboard</h3>
             <p className="text-[10px] text-slate-400 dark:text-gray-500 mt-1">Ranking of registered setups by net profit accumulation</p>
@@ -467,7 +467,7 @@ export default function MistakesView({ trades }) {
         {
     /* Heatmaps (NY/LONDON / Days) */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4 lg:col-span-2 flex flex-col justify-between">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4 lg:col-span-2 flex flex-col justify-between">
           <div>
             <h3 className="text-sm font-bold text-slate-800 dark:text-white tracking-wide uppercase font-mono">⌛ Periodic Market Heatmaps</h3>
             <p className="text-[10px] text-slate-400 dark:text-gray-500 mt-1">Highlighting top-performing trading windows & days of the week</p>

@@ -71,7 +71,7 @@ export default function FeesAnalytics({ showToast, trades }) {
         {
     /* Total Fees */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-md dark:shadow-lg flex items-center space-x-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-md dark:shadow-lg flex items-center space-x-4">
           <div className="p-3 bg-red-50 text-red-650 border border-red-100 dark:bg-red-950/30 dark:text-red-400 dark:border-red-900/40 rounded-xl">
             <Coins className="w-6 h-6" />
           </div>
@@ -86,7 +86,7 @@ export default function FeesAnalytics({ showToast, trades }) {
         {
     /* Avg Fee */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-md dark:shadow-lg flex items-center space-x-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-md dark:shadow-lg flex items-center space-x-4">
           <div className="p-3 bg-blue-50 text-blue-605 border border-blue-100 dark:bg-blue-950/30 dark:text-blue-400 dark:border-blue-900/40 rounded-xl">
             <Calculator className="w-6 h-6" />
           </div>
@@ -101,7 +101,7 @@ export default function FeesAnalytics({ showToast, trades }) {
         {
     /* Biggest Single Fee */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-md dark:shadow-lg flex items-center space-x-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-md dark:shadow-lg flex items-center space-x-4">
           <div className="p-3 bg-purple-50 text-purple-605 border border-purple-100 dark:bg-purple-950/30 dark:text-purple-400 dark:border-purple-900/40 rounded-xl">
             <Scale className="w-6 h-6" />
           </div>
@@ -116,7 +116,7 @@ export default function FeesAnalytics({ showToast, trades }) {
         {
     /* Fees % of Gross PnL */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-md dark:shadow-lg flex items-center space-x-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-md dark:shadow-lg flex items-center space-x-4">
           <div className="p-3 bg-yellow-50 text-yellow-605 border border-yellow-105 dark:bg-yellow-950/30 dark:text-yellow-500 dark:border-yellow-900/40 rounded-xl">
             <Percent className="w-6 h-6" />
           </div>
@@ -137,7 +137,7 @@ export default function FeesAnalytics({ showToast, trades }) {
         {
     /* Card 1: Turns Wins into Losses */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-orange-200 dark:border-orange-900/20 bg-gradient-to-br from-white to-orange-50/20 dark:from-[#1a1a1a] dark:to-orange-950/[0.05] p-5 rounded-2xl flex flex-col justify-between shadow-xl">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-orange-200 dark:border-orange-900/20 bg-gradient-to-br from-white to-orange-50/20 dark:from-[#1a1a1a] dark:to-orange-950/[0.05] p-5 rounded-2xl flex flex-col justify-between shadow-xl">
           <div className="flex items-center space-x-2 text-orange-600 dark:text-orange-400 font-bold text-xs uppercase tracking-wide">
             <AlertTriangle className="w-5 h-5 text-orange-555" />
             <span>Broker Fee Drag Impact</span>
@@ -155,7 +155,7 @@ export default function FeesAnalytics({ showToast, trades }) {
         {
     /* Card 2: Lost revenue absolute */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-red-200 dark:border-red-900/20 bg-gradient-to-br from-white to-red-50/20 dark:from-[#1a1a1a] dark:to-red-950/[0.05] p-5 rounded-2xl flex flex-col justify-between shadow-xl">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-red-200 dark:border-red-900/20 bg-gradient-to-br from-white to-red-50/20 dark:from-[#1a1a1a] dark:to-red-950/[0.05] p-5 rounded-2xl flex flex-col justify-between shadow-xl">
           <div className="flex items-center space-x-2 text-red-600 dark:text-red-400 font-bold text-xs uppercase tracking-wide">
             <Sparkles className="w-5 h-5 text-red-555 animate-pulse" />
             <span>Wasted Capital Stream</span>
@@ -173,7 +173,7 @@ export default function FeesAnalytics({ showToast, trades }) {
         {
     /* Card 3: Most expensive trading day */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-purple-250 dark:border-purple-900/20 bg-gradient-to-br from-white to-purple-50/25 dark:from-[#1a1a1a] dark:to-transparent p-5 rounded-2xl flex flex-col justify-between shadow-xl">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-purple-250 dark:border-purple-900/20 bg-gradient-to-br from-white to-purple-50/25 dark:from-[#1a1a1a] dark:to-transparent p-5 rounded-2xl flex flex-col justify-between shadow-xl">
           <div className="flex items-center space-x-2 text-purple-650 dark:text-purple-400 font-bold text-xs uppercase tracking-wide">
             <TrendingUp className="w-5 h-5 text-purple-555" />
             <span>Heavy Slippage Outflow Day</span>
@@ -202,7 +202,7 @@ export default function FeesAnalytics({ showToast, trades }) {
         {
     /* Cumulative Fees Chart */
   }
-        <div className="lg:col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-xl space-y-3">
+        <div className="lg:col-span-1 bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-xl space-y-3">
           <h3 className="text-xs font-bold text-[#0f172a] dark:text-white uppercase tracking-wider">Cumulative Fees (Absolute Drag)</h3>
           <div className="h-60 w-full text-xs">
             {feesData.cumulativeFees.length === 0 ? <div className="flex h-full items-center justify-center text-slate-400 dark:text-gray-600">No fee logs available</div> : <ResponsiveContainer width="100%" height="100%">
@@ -242,7 +242,7 @@ export default function FeesAnalytics({ showToast, trades }) {
         {
     /* Daily Fees Bar Chart */
   }
-        <div className="lg:col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-xl space-y-3">
+        <div className="lg:col-span-1 bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-xl space-y-3">
           <h3 className="text-xs font-bold text-[#0f172a] dark:text-white uppercase tracking-wider">Daily Fees Outflow</h3>
           <div className="h-60 w-full text-xs">
             {feesData.dailyFees.length === 0 ? <div className="flex h-full items-center justify-center text-slate-400 dark:text-gray-600">No fee logs available</div> : <ResponsiveContainer width="100%" height="100%">
@@ -286,7 +286,7 @@ export default function FeesAnalytics({ showToast, trades }) {
         {
     /* Fees by Contract Horizontal Chart */
   }
-        <div className="lg:col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-xl space-y-3">
+        <div className="lg:col-span-1 bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-xl space-y-3">
           <h3 className="text-xs font-bold text-[#0f172a] dark:text-white uppercase tracking-wider">Fees by Trading Instrument</h3>
           <div className="h-60 w-full text-xs">
             {feesData.feesByContract.length === 0 ? <div className="flex h-full items-center justify-center text-slate-400 dark:text-gray-600">No fee logs available</div> : <ResponsiveContainer width="100%" height="100%">
@@ -332,8 +332,8 @@ export default function FeesAnalytics({ showToast, trades }) {
       {
     /* Fees Breakdown Datagrid Table */
   }
-      <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl overflow-hidden shadow-xl space-y-4">
-        <div className="p-5 border-b border-slate-100 dark:border-[#2a2a2a]">
+      <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl overflow-hidden shadow-xl space-y-4">
+        <div className="p-5 border-b border-slate-100 dark:border-violet-500/15">
           <h3 className="text-sm font-bold text-[#0f172a] dark:text-white uppercase tracking-wider">Brokerage Commissions Ledger</h3>
           <p className="text-xs text-slate-500 dark:text-gray-400 mt-1">Granular breakdown showing the cost percentage of fees against gross trade outcomes.</p>
         </div>
@@ -341,7 +341,7 @@ export default function FeesAnalytics({ showToast, trades }) {
         <div className="overflow-x-auto select-none">
           <table className="w-full text-left border-collapse min-w-[800px]">
             <thead>
-              <tr className="bg-slate-50 dark:bg-[#121212] border-b border-slate-200 dark:border-[#2a2a2a] text-slate-500 dark:text-gray-400 text-xs font-semibold uppercase tracking-wider">
+              <tr className="bg-slate-50 dark:bg-[#121212] border-b border-slate-200 dark:border-violet-500/15 text-slate-500 dark:text-gray-400 text-xs font-semibold uppercase tracking-wider">
                 <th className="py-3 px-5">Date</th>
                 <th className="py-3 px-4">Pair</th>
                 <th className="py-3 px-4 text-center">Direction</th>
@@ -431,7 +431,7 @@ export default function FeesAnalytics({ showToast, trades }) {
         {
     /* Pagination in fees ledger */
   }
-        {totalPages > 1 && <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-[#121212] border-t border-slate-100 dark:border-[#2a2a2a] text-xs text-slate-500 dark:text-gray-400">
+        {totalPages > 1 && <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-[#121212] border-t border-slate-100 dark:border-violet-500/15 text-xs text-slate-500 dark:text-gray-400">
             <div>
               Showing page <span className="font-bold text-[#0f172a] dark:text-white">{currentPage}</span> of{" "}
               <span className="font-bold text-[#0f172a] dark:text-white">{totalPages}</span> sheets

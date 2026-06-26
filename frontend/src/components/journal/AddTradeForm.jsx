@@ -393,19 +393,19 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
   const outcomeColors = {
     Win: {
       active: "bg-green-600 text-white border-green-500 shadow-lg shadow-green-600/20",
-      inactive: "bg-slate-50 dark:bg-[#222] text-[#475569] dark:text-gray-400 border-slate-200 dark:border-transparent hover:bg-slate-100 dark:hover:bg-[#2e2e2e]"
+      inactive: "bg-slate-50 dark:bg-[#151225]/45 text-[#475569] dark:text-gray-400 border-slate-200 dark:border-violet-500/15 hover:bg-slate-100 dark:hover:bg-violet-500/10"
     },
     Loss: {
       active: "bg-red-600 text-white border-red-500 shadow-lg shadow-red-600/20",
-      inactive: "bg-slate-50 dark:bg-[#222] text-[#475569] dark:text-gray-400 border-slate-200 dark:border-transparent hover:bg-slate-100 dark:hover:bg-[#2e2e2e]"
+      inactive: "bg-slate-50 dark:bg-[#151225]/45 text-[#475569] dark:text-gray-400 border-slate-200 dark:border-violet-500/15 hover:bg-slate-100 dark:hover:bg-violet-500/10"
     },
     Breakeven: {
       active: "bg-slate-600 dark:bg-neutral-600 text-white border-slate-500 dark:border-neutral-500 shadow-lg shadow-slate-600/20 dark:shadow-neutral-600/20",
-      inactive: "bg-slate-50 dark:bg-[#222] text-[#475569] dark:text-gray-400 border-slate-200 dark:border-transparent hover:bg-slate-100 dark:hover:bg-[#2e2e2e]"
+      inactive: "bg-slate-50 dark:bg-[#151225]/45 text-[#475569] dark:text-gray-400 border-slate-200 dark:border-violet-500/15 hover:bg-slate-100 dark:hover:bg-violet-500/10"
     },
     Running: {
       active: "bg-blue-600 text-white border-blue-500 shadow-lg shadow-blue-600/20",
-      inactive: "bg-slate-50 dark:bg-[#222] text-[#475569] dark:text-gray-400 border-slate-200 dark:border-transparent hover:bg-slate-100 dark:hover:bg-[#2e2e2e]"
+      inactive: "bg-slate-50 dark:bg-[#151225]/45 text-[#475569] dark:text-gray-400 border-slate-200 dark:border-violet-500/15 hover:bg-slate-100 dark:hover:bg-violet-500/10"
     }
   };
   return <div className="max-w-4xl mx-auto py-4 px-2">
@@ -428,7 +428,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
           </button>
         </div>}
 
-      <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200 dark:border-[#2a2a2a]">
+      <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200 dark:border-violet-500/15">
         <div>
           <h2 className="text-2xl font-bold tracking-tight text-[#0f172a] dark:text-white">
             {isEdit ? "\u270F\uFE0F Edit Trading Log" : "\u2795 Log New Trade"}
@@ -440,14 +440,14 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
         {onCancel && <button
     onClick={onCancel}
     type="button"
-    className="px-4 py-2 bg-white hover:bg-slate-50 dark:bg-[#222] dark:hover:bg-[#2e2e2e] text-slate-700 hover:text-black dark:text-gray-300 border border-slate-200 dark:border-[#333] dark:hover:text-white rounded-lg text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-100"
+    className="px-4 py-2 bg-white hover:bg-slate-50 dark:bg-[#151225]/45 dark:hover:bg-violet-500/10 text-slate-700 hover:text-black dark:text-gray-300 border border-slate-200 dark:border-violet-500/15 dark:hover:text-white rounded-lg text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-100"
   >
             Cancel
           </button>}
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-6 shadow-xl space-y-6">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-6 shadow-xl space-y-6 backdrop-blur-sm">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {
     /* Pair */
@@ -463,7 +463,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     value={pair}
     onChange={(e) => setPair(e.target.value.toUpperCase())}
     placeholder="BTCUSD"
-    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] focus:border-blue-500 rounded-lg text-[#0f172a] dark:text-white font-mono placeholder-slate-400 dark:placeholder-gray-600 outline-none transition-all"
+    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 focus:border-violet-500 rounded-lg text-[#0f172a] dark:text-white font-mono placeholder-slate-400 dark:placeholder-gray-600 outline-none transition-all"
   />
             </div>
 
@@ -480,7 +480,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     required
     value={date}
     onChange={(e) => setDate(e.target.value)}
-    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] focus:border-blue-500 rounded-lg text-[#0f172a] dark:text-white outline-none transition-all"
+    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 focus:border-violet-500 rounded-lg text-[#0f172a] dark:text-white outline-none transition-all"
   />
             </div>
 
@@ -491,12 +491,12 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-2">
                 Market
               </label>
-              <div className="grid grid-cols-2 bg-slate-100 dark:bg-[#222] border border-slate-250 dark:border-[#333] p-1 rounded-lg">
+              <div className="grid grid-cols-2 bg-slate-100 dark:bg-[#151225]/45 border border-slate-250 dark:border-violet-500/15 p-1 rounded-lg">
                 {MARKETS.map((m) => <button
     key={m}
     type="button"
     onClick={() => setMarket(m)}
-    className={`py-1.5 rounded-md text-xs font-semibold transition-all ${market === m ? "bg-white dark:bg-[#333] text-[#0f172a] dark:text-white shadow-sm" : "text-slate-500 hover:text-slate-800 dark:text-gray-500 dark:hover:text-gray-300"}`}
+    className={`py-1.5 rounded-md text-xs font-semibold transition-all ${market === m ? "bg-white dark:bg-violet-500/20 text-[#0f172a] dark:text-white shadow-sm" : "text-slate-500 hover:text-slate-800 dark:text-gray-500 dark:hover:text-gray-300"}`}
   >
                     {m}
                   </button>)}
@@ -516,14 +516,14 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
                 <button
     type="button"
     onClick={() => setDirection("Long")}
-    className={`py-2 px-4 rounded-lg font-bold text-sm border transition-all ${direction === "Long" ? "bg-green-50 dark:bg-green-600/10 text-green-600 dark:text-green-400 border-green-550 shadow-md shadow-green-500/5" : "bg-slate-50 dark:bg-[#222] text-slate-500 dark:text-gray-500 border-slate-200 dark:border-transparent hover:bg-slate-100 dark:hover:bg-[#252525] hover:text-slate-700 dark:hover:text-gray-400"}`}
+    className={`py-2 px-4 rounded-lg font-bold text-sm border transition-all ${direction === "Long" ? "bg-green-50 dark:bg-green-600/10 text-green-600 dark:text-green-400 border-green-550 shadow-md shadow-green-500/5" : "bg-slate-50 dark:bg-[#151225]/45 text-slate-500 dark:text-gray-500 border-slate-200 dark:border-violet-500/15 hover:bg-slate-100 dark:hover:bg-violet-500/10 hover:text-slate-700 dark:hover:text-gray-400"}`}
   >
                   Buy / Long
                 </button>
                 <button
     type="button"
     onClick={() => setDirection("Short")}
-    className={`py-2 px-4 rounded-lg font-bold text-sm border transition-all ${direction === "Short" ? "bg-red-50 dark:bg-red-600/10 text-red-600 dark:text-red-400 border-red-500 shadow-md shadow-red-500/5" : "bg-slate-50 dark:bg-[#222] text-slate-500 dark:text-gray-500 border-slate-200 dark:border-transparent hover:bg-slate-100 dark:hover:bg-[#252525] hover:text-slate-700 dark:hover:text-gray-400"}`}
+    className={`py-2 px-4 rounded-lg font-bold text-sm border transition-all ${direction === "Short" ? "bg-red-50 dark:bg-red-600/10 text-red-600 dark:text-red-400 border-red-500 shadow-md shadow-red-500/5" : "bg-slate-50 dark:bg-[#151225]/45 text-slate-500 dark:text-gray-500 border-slate-200 dark:border-violet-500/15 hover:bg-slate-100 dark:hover:bg-violet-500/10 hover:text-slate-700 dark:hover:text-gray-400"}`}
   >
                   Sell / Short
                 </button>
@@ -541,7 +541,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     id="session"
     value={session}
     onChange={(e) => setSession(e.target.value)}
-    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] focus:border-blue-500 rounded-lg text-[#0f172a] dark:text-white outline-none transition-all cursor-pointer"
+    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 focus:border-violet-500 rounded-lg text-[#0f172a] dark:text-white outline-none transition-all cursor-pointer"
   >
                 <option value="">Select Session...</option>
                 {SESSIONS.map((s) => <option key={s} value={s}>{s}</option>)}
@@ -559,7 +559,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     id="setupType"
     value={setupType}
     onChange={(e) => setSetupType(e.target.value)}
-    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] focus:border-blue-500 rounded-lg text-[#0f172a] dark:text-white outline-none transition-all cursor-pointer"
+    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 focus:border-violet-500 rounded-lg text-[#0f172a] dark:text-white outline-none transition-all cursor-pointer"
   >
                 <option value="">Select Setup...</option>
                 {SETUP_TYPES.map((st) => <option key={st} value={st}>{st}</option>)}
@@ -583,7 +583,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
                     <button
       type="button"
       onClick={() => toggleConfluence(c)}
-      className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${isSelected ? "bg-green-50 dark:bg-green-500/15 text-green-600 dark:text-green-400 border-green-500 shadow-sm" : "bg-slate-50 dark:bg-[#222] text-slate-600 dark:text-gray-400 border-slate-200 dark:border-[#333] hover:bg-slate-100 dark:hover:bg-[#252525]"}`}
+      className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${isSelected ? "bg-green-50 dark:bg-green-500/15 text-green-600 dark:text-green-400 border-green-500 shadow-sm" : "bg-slate-50 dark:bg-[#151225]/45 text-slate-600 dark:text-gray-400 border-slate-200 dark:border-violet-500/15 hover:bg-slate-100 dark:hover:bg-violet-500/10"}`}
     >
                       {c}
                     </button>
@@ -609,12 +609,12 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     placeholder="e.g. 200 EMA Retest"
     value={newConfluenceText}
     onChange={(e) => setNewConfluenceText(e.target.value)}
-    className="flex-1 min-w-[150px] px-3 py-1.5 bg-white dark:bg-[#222] border border-slate-200 dark:border-[#333] rounded-lg text-xs text-[#0f172a] dark:text-white outline-none focus:border-blue-500 placeholder-slate-450 dark:placeholder-gray-550"
+    className="flex-1 min-w-[150px] px-3 py-1.5 bg-white dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-xs text-[#0f172a] dark:text-white outline-none focus:border-violet-500 placeholder-slate-450 dark:placeholder-gray-550"
   />
               <select
     value={newConfluenceWeight}
     onChange={(e) => setNewConfluenceWeight(e.target.value)}
-    className="px-2 py-1.5 bg-white dark:bg-[#222] border border-slate-200 dark:border-[#333] rounded-lg text-xs text-[#0f172a] dark:text-white outline-none focus:border-blue-500 cursor-pointer font-sans"
+    className="px-2 py-1.5 bg-white dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-xs text-[#0f172a] dark:text-white outline-none focus:border-violet-500 cursor-pointer font-sans"
   >
                 <option value="1">Weight 1 (Minor)</option>
                 <option value="2">Weight 2 (Normal)</option>
@@ -666,7 +666,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
                     <button
       type="button"
       onClick={() => toggleMistake(m)}
-      className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${isSelected ? "bg-red-50 dark:bg-red-500/15 text-red-600 dark:text-red-400 border-red-500 shadow-sm" : "bg-slate-50 dark:bg-[#222] text-slate-600 dark:text-gray-400 border-slate-200 dark:border-[#333] hover:bg-slate-100 dark:hover:bg-[#252525]"}`}
+      className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${isSelected ? "bg-red-50 dark:bg-red-500/15 text-red-600 dark:text-red-400 border-red-500 shadow-sm" : "bg-slate-50 dark:bg-[#151225]/45 text-slate-600 dark:text-gray-400 border-slate-200 dark:border-violet-500/15 hover:bg-slate-100 dark:hover:bg-violet-500/10"}`}
     >
                       {m}
                     </button>
@@ -692,7 +692,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     placeholder="e.g. Revenge Traded"
     value={newMistakeText}
     onChange={(e) => setNewMistakeText(e.target.value)}
-    className="flex-1 min-w-[200px] px-3 py-1.5 bg-white dark:bg-[#222] border border-slate-200 dark:border-[#333] rounded-lg text-xs text-[#0f172a] dark:text-white outline-none focus:border-blue-500 placeholder-slate-450 dark:placeholder-gray-550"
+    className="flex-1 min-w-[200px] px-3 py-1.5 bg-white dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-xs text-[#0f172a] dark:text-white outline-none focus:border-violet-500 placeholder-slate-450 dark:placeholder-gray-550"
   />
               <button
     type="button"
@@ -718,7 +718,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     step="any"
     value={pnl}
     onChange={(e) => setPnl(e.target.value)}
-    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] focus:border-blue-500 rounded-lg text-[#0f172a] dark:text-white font-mono outline-none transition-all"
+    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 focus:border-violet-500 rounded-lg text-[#0f172a] dark:text-white font-mono outline-none transition-all"
   />
             </div>
 
@@ -735,7 +735,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     step="any"
     value={fee}
     onChange={(e) => setFee(e.target.value)}
-    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] focus:border-blue-500 rounded-lg text-[#0f172a] dark:text-white font-mono outline-none transition-all"
+    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 focus:border-violet-500 rounded-lg text-[#0f172a] dark:text-white font-mono outline-none transition-all"
   />
             </div>
 
@@ -748,7 +748,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
               </label>
               <div
     id="netPnlDisplay"
-    className={`w-full px-4 py-2.5 bg-slate-100 dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#2a2a2a] rounded-lg font-mono font-black text-sm ${netPnl > 0 ? "text-green-600 dark:text-green-500" : netPnl < 0 ? "text-red-600 dark:text-red-500" : "text-slate-500 dark:text-gray-400"}`}
+    className={`w-full px-4 py-2.5 bg-slate-100 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg font-mono font-black text-sm ${netPnl > 0 ? "text-green-600 dark:text-green-500" : netPnl < 0 ? "text-red-600 dark:text-red-500" : "text-slate-500 dark:text-gray-400"}`}
   >
                 {netPnl >= 0 ? `+${netPnl.toFixed(2)}` : netPnl.toFixed(2)} USD
               </div>
@@ -767,7 +767,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     step="any"
     value={netDaily}
     onChange={(e) => setNetDaily(e.target.value)}
-    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] focus:border-blue-500 rounded-lg text-[#0f172a] dark:text-white font-mono outline-none transition-all"
+    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 focus:border-violet-500 rounded-lg text-[#0f172a] dark:text-white font-mono outline-none transition-all"
   />
             </div>
           </div>
@@ -798,7 +798,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
           {
     /* SECTION 2 - NEW COLUMNS IN FORM */
   }
-          <div className="border-t border-slate-100 dark:border-[#2a2a2a] pt-6 space-y-6">
+          <div className="border-t border-slate-100 dark:border-violet-500/15 pt-6 space-y-6">
             <h3 className="text-sm font-bold tracking-wider font-mono text-slate-500 dark:text-gray-400 uppercase">
               Advanced Metrics & Trade Quality Custom Fields
             </h3>
@@ -821,7 +821,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     placeholder="Type quality, e.g. A+ -, A-, D..."
     value={tradeQuality}
     onChange={(e) => setTradeQuality(e.target.value)}
-    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] focus:border-blue-500 rounded-lg text-[#0f172a] dark:text-white font-mono outline-none transition-all text-sm font-bold"
+    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 focus:border-violet-500 rounded-lg text-[#0f172a] dark:text-white font-mono outline-none transition-all text-sm font-bold"
   />
 
                 {
@@ -839,7 +839,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     };
     const defaultActiveCol = "bg-blue-600 text-white border-blue-500 shadow-sm shadow-blue-600/10";
     const activeColor = colorMapping[preset] || defaultActiveCol;
-    const finalColor = isActive ? `${activeColor}` : "bg-slate-50 dark:bg-[#222] text-slate-500 dark:text-gray-400 border-slate-200 dark:border-[#333] hover:bg-slate-100 dark:hover:bg-[#2a2a2a] hover:text-[#0f172a] dark:text-white";
+    const finalColor = isActive ? `${activeColor}` : "bg-slate-50 dark:bg-[#151225]/45 text-slate-500 dark:text-gray-400 border-slate-200 dark:border-violet-500/15 hover:bg-slate-100 dark:hover:bg-violet-500/10 hover:text-[#0f172a] dark:text-white";
     const isPresetDefault = ["A+", "A", "B", "C"].includes(preset);
     return <span key={preset} className="inline-flex items-center gap-1">
                         <button
@@ -871,7 +871,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     placeholder="e.g. A-"
     value={newTradeQualityPreset}
     onChange={(e) => setNewTradeQualityPreset(e.target.value)}
-    className="flex-1 px-3 py-1 bg-white dark:bg-[#222] border border-slate-200 dark:border-[#333] rounded-lg text-xs text-[#0f172a] dark:text-white outline-none focus:border-blue-500 placeholder-slate-450 dark:placeholder-gray-550"
+    className="flex-1 px-3 py-1 bg-white dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-xs text-[#0f172a] dark:text-white outline-none focus:border-violet-500 placeholder-slate-450 dark:placeholder-gray-550"
   />
                   <button
     type="button"
@@ -904,7 +904,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     placeholder="https://tradingview.com/x/..."
     value={screenshotUrl}
     onChange={(e) => setScreenshotUrl(e.target.value)}
-    className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] focus:border-blue-500 rounded-lg text-[#0f172a] dark:text-white font-mono placeholder-slate-400 dark:placeholder-gray-600 outline-none transition-all text-sm"
+    className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 focus:border-violet-500 rounded-lg text-[#0f172a] dark:text-white font-mono placeholder-slate-400 dark:placeholder-gray-600 outline-none transition-all text-sm"
   />
                 <button
     type="button"
@@ -916,7 +916,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
         showToast("Please enter a screenshot URL first.", "error");
       }
     }}
-    className="px-4 py-2.5 bg-slate-50 hover:bg-slate-100 dark:bg-[#2a2a2a] dark:hover:bg-[#353535] text-slate-750 hover:text-[#0f172a] dark:text-white border border-slate-200 dark:border-[#3c3c3c] rounded-lg text-sm transition-all outline-none cursor-pointer"
+    className="px-4 py-2.5 bg-slate-50 hover:bg-slate-100 dark:bg-[#151225]/45 dark:hover:bg-violet-500/10 text-slate-750 hover:text-[#0f172a] dark:text-white border border-slate-200 dark:border-violet-500/15 rounded-lg text-sm transition-all outline-none cursor-pointer"
   >
                   Open
                 </button>
@@ -936,7 +936,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     value={notes}
     onChange={(e) => setNotes(e.target.value)}
     placeholder="Log confluences detail, emotions experienced, mistakes made, or why you closed the trade early..."
-    className="w-full px-4 py-3 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] focus:border-blue-500 rounded-lg text-[#0f172a] dark:text-white placeholder-slate-400 dark:placeholder-gray-600 outline-none transition-all text-sm resize-y"
+    className="w-full px-4 py-3 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 focus:border-violet-500 rounded-lg text-[#0f172a] dark:text-white placeholder-slate-400 dark:placeholder-gray-600 outline-none transition-all text-sm resize-y"
   />
             </div>
           </div>
@@ -949,7 +949,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
           {onCancel && <button
     onClick={onCancel}
     type="button"
-    className="px-6 py-3 bg-slate-50 hover:bg-slate-100 dark:bg-neutral-900 border border-slate-200 dark:border-[#333] dark:hover:bg-neutral-800 text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white rounded-xl text-sm font-semibold transition-all cursor-pointer"
+    className="px-6 py-3 bg-slate-50 hover:bg-slate-100 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 dark:hover:bg-violet-500/10 text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white rounded-xl text-sm font-semibold transition-all cursor-pointer"
   >
               Cancel
             </button>}
@@ -968,7 +968,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     /* Rules compliance checklist modal */
   }
       {isChecklistOpen && <div className="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] max-w-lg w-full rounded-2xl p-6 shadow-2xl space-y-6 animate-scale-in">
+          <div className="bg-white dark:bg-[#0e0b18]/90 border border-[#e2e8f0] dark:border-violet-500/15 max-w-lg w-full rounded-2xl p-6 shadow-2xl space-y-6 animate-scale-in backdrop-blur-md">
             <div className="space-y-1">
               <h3 className="text-sm font-bold text-[#0f172a] dark:text-white flex items-center gap-2">
                 🛡️ Operating Rules Checklist
@@ -979,20 +979,20 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
             <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
               {activeRules.map((r) => {
     const answer = ruleChecksMap[r.id] ?? true;
-    return <div key={r.id} className="p-3 bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#333] rounded-xl flex items-center justify-between gap-4">
+    return <div key={r.id} className="p-3 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-xl flex items-center justify-between gap-4">
                     <p className="text-xs text-slate-800 dark:text-gray-200 font-sans leading-relaxed">{r.rule_text}</p>
                     <div className="flex gap-1.5 shrink-0">
                       <button
       type="button"
       onClick={() => setRuleChecksMap((prev) => ({ ...prev, [r.id]: true }))}
-      className={`px-2.5 py-1 rounded-lg text-[10px] font-black tracking-normal transition-all border cursor-pointer ${answer ? "bg-green-50 text-green-700 border-green-500/40 dark:bg-green-500/10 dark:text-green-400 dark:border-green-500/35 font-bold" : "text-slate-400 dark:text-gray-500 border-slate-200 dark:border-[#222] opacity-50"}`}
+      className={`px-2.5 py-1 rounded-lg text-[10px] font-black tracking-normal transition-all border cursor-pointer ${answer ? "bg-green-50 text-green-700 border-green-500/40 dark:bg-green-500/10 dark:text-green-400 dark:border-green-500/35 font-bold" : "text-slate-400 dark:text-gray-500 border-slate-200 dark:border-violet-500/15 opacity-50"}`}
     >
                         Followed
                       </button>
                       <button
       type="button"
       onClick={() => setRuleChecksMap((prev) => ({ ...prev, [r.id]: false }))}
-      className={`px-2.5 py-1 rounded-lg text-[10px] font-black tracking-normal transition-all border cursor-pointer ${!answer ? "bg-red-50 text-red-700 border-red-500/40 dark:bg-red-500/10 dark:text-red-100 dark:border-red-500/35 font-bold" : "text-slate-400 dark:text-gray-500 border-slate-200 dark:border-[#222] opacity-50"}`}
+      className={`px-2.5 py-1 rounded-lg text-[10px] font-black tracking-normal transition-all border cursor-pointer ${!answer ? "bg-red-50 text-red-700 border-red-500/40 dark:bg-red-500/10 dark:text-red-100 dark:border-red-500/35 font-bold" : "text-slate-400 dark:text-gray-500 border-slate-200 dark:border-violet-500/15 opacity-50"}`}
     >
                         Broken
                       </button>
@@ -1001,14 +1001,14 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
   })}
             </div>
 
-            <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-[#2a2a2a]">
+            <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-violet-500/15">
               <button
     type="button"
     onClick={() => {
       setIsChecklistOpen(false);
       setPendingPayload(null);
     }}
-    className="px-4 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-[#2a2a2a] dark:hover:bg-[#323232] border border-slate-200 dark:border-transparent rounded-xl text-xs text-slate-700 dark:text-gray-300 font-semibold cursor-pointer"
+    className="px-4 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-[#151225]/45 dark:hover:bg-violet-500/10 border border-slate-200 dark:border-violet-500/15 rounded-xl text-xs text-slate-700 dark:text-gray-300 font-semibold cursor-pointer"
   >
                 Go Back
               </button>

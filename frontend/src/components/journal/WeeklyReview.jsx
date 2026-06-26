@@ -69,7 +69,7 @@ export default function WeeklyReview({ trades, showToast }) {
       {
     /* Header and week controller */
   }
-      <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-md dark:shadow-lg gap-4">
+      <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-md dark:shadow-lg gap-4">
         <div>
           <h2 className="text-xl font-bold text-slate-800 dark:text-white mt-2">Weekly Performance Review</h2>
           <p className="text-xs text-slate-500 dark:text-gray-500 font-mono mt-1">Review outcomes, evaluate week rules adherence, and capture core insights.</p>
@@ -106,8 +106,8 @@ export default function WeeklyReview({ trades, showToast }) {
         {
     /* Weekly stats summary */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4">
-          <h3 className="text-sm font-bold tracking-wide uppercase font-mono border-b border-slate-150 dark:border-[#222] pb-3 text-slate-800 dark:text-white flex items-center gap-1.5">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4">
+          <h3 className="text-sm font-bold tracking-wide uppercase font-mono border-b border-slate-150 dark:border-violet-500/15 pb-3 text-slate-800 dark:text-white flex items-center gap-1.5">
             <TrendingUp className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
             <span>Weekly Statistics</span>
           </h3>
@@ -150,8 +150,8 @@ export default function WeeklyReview({ trades, showToast }) {
         {
     /* Weekly Goal vs rules target correlation */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4">
-          <h3 className="text-sm font-bold tracking-wide uppercase font-mono border-b border-slate-150 dark:border-[#222] pb-3 text-slate-800 dark:text-white flex items-center gap-1.5">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4">
+          <h3 className="text-sm font-bold tracking-wide uppercase font-mono border-b border-slate-150 dark:border-violet-500/15 pb-3 text-slate-800 dark:text-white flex items-center gap-1.5">
             <Calendar className="w-4 h-4 text-blue-500 dark:text-blue-400" />
             <span>Weekly Goal Evaluation</span>
           </h3>
@@ -180,9 +180,9 @@ export default function WeeklyReview({ trades, showToast }) {
         {
     /* Weekly Journal Reflection logs inputs */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4 flex flex-col justify-between">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4 flex flex-col justify-between">
           <div className="space-y-4">
-            <h3 className="text-sm font-bold tracking-wide uppercase font-mono border-b border-slate-150 dark:border-[#222] pb-3 text-slate-800 dark:text-white flex items-center gap-1.5">
+            <h3 className="text-sm font-bold tracking-wide uppercase font-mono border-b border-slate-150 dark:border-violet-500/15 pb-3 text-slate-800 dark:text-white flex items-center gap-1.5">
               <Bookmark className="w-4 h-4 text-yellow-500 dark:text-yellow-400" />
               <span>Review Reflection Logs</span>
             </h3>

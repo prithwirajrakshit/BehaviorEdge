@@ -170,7 +170,7 @@ export default function RulesView({ trades, showToast }) {
       {
     /* Page Header */
   }
-      <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-md dark:shadow-lg gap-4">
+      <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-[#2a2a2a] p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-md dark:shadow-lg gap-4">
         <div>
           <h2 className="text-xl font-bold text-slate-800 dark:text-white mt-2">Compliance & Policy Administration</h2>
           <p className="text-xs text-slate-500 dark:text-gray-500 font-mono mt-1 font-bold">Formalize self-regulations, mindset policies, and process execution criteria.</p>
@@ -185,7 +185,7 @@ export default function RulesView({ trades, showToast }) {
         {
     /* Form panel */
   }
-        <div className="lg:col-span-5 bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-6 shadow-md dark:shadow-xl space-y-5">
+        <div className="lg:col-span-5 bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-6 shadow-md dark:shadow-xl space-y-5">
           <div className="flex items-center space-x-3 border-b border-slate-150 dark:border-[#2a2a2a] pb-3">
             <Scroll className="w-5 h-5 text-blue-500 dark:text-blue-400" />
             <div>
@@ -219,7 +219,7 @@ export default function RulesView({ trades, showToast }) {
               </select>
             </div>
 
-            <div className="flex items-center justify-between bg-slate-50 dark:bg-[#121212] border border-slate-150 dark:border-[#222] rounded-xl p-3">
+            <div className="flex items-center justify-between bg-slate-50 dark:bg-[#151225]/45 border border-slate-150 dark:border-violet-500/15 rounded-xl p-3">
               <div>
                 <p className="text-xs font-bold text-slate-800 dark:text-white">Active Rule Status</p>
                 <p className="text-[10px] text-slate-450 dark:text-gray-400 font-mono">Inactive rules will hide from checkout checklists</p>
@@ -255,7 +255,7 @@ export default function RulesView({ trades, showToast }) {
         {
     /* Directory layout */
   }
-        <div className="lg:col-span-7 bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-6 shadow-md dark:shadow-xl space-y-5">
+        <div className="lg:col-span-7 bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-6 shadow-md dark:shadow-xl space-y-5">
           <div className="border-b border-slate-150 dark:border-[#2a2a2a] pb-3 flex justify-between items-center">
             <div>
               <h3 className="font-bold text-slate-800 dark:text-white text-sm">Policy Book Checklist</h3>
@@ -275,7 +275,7 @@ export default function RulesView({ trades, showToast }) {
                     <div className="space-y-2">
                       {catRules.map((rule) => <div
       key={rule.id}
-      className={`p-3.5 rounded-xl border transition-all flex justify-between items-center ${rule.is_active === 1 ? "bg-slate-50 dark:bg-[#121212] border-slate-150 dark:border-[#222] hover:border-slate-205 dark:hover:border-[#333]" : "bg-slate-50/50 dark:bg-[#121212]/40 border-slate-200/50 dark:border-[#222]/50 opacity-60"}`}
+      className={`p-3.5 rounded-xl border transition-all flex justify-between items-center ${rule.is_active === 1 ? "bg-slate-50 dark:bg-[#151225]/45 border-slate-150 dark:border-violet-500/15 hover:border-slate-205 dark:hover:border-violet-500/25" : "bg-slate-50/50 dark:bg-[#151225]/25 border-slate-200/50 dark:border-violet-500/10 opacity-60"}`}
     >
                           <div className="space-y-2 max-w-[70%]">
                             <p className="text-xs text-slate-700 dark:text-gray-200 font-sans leading-relaxed font-bold">{rule.rule_text}</p>
@@ -298,13 +298,13 @@ export default function RulesView({ trades, showToast }) {
                             </button>
                             <button
       onClick={() => handleTriggerEdit(rule)}
-      className="p-1 hover:bg-slate-100 dark:hover:bg-[#222] text-slate-400 hover:text-slate-700 dark:text-gray-400 dark:hover:text-white rounded-lg transition cursor-pointer"
+      className="p-1 hover:bg-slate-100 dark:hover:bg-violet-500/10 text-slate-400 hover:text-slate-700 dark:text-gray-400 dark:hover:text-white rounded-lg transition cursor-pointer"
     >
                               <Edit className="w-3.5 h-3.5" />
                             </button>
                             <button
       onClick={() => handleDeleteRule(rule.id)}
-      className="p-1 hover:bg-red-50 dark:hover:bg-[#222] text-red-500 hover:bg-red-100 dark:hover:bg-red-950/20 rounded-lg transition cursor-pointer"
+      className="p-1 hover:bg-red-50 dark:hover:bg-red-950/20 text-red-500 hover:bg-red-100 rounded-lg transition cursor-pointer"
     >
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
@@ -325,7 +325,7 @@ export default function RulesView({ trades, showToast }) {
         {
     /* SECTION B: Rules Performance Table (cols 8/12) */
   }
-        <div className="lg:col-span-8 bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-6 shadow-md dark:shadow-xl space-y-4">
+        <div className="lg:col-span-8 bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-6 shadow-md dark:shadow-xl space-y-4">
           <div className="flex items-center justify-between border-b border-slate-150 dark:border-[#2a2a2a] pb-3">
             <div className="flex items-center gap-2">
               <Award className="w-4 h-4 text-blue-500 dark:text-blue-400" />
@@ -340,7 +340,7 @@ export default function RulesView({ trades, showToast }) {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs text-slate-700 dark:text-gray-400">
               <thead>
-                <tr className="border-b border-slate-150 dark:border-[#2a2a2a] font-mono uppercase tracking-wider text-[10px] text-slate-400 dark:text-gray-500">
+                <tr className="border-b border-slate-150 dark:border-violet-500/15 font-mono uppercase tracking-wider text-[10px] text-slate-400 dark:text-gray-500">
                   <th className="py-2.5">Rule text</th>
                   <th className="py-2.5">Category</th>
                   <th className="py-2.5 text-center">Checked / Broken</th>
@@ -349,7 +349,7 @@ export default function RulesView({ trades, showToast }) {
                   <th className="py-2.5 pl-4 text-center">Verdict</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-[#222] font-mono">
+              <tbody className="divide-y divide-slate-100 dark:divide-violet-500/10 font-mono">
                 {performanceRows.length > 0 ? performanceRows.map((row) => <tr key={row.id} className="hover:bg-slate-50 dark:hover:bg-[#1f1f1f] transition-all">
                       <td className="py-3 font-semibold text-slate-800 dark:text-white max-w-[200px] truncate" title={row.rule_text}>
                         {row.rule_text}
@@ -378,9 +378,9 @@ export default function RulesView({ trades, showToast }) {
         {
     /* SECTION C: Rules Compliance Chart (cols 4/12) */
   }
-        <div className="lg:col-span-4 bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-6 shadow-md dark:shadow-xl flex flex-col justify-between">
+        <div className="lg:col-span-4 bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-6 shadow-md dark:shadow-xl flex flex-col justify-between">
           <div>
-            <div className="flex items-center gap-2 border-b border-slate-150 dark:border-[#2a2a2a] pb-3 mb-4">
+            <div className="flex items-center gap-2 border-b border-slate-150 dark:border-violet-500/15 pb-3 mb-4">
               <Sliders className="w-4 h-4 text-red-500 dark:text-red-400" />
               <div>
                 <h3 className="font-bold text-slate-800 dark:text-white text-xs uppercase tracking-wide">Historical Leaks Trail</h3>
@@ -404,7 +404,7 @@ export default function RulesView({ trades, showToast }) {
                       </feMerge>
                     </filter>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="stroke-slate-100 dark:stroke-[#222]" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="stroke-slate-100 dark:stroke-violet-500/10" />
                   <XAxis dataKey="name" stroke="currentColor" className="text-slate-405 dark:text-gray-500" fontSize={10} tickLine={false} />
                   <YAxis stroke="currentColor" className="text-slate-405 dark:text-gray-500" fontSize={10} domain={[0, 100]} tickLine={false} />
                   <Tooltip
@@ -427,7 +427,7 @@ export default function RulesView({ trades, showToast }) {
             </div>
           </div>
 
-          <div className="bg-slate-50 dark:bg-[#121212] p-3 rounded-xl border border-slate-150 dark:border-[#222] text-[10px] text-slate-500 dark:text-gray-400 font-mono mt-4 leading-relaxed font-bold">
+          <div className="bg-slate-50 dark:bg-[#151225]/45 p-3 rounded-xl border border-slate-150 dark:border-violet-500/15 text-[10px] text-slate-500 dark:text-gray-400 font-mono mt-4 leading-relaxed font-bold">
             💡 <strong className="text-slate-750 dark:text-gray-300">Policy advice:</strong> A lower bars height demonstrates increasing compliance to rules across your trading sessions.
           </div>
         </div>

@@ -277,7 +277,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Total Net PnL */
   }
-        <div className="col-span-2 sm:col-span-2 lg:col-span-2 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-2 sm:col-span-2 lg:col-span-2 bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Total Net PnL</span>
             <Coins className="w-5 h-5 text-yellow-500" />
@@ -293,7 +293,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Win Rate % */
   }
-        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Win Rate</span>
             <Percent className="w-5 h-5 text-green-500" />
@@ -311,7 +311,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Total Trades */
   }
-        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Trades</span>
             <Activity className="w-5 h-5 text-blue-500" />
@@ -327,7 +327,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Profit Factor */
   }
-        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Prof. Factor</span>
             <TrendingUp className="w-5 h-5 text-purple-500" />
@@ -343,7 +343,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Average Win (USD) */
   }
-        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Avg Win</span>
             <TrendingUp className="w-5 h-5 text-green-400" />
@@ -359,7 +359,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Average Loss (USD) */
   }
-        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Avg Loss</span>
             <TrendingDown className="w-5 h-5 text-red-400" />
@@ -375,7 +375,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Best / Worst Trade (USD) */
   }
-        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Best Trade</span>
             <ShieldCheck className="w-5 h-5 text-emerald-400" />
@@ -391,7 +391,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Total Fees Paid */
   }
-        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Total Fees</span>
             <Calculator className="w-5 h-5 text-red-500" />
@@ -407,7 +407,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Rules Followed Rate % Card */
   }
-        <div className="col-span-1 bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+        <div className="col-span-1 bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-4 flex flex-col justify-between shadow-lg">
           <div className="flex justify-between items-center text-[#475569] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">
             <span>Rules Followed</span>
             <ShieldCheck className="w-5 h-5 text-blue-500" />
@@ -430,7 +430,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Card 1: Today's Status (Daily Loss Limit / Profit Target) */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-xl flex flex-col justify-between space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-xl flex flex-col justify-between space-y-4">
           <div className="flex items-center justify-between border-b border-slate-100 dark:border-[#222] pb-3">
             <h3 className="text-sm font-bold text-[#0f172a] dark:text-white tracking-wide">Today's Risk Status</h3>
             <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider font-mono ${todayStatus === "locked" ? "bg-red-500/10 text-red-500 animate-pulse" : todayStatus === "target" ? "bg-green-500/10 text-green-500 animate-pulse" : "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400"}`}>
@@ -454,7 +454,7 @@ export default function DashboardView({ showToast, onNavigate }) {
                 <span className="text-[#475569] dark:text-gray-400">Daily Loss Limit (${dailyLossLimit})</span>
                 <span className="text-red-500 dark:text-red-400">{lossPct.toFixed(0)}%</span>
               </div>
-              <div className="w-full bg-slate-100 dark:bg-[#222] h-2 rounded-full overflow-hidden">
+              <div className="w-full bg-slate-100 dark:bg-[#151225]/45 h-2 rounded-full overflow-hidden">
                 <div
     className={`h-full transition-all duration-300 ${lossPct >= 100 ? "bg-red-600 animate-pulse" : "bg-red-500/85"}`}
     style={{ width: `${lossPct}%` }}
@@ -470,7 +470,7 @@ export default function DashboardView({ showToast, onNavigate }) {
                 <span className="text-[#475569] dark:text-gray-400">Daily Profit Target (${dailyProfitTarget})</span>
                 <span className="text-green-600 dark:text-green-400">{profitPct.toFixed(0)}%</span>
               </div>
-              <div className="w-full bg-slate-100 dark:bg-[#222] h-2 rounded-full overflow-hidden">
+              <div className="w-full bg-slate-100 dark:bg-[#151225]/45 h-2 rounded-full overflow-hidden">
                 <div
     className={`h-full transition-all duration-300 ${profitPct >= 100 ? "bg-green-500 animate-pulse" : "bg-green-500/85"}`}
     style={{ width: `${profitPct}%` }}
@@ -483,16 +483,16 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Card 2: 🔥 Streak Tracker */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-xl flex flex-col justify-between space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-xl flex flex-col justify-between space-y-4">
           <div className="flex items-center justify-between border-b border-slate-100 dark:border-[#222] pb-3">
             <h3 className="text-sm font-bold text-[#0f172a] dark:text-white tracking-wide">🔥 Streak Tracker</h3>
-            <span className="text-xs font-bold font-mono text-blue-600 dark:text-blue-400 px-2 py-0.5 bg-slate-100 dark:bg-[#222] rounded border border-slate-200 dark:border-[#333]">
+            <span className="text-xs font-bold font-mono text-blue-600 dark:text-blue-400 px-2 py-0.5 bg-slate-100 dark:bg-[#151225]/45 rounded border border-slate-200 dark:border-violet-500/15">
               Active
             </span>
           </div>
 
           <div className="grid grid-cols-2 gap-4 py-1">
-            <div className="bg-slate-50 dark:bg-[#222]/30 border border-slate-100 dark:border-[#333]/30 p-3 rounded-xl text-center">
+            <div className="bg-slate-50 dark:bg-[#151225]/45/30 border border-slate-100 dark:border-violet-500/15/30 p-3 rounded-xl text-center">
               <p className="text-[10px] uppercase tracking-wider text-[#475569] dark:text-gray-400 font-semibold">Current Streak</p>
               <h4 className="text-lg font-black font-mono mt-1 text-[#0f172a] dark:text-white">
                 {streakInfo.type === "Win" ? "\u{1F525}" : streakInfo.type === "Loss" ? "\u2744\uFE0F" : "\u2796"}{" "}
@@ -500,7 +500,7 @@ export default function DashboardView({ showToast, onNavigate }) {
               </h4>
             </div>
 
-            <div className="bg-slate-50 dark:bg-[#222]/30 border border-slate-100 dark:border-[#333]/30 p-3 rounded-xl text-center">
+            <div className="bg-slate-50 dark:bg-[#151225]/45/30 border border-slate-100 dark:border-violet-500/15/30 p-3 rounded-xl text-center">
               <p className="text-[10px] uppercase tracking-wider text-[#475569] dark:text-gray-400 font-semibold">Consecutive Losses</p>
               <h4 className={`text-lg font-black font-mono mt-1 ${streakInfo.consecutiveLosses >= 3 ? "text-red-500 dark:text-red-400 font-black" : "text-gray-400 dark:text-gray-500"}`}>
                 {streakInfo.consecutiveLosses}
@@ -523,7 +523,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Card 3: Drawdown Tracker */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-xl flex flex-col justify-between space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-xl flex flex-col justify-between space-y-4">
           <div className="flex items-center justify-between border-b border-slate-100 dark:border-[#222] pb-3">
             <h3 className="text-sm font-bold text-[#0f172a] dark:text-white tracking-wide">📉 Drawdown Tracker</h3>
             <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider font-mono ${showDrawdownLimitWarning ? "bg-red-500/10 text-red-500 animate-pulse" : "bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400"}`}>
@@ -532,15 +532,15 @@ export default function DashboardView({ showToast, onNavigate }) {
           </div>
 
           <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
-            <div className="bg-slate-50 dark:bg-[#222]/20 py-2 px-1 rounded-lg">
+            <div className="bg-slate-50 dark:bg-[#151225]/45/20 py-2 px-1 rounded-lg">
               <span className="text-[9px] uppercase text-[#475569] dark:text-gray-500 block font-semibold">Peak Bal.</span>
               <span className="text-[#0f172a] dark:text-white font-bold block mt-0.5">${drawdownMetrics.peakBalance.toFixed(0)}</span>
             </div>
-            <div className="bg-slate-50 dark:bg-[#222]/20 py-2 px-1 rounded-lg">
+            <div className="bg-slate-50 dark:bg-[#151225]/45/20 py-2 px-1 rounded-lg">
               <span className="text-[9px] uppercase text-[#475569] dark:text-gray-500 block font-semibold">Current DD</span>
               <span className="text-red-500 dark:text-red-400 font-bold block mt-0.5">-${drawdownMetrics.currentDrawdownUsd.toFixed(0)}</span>
             </div>
-            <div className="bg-slate-50 dark:bg-[#222]/20 py-2 px-1 rounded-lg">
+            <div className="bg-slate-50 dark:bg-[#151225]/45/20 py-2 px-1 rounded-lg">
               <span className="text-[9px] uppercase text-[#475569] dark:text-gray-500 block font-semibold">Max DD %</span>
               <span className="text-red-500 dark:text-red-400 font-bold block mt-0.5">{drawdownMetrics.maxDrawdownPct.toFixed(1)}%</span>
             </div>
@@ -573,7 +573,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Card 4: ⚡ Key Events This Week */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-xl flex flex-col justify-between space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-xl flex flex-col justify-between space-y-4">
           <div className="flex items-center justify-between border-b border-slate-100 dark:border-[#222] pb-3">
             <h3 className="text-sm font-bold text-[#0f172a] dark:text-white tracking-wide flex items-center gap-1.5">
               <span>⚡ Key Events This Week</span>
@@ -653,7 +653,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Chart 1 — Cumulative PnL Curve */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-xl space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-xl space-y-4">
           <h3 className="text-sm font-bold text-[#0f172a] dark:text-white tracking-wide">1. Cumulative PnL Curve (USD)</h3>
           <div className="h-72 w-full text-xs">
             {charts.cumulativePnl.length === 0 ? <div className="flex justify-center items-center h-full text-gray-400 dark:text-gray-600">No data available</div> : <ResponsiveContainer width="100%" height="100%">
@@ -695,7 +695,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Chart 2 — Daily PnL Bar Chart */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-xl space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-xl space-y-4">
           <h3 className="text-sm font-bold text-[#0f172a] dark:text-white tracking-wide">2. Daily Net PnL Performance</h3>
           <div className="h-72 w-full text-xs">
             {charts.dailyPnl.length === 0 ? <div className="flex justify-center items-center h-full text-gray-400 dark:text-gray-600">No data available</div> : <ResponsiveContainer width="100%" height="100%">
@@ -745,7 +745,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Chart 3 — Win Rate by Session */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-xl space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-xl space-y-4">
           <h3 className="text-sm font-bold text-[#0f172a] dark:text-white tracking-wide">3. Win Rate % by Trading Session</h3>
           <div className="h-72 w-full text-xs">
             <ResponsiveContainer width="100%" height="100%">
@@ -789,7 +789,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Chart 4 — PnL by Setup Type */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-xl space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-xl space-y-4">
           <h3 className="text-sm font-bold text-[#0f172a] dark:text-white tracking-wide">4. PnL Performance by Setup Type</h3>
           <div className="h-72 w-full text-xs">
             {charts.pnlBySetup.length === 0 ? <div className="flex justify-center items-center h-full text-gray-400 dark:text-gray-600">No setups logged</div> : <ResponsiveContainer width="100%" height="100%">
@@ -839,7 +839,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Chart 5 — Most Common Mistakes */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-xl space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-xl space-y-4">
           <h3 className="text-sm font-bold text-[#0f172a] dark:text-white tracking-wide">5. Mistakes Occurrences Tracker</h3>
           <div className="h-72 w-full text-xs">
             {charts.mostCommonMistakes.length === 0 ? <div className="flex justify-center items-center h-full text-gray-400 dark:text-gray-600">Perfect track record! No mistakes logged.</div> : <ResponsiveContainer width="100%" height="100%">
@@ -883,7 +883,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Chart 6 — Win Rate by Direction */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-xl space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-xl space-y-4">
           <h3 className="text-sm font-bold text-[#0f172a] dark:text-white tracking-wide">6. Directional Win Rate Performance</h3>
           <div className="grid grid-cols-2 gap-4 h-72 py-6">
             {
@@ -915,7 +915,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Chart 8 — Outcome Distribution (Donut Chart) -- Show early before confluence table if desired */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-xl space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-xl space-y-4">
           <h3 className="text-sm font-bold text-[#0f172a] dark:text-white tracking-wide">8. Trade Outcomes Balance Distribution</h3>
           <div className="flex flex-col sm:flex-row items-center justify-around h-72 select-none">
             {donutData.length === 0 ? <div className="text-gray-400 dark:text-gray-600 text-xs">No outcome records</div> : <>
@@ -980,7 +980,7 @@ export default function DashboardView({ showToast, onNavigate }) {
         {
     /* Chart 7 — Confluences Performance (Inline Table) */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-xl space-y-4">
+        <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 shadow-xl space-y-4">
           <h3 className="text-sm font-bold text-[#0f172a] dark:text-white tracking-wide">7. Confluences Performance Tracker</h3>
           <div className="overflow-y-auto h-72 pr-1 border border-[#e2e8f0] dark:border-[#222] rounded-xl bg-slate-50/50 dark:bg-[#121212]/50">
             <table className="w-full text-xs font-sans text-left">

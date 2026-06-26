@@ -161,7 +161,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
       {
     /* Week Title Indicator banner */
   }
-      <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] py-3.5 px-6 rounded-2xl flex justify-between items-center shadow-md dark:shadow-lg">
+      <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 py-3.5 px-6 rounded-2xl flex justify-between items-center shadow-md dark:shadow-lg">
         <span className="font-sans font-bold text-lg text-slate-805 dark:text-white">
           📅 {getWeekRangeLabel()}
         </span>
@@ -180,19 +180,19 @@ export default function WeeklyCalendar({ trades, showToast }) {
     const hasTrades = dayTrades.length > 0;
     return <div
       key={day.date}
-      className={`min-h-[220px] bg-white dark:bg-[#1a1a1a] border rounded-2xl p-4 flex flex-col justify-between shadow-sm dark:shadow-lg transition-all duration-300 hover:border-slate-350 dark:hover:border-neutral-700/80 ${day.date === todayStr ? "border-blue-500/50 shadow-blue-500/[0.04]" : "border-slate-200 dark:border-[#2a2a2a]"}`}
+      className={`min-h-[220px] bg-white dark:bg-[#0e0b18]/65 border rounded-2xl p-4 flex flex-col justify-between shadow-sm dark:shadow-lg transition-all duration-300 hover:border-slate-350 dark:hover:border-neutral-700/80 ${day.date === todayStr ? "border-blue-500/50 shadow-blue-500/[0.04]" : "border-slate-200 dark:border-violet-500/15"}`}
     >
               {
       /* Day title & date info */
     }
-              <div className="flex items-center justify-between border-b border-slate-100 dark:border-[#252525] pb-2">
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-violet-500/10 pb-2">
                 <div className="flex items-center gap-1.5">
                   <span className={`font-sans font-black text-sm uppercase ${day.date === todayStr ? "text-blue-600 dark:text-blue-400" : "text-slate-400 dark:text-gray-400"}`}>
                     {day.dayName}
                   </span>
                   <button
       onClick={() => handleOpenNotes(day.date)}
-      className="p-1 text-slate-400 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-[#222]/80 rounded transition-colors cursor-pointer"
+      className="p-1 text-slate-400 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-violet-500/10 rounded transition-colors cursor-pointer"
       title="Edit Daily Journal Notes"
     >
                     <Edit2 className="w-3 h-3" />
@@ -236,12 +236,12 @@ export default function WeeklyCalendar({ trades, showToast }) {
     /* FULL TRADE DETAILS PREVIEW MODAL */
   }
       {selectedTrade && <div className="fixed inset-0 bg-black/60 dark:bg-black/85 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fade-in text-slate-850 dark:text-white">
-          <div className="bg-white dark:bg-[#1a1a1a] border border-slate-205 dark:border-[#2a2a2a] max-w-2xl w-full rounded-2xl shadow-2xl overflow-hidden relative">
+          <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-205 dark:border-violet-500/15 max-w-2xl w-full rounded-2xl shadow-2xl overflow-hidden relative">
             
             {
     /* Modal Heading Header */
   }
-            <div className="bg-slate-50 dark:bg-[#121212] p-5 border-b border-slate-150 dark:border-[#2a2a2a] flex justify-between items-center text-slate-800 dark:text-white">
+            <div className="bg-slate-50 dark:bg-[#121212] p-5 border-b border-slate-150 dark:border-violet-500/15 flex justify-between items-center text-slate-800 dark:text-white">
               <div>
                 <h3 className="text-lg font-black text-slate-800 dark:text-white flex items-center space-x-2">
                   <span className="bg-blue-50 dark:bg-blue-600/10 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20 px-2 py-0.5 rounded text-xs font-mono">REF ID: {selectedTrade.id}</span>
@@ -251,7 +251,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
               </div>
               <button
     onClick={() => setSelectedTrade(null)}
-    className="p-1 px-2.5 bg-white dark:bg-[#222] border border-slate-200 dark:border-[#333] hover:text-slate-900 dark:hover:text-white text-slate-600 dark:text-gray-400 rounded-lg cursor-pointer"
+    className="p-1 px-2.5 bg-white dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 hover:text-slate-900 dark:hover:text-white text-slate-600 dark:text-gray-400 rounded-lg cursor-pointer"
   >
                 Close
               </button>
@@ -265,7 +265,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
                 {
     /* Direction */
   }
-                <div className="bg-slate-50 dark:bg-[#222]/30 border border-slate-150 dark:border-[#333] p-3 rounded-xl flex flex-col justify-between">
+                <div className="bg-slate-50 dark:bg-[#151225]/45 border border-slate-150 dark:border-violet-500/15 p-3 rounded-xl flex flex-col justify-between">
                   <span className="text-[10px] text-slate-500 dark:text-gray-500 uppercase font-bold">Direction</span>
                   <div className="mt-1"><DirectionBadge direction={selectedTrade.direction} /></div>
                 </div>
@@ -273,7 +273,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
                 {
     /* Session */
   }
-                <div className="bg-slate-50 dark:bg-[#222]/30 border border-slate-150 dark:border-[#333] p-3 rounded-xl flex flex-col justify-between">
+                <div className="bg-slate-50 dark:bg-[#151225]/45 border border-slate-150 dark:border-violet-500/15 p-3 rounded-xl flex flex-col justify-between">
                   <span className="text-[10px] text-slate-500 dark:text-gray-500 uppercase font-bold">Session</span>
                   <div className="mt-1"><SessionBadge session={selectedTrade.session} /></div>
                 </div>
@@ -281,7 +281,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
                 {
     /* Setup */
   }
-                <div className="bg-slate-50 dark:bg-[#222]/30 border border-slate-150 dark:border-[#333] p-3 rounded-xl flex flex-col justify-between">
+                <div className="bg-slate-50 dark:bg-[#151225]/45 border border-slate-150 dark:border-violet-500/15 p-3 rounded-xl flex flex-col justify-between">
                   <span className="text-[10px] text-slate-500 dark:text-gray-500 uppercase font-bold">Setup Type</span>
                   <span className="text-xs font-bold text-slate-800 dark:text-white mt-1 block truncate">
                     {selectedTrade.setup_type || "\u2014"}
@@ -291,7 +291,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
                 {
     /* Outcome */
   }
-                <div className="bg-slate-50 dark:bg-[#222]/30 border border-slate-150 dark:border-[#333] p-3 rounded-xl flex flex-col justify-between">
+                <div className="bg-slate-50 dark:bg-[#151225]/45 border border-slate-150 dark:border-violet-500/15 p-3 rounded-xl flex flex-col justify-between">
                   <span className="text-[10px] text-slate-500 dark:text-gray-500 uppercase font-bold">Outcome</span>
                   <div className="mt-1"><OutcomeBadge outcome={selectedTrade.outcome} /></div>
                 </div>
@@ -405,12 +405,12 @@ export default function WeeklyCalendar({ trades, showToast }) {
     /* DAILY NOTES MODAL */
   }
       {selectedNotesDay && <div className="fixed inset-0 bg-black/60 dark:bg-black/85 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fade-in text-slate-850 dark:text-white">
-          <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] max-w-lg w-full rounded-2xl shadow-2xl overflow-hidden relative">
+          <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 max-w-lg w-full rounded-2xl shadow-2xl overflow-hidden relative">
             
             {
     /* Header */
   }
-            <div className="bg-slate-50 dark:bg-[#121212] p-5 border-b border-slate-150 dark:border-[#2a2a2a] flex justify-between items-center text-slate-800 dark:text-white">
+            <div className="bg-slate-50 dark:bg-[#121212] p-5 border-b border-slate-150 dark:border-violet-500/15 flex justify-between items-center text-slate-800 dark:text-white">
               <div>
                 <h3 className="text-base font-bold text-slate-800 dark:text-white flex items-center gap-2">
                   <span>📝 Daily Journal Notes</span>
@@ -419,7 +419,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
               </div>
               <button
     onClick={() => setSelectedNotesDay(null)}
-    className="p-1 px-2.5 bg-white dark:bg-[#222] border border-slate-200 dark:border-[#333] hover:text-slate-900 dark:hover:text-white text-slate-500 dark:text-gray-400 rounded-lg cursor-pointer font-bold text-xs select-none"
+    className="p-1 px-2.5 bg-white dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 hover:text-slate-900 dark:hover:text-white text-slate-500 dark:text-gray-400 rounded-lg cursor-pointer font-bold text-xs select-none"
   >
                 Cancel
               </button>
@@ -508,11 +508,11 @@ export default function WeeklyCalendar({ trades, showToast }) {
             {
     /* Action Footer */
   }
-            <div className="p-4 bg-slate-50 dark:bg-[#121212] border-t border-slate-150 dark:border-[#2a2a2a] flex justify-end gap-2">
+            <div className="p-4 bg-slate-50 dark:bg-[#151225]/45 border-t border-slate-150 dark:border-violet-500/15 flex justify-end gap-2">
               <button
     type="button"
     onClick={() => setSelectedNotesDay(null)}
-    className="px-4 py-2 bg-white dark:bg-[#222] border border-slate-200 dark:border-[#333] hover:text-slate-905 dark:hover:text-white text-slate-600 dark:text-gray-400 text-xs font-bold rounded-lg cursor-pointer"
+    className="px-4 py-2 bg-white dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 hover:text-slate-905 dark:hover:text-white text-slate-600 dark:text-gray-400 text-xs font-bold rounded-lg cursor-pointer"
   >
                 Cancel
               </button>
@@ -532,7 +532,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
       {
     /* Discipline Trend Chart */
   }
-      <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-5 shadow-sm dark:shadow-xl space-y-4">
+      <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-5 shadow-sm dark:shadow-xl space-y-4">
         <div>
           <h3 className="text-sm font-bold text-slate-800 dark:text-white tracking-wide">🧠 Discipline Score Trend</h3>
           <p className="text-[10px] text-slate-400 dark:text-gray-500 mt-1">Discipline score history over logged sessions (Scale: 1 to 5 Stars)</p>
@@ -549,7 +549,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
                     </feMerge>
                   </filter>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="stroke-slate-100 dark:stroke-[#222]" />
+                <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="stroke-slate-100 dark:stroke-violet-500/10" />
                 <XAxis dataKey="date" stroke="currentColor" className="text-slate-400 dark:text-gray-500" fontSize={10} tickLine={false} />
                 <YAxis stroke="currentColor" className="text-slate-400 dark:text-gray-500" fontSize={10} tickLine={false} domain={[1, 5]} ticks={[1, 2, 3, 4, 5]} />
                 <Tooltip

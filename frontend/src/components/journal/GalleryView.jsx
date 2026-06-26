@@ -49,7 +49,7 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
       {
     /* FILTER HEADER */
   }
-      <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-5 shadow-md dark:shadow-lg flex flex-col sm:flex-row gap-4 justify-between items-center">
+      <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-5 shadow-md dark:shadow-lg flex flex-col sm:flex-row gap-4 justify-between items-center">
         <div className="flex items-center gap-3">
           <ImageIcon className="w-5 h-5 text-blue-500" />
           <div>
@@ -64,7 +64,7 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
             <select
     value={filterSetup}
     onChange={(e) => setFilterSetup(e.target.value)}
-    className="bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2a2a2a] rounded-lg p-2 text-slate-800 dark:text-white text-xs text-center cursor-pointer font-sans outline-none"
+    className="bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-violet-500/15 rounded-lg p-2 text-slate-800 dark:text-white text-xs text-center cursor-pointer font-sans outline-none"
   >
               <option value="All">All Setups</option>
               {setups.map((s) => <option key={s} value={s}>{s}</option>)}
@@ -76,7 +76,7 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
             <select
     value={filterOutcome}
     onChange={(e) => setFilterOutcome(e.target.value)}
-    className="bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2a2a2a] rounded-lg p-2 text-slate-800 dark:text-white text-xs text-center cursor-pointer font-sans outline-none"
+    className="bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-violet-500/15 rounded-lg p-2 text-slate-800 dark:text-white text-xs text-center cursor-pointer font-sans outline-none"
   >
               <option value="All">All Out</option>
               <option value="Win">Win 🟢</option>
@@ -90,7 +90,7 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
             <select
     value={filterDirection}
     onChange={(e) => setFilterDirection(e.target.value)}
-    className="bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2a2a2a] rounded-lg p-2 text-slate-800 dark:text-white text-xs text-center cursor-pointer font-sans outline-none"
+    className="bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-violet-500/15 rounded-lg p-2 text-slate-800 dark:text-white text-xs text-center cursor-pointer font-sans outline-none"
   >
               <option value="All">All Dir</option>
               <option value="Long">Long 🟢</option>
@@ -108,13 +108,13 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
     const isBroken = brokenImages[trade.id];
     return <div
       key={trade.id}
-      className="group relative bg-white dark:bg-[#1a1a1a] border border-slate-100 dark:border-[#1e1e1e] hover:border-slate-300 dark:hover:border-[#333] transition-all rounded-xl overflow-hidden shadow-md hover:shadow-xl flex flex-col justify-between"
+      className="group relative bg-white dark:bg-[#0e0b18]/65 border border-slate-100 dark:border-[#1e1e1e] hover:border-slate-300 dark:hover:border-[#333] transition-all rounded-xl overflow-hidden shadow-md hover:shadow-xl flex flex-col justify-between"
     >
                 
                 {
       /* Visual Image container with nice overlay on hover */
     }
-                <div className="relative aspect-video w-full bg-slate-50 dark:bg-[#121212] flex items-center justify-center overflow-hidden border-b border-slate-100 dark:border-[#222]">
+                <div className="relative aspect-video w-full bg-slate-50 dark:bg-[#121212] flex items-center justify-center overflow-hidden border-b border-slate-100 dark:border-violet-500/15">
                   {isBroken ? <div className="flex flex-col items-center justify-center text-center p-4 text-slate-400 dark:text-gray-600">
                       <Compass className="w-8 h-8 opacity-40 mb-1.5" />
                       <span className="text-[10px] font-mono select-none uppercase truncate max-w-[120px]">
@@ -177,7 +177,7 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
                   {
       /* Setup info */
     }
-                  <div className="flex justify-between items-center text-[10px] font-mono text-slate-500 dark:text-gray-400 pt-1.5 border-t border-slate-100 dark:border-[#222]">
+                  <div className="flex justify-between items-center text-[10px] font-mono text-slate-500 dark:text-gray-400 pt-1.5 border-t border-slate-100 dark:border-violet-500/15">
                     <span>{trade.setup_type || "No Setup"}</span>
                     <span className={trade.net_pnl_usd >= 0 ? "text-green-650 dark:text-green-500 font-bold" : "text-red-655 dark:text-red-500 font-bold"}>
                       {trade.net_pnl_usd >= 0 ? "+" : ""}${trade.net_pnl_usd.toFixed(2)}
@@ -195,7 +195,7 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
 
               </div>;
   })}
-        </div> : <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-12 text-center text-xs text-slate-500 dark:text-gray-550 font-mono">
+        </div> : <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-12 text-center text-xs text-slate-500 dark:text-gray-550 font-mono">
           No trade screenshots found. Add a Screenshot URL (like clean Imgur or Lightshot link) inside Add/Edit trades to active this dashboard.
         </div>}
 
@@ -260,18 +260,18 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
           {
     /* Collapsible/Rigid Trade sidebar panels */
   }
-          <div className="w-full md:w-80 bg-white dark:bg-[#141414] border-t md:border-t-0 md:border-l border-slate-200 dark:border-[#2a2a2a] p-6 text-xs text-slate-800 dark:text-white overflow-y-auto flex flex-col justify-between shrink-0">
+          <div className="w-full md:w-80 bg-white dark:bg-[#141414] border-t md:border-t-0 md:border-l border-slate-200 dark:border-violet-500/15 p-6 text-xs text-slate-800 dark:text-white overflow-y-auto flex flex-col justify-between shrink-0">
             
             <div className="space-y-6">
               
               {
     /* Close, inspect header */
   }
-              <div className="flex justify-between items-center pb-3 border-b border-slate-100 dark:border-[#2a2a2a]">
+              <div className="flex justify-between items-center pb-3 border-b border-slate-100 dark:border-violet-500/15">
                 <h4 className="font-serif text-slate-900 dark:text-white font-bold text-lg tracking-wide">{currentSlideTrade.pair_instrument} Profile</h4>
                 <button
     onClick={closeSlideshow}
-    className="p-1.5 bg-slate-100 dark:bg-[#222] border border-slate-200 dark:border-[#2a2a2a] hover:bg-red-500/20 hover:text-red-550 rounded-lg cursor-pointer text-slate-700 dark:text-gray-300"
+    className="p-1.5 bg-slate-100 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 hover:bg-red-500/20 hover:text-red-550 rounded-lg cursor-pointer text-slate-700 dark:text-gray-300"
   >
                   <X className="w-4 h-4" />
                 </button>
@@ -280,7 +280,7 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
               {
     /* Badges card */
   }
-              <div className="bg-slate-50 dark:bg-[#1a1a1a] rounded-xl border border-slate-200 dark:border-[#222] p-4 space-y-3 font-mono">
+              <div className="bg-slate-50 dark:bg-[#0e0b18]/65 rounded-xl border border-slate-200 dark:border-violet-500/15 p-4 space-y-3 font-mono">
                 <div className="flex justify-between">
                   <span className="text-slate-400 dark:text-gray-500 font-bold uppercase text-[8px]">Direction</span>
                   <span className={currentSlideTrade.direction === "Long" ? "text-green-600 dark:text-green-400 font-bold" : "text-red-650 dark:text-red-400 font-bold"}>
@@ -308,22 +308,22 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
   }
               <div className="space-y-3 font-mono">
                 <div className="grid grid-cols-2 gap-2 text-center text-[10px]">
-                  <div className="bg-slate-50 dark:bg-[#1a1a1a] p-2 border border-slate-200 dark:border-[#222] rounded-xl">
+                  <div className="bg-slate-50 dark:bg-[#0e0b18]/65 p-2 border border-slate-200 dark:border-violet-500/15 rounded-xl">
                     <p className="text-[7px] text-slate-400 dark:text-gray-500 uppercase font-bold">Planned R:R</p>
                     <p className="text-xs font-bold text-slate-800 dark:text-white mt-0.5">{currentSlideTrade.planned_rr || "0"}R</p>
                   </div>
-                  <div className="bg-slate-50 dark:bg-[#1a1a1a] p-2 border border-slate-200 dark:border-[#222] rounded-xl">
+                  <div className="bg-slate-50 dark:bg-[#0e0b18]/65 p-2 border border-slate-200 dark:border-violet-500/15 rounded-xl">
                     <p className="text-[7px] text-slate-400 dark:text-gray-500 uppercase font-bold">Actual R:R</p>
                     <p className="text-xs font-bold text-slate-800 dark:text-white mt-0.5">{currentSlideTrade.actual_rr || "0"}R</p>
                   </div>
                 </div>
 
-                <div className="bg-slate-50 dark:bg-[#1a1a1a] p-3 border border-slate-200 dark:border-[#222] rounded-xl">
+                <div className="bg-slate-50 dark:bg-[#0e0b18]/65 p-3 border border-slate-200 dark:border-violet-500/15 rounded-xl">
                   <p className="text-[8px] text-slate-400 dark:text-gray-500 uppercase font-bold">Primary Setup</p>
                   <p className="text-slate-800 dark:text-white text-xs font-bold mt-1">{currentSlideTrade.setup_type || "Custom setup model"}</p>
                 </div>
 
-                {currentSlideTrade.trade_quality && <div className="bg-slate-50 dark:bg-[#1a1a1a] p-3 border border-slate-200 dark:border-[#222] rounded-xl flex justify-between items-center">
+                {currentSlideTrade.trade_quality && <div className="bg-slate-50 dark:bg-[#0e0b18]/65 p-3 border border-slate-200 dark:border-violet-500/15 rounded-xl flex justify-between items-center">
                     <span className="text-[8px] text-slate-400 dark:text-gray-500 uppercase font-bold">Trade Quality</span>
                     {renderStars(currentSlideTrade.trade_quality)}
                   </div>}
@@ -332,7 +332,7 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
               {
     /* Notes */
   }
-              {currentSlideTrade.notes && <div className="space-y-1 bg-slate-50 dark:bg-[#1a1a1a] p-3 border border-slate-200 dark:border-[#222] rounded-xl max-h-[140px] overflow-y-auto">
+              {currentSlideTrade.notes && <div className="space-y-1 bg-slate-50 dark:bg-[#0e0b18]/65 p-3 border border-slate-200 dark:border-violet-500/15 rounded-xl max-h-[140px] overflow-y-auto">
                   <p className="text-[8px] font-mono text-slate-400 dark:text-gray-500 uppercase font-bold">Logged Diary Notes</p>
                   <p className="text-slate-600 dark:text-gray-300 italic whitespace-pre-wrap leading-relaxed">{currentSlideTrade.notes}</p>
                 </div>}
@@ -342,7 +342,7 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
             {
     /* Direct Edit Redirect link */
   }
-            <div className="pt-6 border-t border-slate-200 dark:border-[#2a2a2a] mt-6">
+            <div className="pt-6 border-t border-slate-200 dark:border-violet-500/15 mt-6">
               <button
     onClick={() => {
       closeSlideshow();

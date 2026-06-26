@@ -180,7 +180,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
         <button
     id="openImportModalBtn"
     onClick={() => setIsCsvModalOpen(true)}
-    className="flex items-center space-x-2 px-4 py-2 bg-white hover:bg-slate-50 dark:bg-[#1a1a1a] dark:hover:bg-[#222] text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-lg text-xs font-semibold cursor-pointer outline-none transition-all shadow-sm"
+    className="flex items-center space-x-2 px-4 py-2 bg-white hover:bg-slate-50 dark:bg-[#0e0b18]/65 dark:hover:bg-[#222] text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white border border-[#e2e8f0] dark:border-violet-500/15 rounded-lg text-xs font-semibold cursor-pointer outline-none transition-all shadow-sm"
   >
           <span>📂 Import CSV</span>
         </button>
@@ -189,8 +189,8 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
       {
     /* Advanced Filter Panel */
   }
-      <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 space-y-4 shadow-xl">
-        <div className="flex items-center justify-between border-b border-slate-100 dark:border-[#2a2a2a] pb-3">
+      <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl p-5 space-y-4 shadow-xl">
+        <div className="flex items-center justify-between border-b border-slate-100 dark:border-violet-500/15 pb-3">
           <div className="flex items-center space-x-2 text-[#0f172a] dark:text-white font-semibold text-sm">
             <Filter className="w-4 h-4 text-blue-500" />
             <span>Search & Filter Parameters</span>
@@ -217,7 +217,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
     placeholder="BTCUSD, notes..."
     value={searchTerm}
     onChange={(e) => setSearchTerm(e.target.value)}
-    className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] rounded-lg text-[#0f172a] dark:text-white text-xs placeholder-slate-400 dark:placeholder-gray-600 outline-none focus:border-blue-500 font-mono"
+    className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs placeholder-slate-400 dark:placeholder-gray-600 outline-none focus:border-blue-500 font-mono"
   />
             </div>
           </div>
@@ -231,7 +231,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
     id="outcomeFilter"
     value={outcomeFilter}
     onChange={(e) => setOutcomeFilter(e.target.value)}
-    className="w-full px-3 py-2 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
+    className="w-full px-3 py-2 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
   >
               <option value="">All Outcomes</option>
               {OUTCOMES.map((o) => <option key={o} value={o}>{o}</option>)}
@@ -247,7 +247,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
     id="directionFilter"
     value={directionFilter}
     onChange={(e) => setDirectionFilter(e.target.value)}
-    className="w-full px-3 py-2 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
+    className="w-full px-3 py-2 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
   >
               <option value="">All Directions</option>
               {DIRECTIONS.map((d) => <option key={d} value={d}>{d}</option>)}
@@ -263,7 +263,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
     id="sessionFilter"
     value={sessionFilter}
     onChange={(e) => setSessionFilter(e.target.value)}
-    className="w-full px-3 py-2 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
+    className="w-full px-3 py-2 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
   >
               <option value="">All Sessions</option>
               {SESSIONS.map((s) => <option key={s} value={s}>{s}</option>)}
@@ -280,7 +280,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
     type="date"
     value={dateFrom}
     onChange={(e) => setDateFrom(e.target.value)}
-    className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
+    className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
   />
           </div>
 
@@ -294,7 +294,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
     type="date"
     value={dateTo}
     onChange={(e) => setDateTo(e.target.value)}
-    className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
+    className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
   />
           </div>
         </div>
@@ -303,11 +303,11 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
       {
     /* Main Datagrid */
   }
-      <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl overflow-hidden shadow-xl">
+      <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 rounded-2xl overflow-hidden shadow-xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[1200px]">
             <thead>
-              <tr className="bg-slate-50 dark:bg-[#121212] border-b border-[#e2e8f0] dark:border-[#2a2a2a] text-[#475569] dark:text-gray-400 font-semibold text-xs uppercase tracking-wider">
+              <tr className="bg-slate-50 dark:bg-[#121212] border-b border-[#e2e8f0] dark:border-violet-500/15 text-[#475569] dark:text-gray-400 font-semibold text-xs uppercase tracking-wider">
                 <th className="py-4 px-5">Date</th>
                 <th className="py-4 px-4">Pair</th>
                 <th className="py-4 px-4 text-center">Direction</th>
@@ -420,7 +420,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
     }
                       <td className="py-3.5 px-4 text-xs max-w-xs truncate" title={t.mistakes.join(", ")}>
                         {t.mistakes.length > 0 ? <div className="flex gap-1 overflow-hidden select-none">
-                            {t.mistakes.slice(0, 2).map((m) => <span key={m} className={`bg-red-500/5 text-red-600 dark:text-red-400 border border-red-500/10 dark:border-red-500/20 px-1 py-0.2 rounded text-[10px] ${m === "No Mistake" ? "text-gray-500 dark:text-gray-400 bg-slate-100 dark:bg-neutral-900 border-slate-200 dark:border-[#333]" : ""}`}>
+                            {t.mistakes.slice(0, 2).map((m) => <span key={m} className={`bg-red-500/5 text-red-600 dark:text-red-400 border border-red-500/10 dark:border-red-500/20 px-1 py-0.2 rounded text-[10px] ${m === "No Mistake" ? "text-gray-500 dark:text-gray-400 bg-slate-100 dark:bg-neutral-900 border-slate-200 dark:border-violet-500/15" : ""}`}>
                                 {m}
                               </span>)}
                             {t.mistakes.length > 2 && <span className="text-gray-400 dark:text-gray-500 text-[10px] font-bold">+{t.mistakes.length - 2}</span>}
@@ -449,7 +449,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
                         <div className="flex items-center justify-center space-x-2">
                           <button
       onClick={() => onEdit(t)}
-      className="p-1 px-1.5 bg-slate-50 hover:bg-slate-100 dark:bg-[#2a2a2a] dark:hover:bg-[#353535] rounded-md text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-all border border-slate-200 dark:border-[#333] cursor-pointer"
+      className="p-1 px-1.5 bg-slate-50 hover:bg-slate-100 dark:bg-[#2a2a2a] dark:hover:bg-[#353535] rounded-md text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-all border border-slate-200 dark:border-violet-500/15 cursor-pointer"
       title="Edit trade record"
     >
                             <Edit className="w-3.5 h-3.5" />
@@ -473,7 +473,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
         {
     /* Custom Pagination Footer */
   }
-        {totalPages > 1 && <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-[#121212] border-t border-[#e2e8f0] dark:border-[#2a2a2a] text-sm text-[#475569] dark:text-gray-400">
+        {totalPages > 1 && <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-[#121212] border-t border-[#e2e8f0] dark:border-violet-500/15 text-sm text-[#475569] dark:text-gray-400">
             <div>
               Showing <span className="font-bold text-[#0f172a] dark:text-white">{(currentPage - 1) * itemsPerPage + 1}</span> to{" "}
               <span className="font-bold text-[#0f172a] dark:text-white">{Math.min(currentPage * itemsPerPage, filteredTrades.length)}</span> of{" "}
@@ -484,7 +484,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
               <button
     disabled={currentPage === 1}
     onClick={() => setCurrentPage(currentPage - 1)}
-    className="p-1.5 rounded-lg bg-white hover:bg-slate-100 dark:bg-[#111] dark:hover:bg-[#222] border border-slate-200 dark:border-[#333] disabled:opacity-40 text-[#0f172a] dark:text-white disabled:hover:bg-white dark:disabled:hover:bg-[#111] transition-all cursor-pointer"
+    className="p-1.5 rounded-lg bg-white hover:bg-slate-100 dark:bg-[#111] dark:hover:bg-[#222] border border-slate-200 dark:border-violet-500/15 disabled:opacity-40 text-[#0f172a] dark:text-white disabled:hover:bg-white dark:disabled:hover:bg-[#111] transition-all cursor-pointer"
   >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -492,7 +492,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
               <button
     disabled={currentPage === totalPages}
     onClick={() => setCurrentPage(currentPage + 1)}
-    className="p-1.5 rounded-lg bg-white hover:bg-slate-100 dark:bg-[#111] dark:hover:bg-[#222] border border-slate-200 dark:border-[#333] disabled:opacity-40 text-[#0f172a] dark:text-white disabled:hover:bg-white dark:disabled:hover:bg-[#111] transition-all cursor-pointer"
+    className="p-1.5 rounded-lg bg-white hover:bg-slate-100 dark:bg-[#111] dark:hover:bg-[#222] border border-slate-200 dark:border-violet-500/15 disabled:opacity-40 text-[#0f172a] dark:text-white disabled:hover:bg-white dark:disabled:hover:bg-[#111] transition-all cursor-pointer"
   >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -504,14 +504,14 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
     /* DETAILED CSV IMPORT MODAL */
   }
       {isCsvModalOpen && <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] max-w-lg w-full rounded-2xl shadow-2xl p-6 relative">
+          <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 max-w-lg w-full rounded-2xl shadow-2xl p-6 relative">
             <button
     id="closeImportModalBtn"
     onClick={() => {
       setIsCsvModalOpen(false);
       setCsvFile(null);
     }}
-    className="absolute right-4 top-4 p-1.5 bg-slate-50 hover:bg-slate-100 dark:bg-[#222] border border-slate-200 dark:border-[#333] hover:text-[#0f172a] dark:hover:text-white text-slate-500 dark:text-gray-400 rounded-lg cursor-pointer"
+    className="absolute right-4 top-4 p-1.5 bg-slate-50 hover:bg-slate-100 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 hover:text-[#0f172a] dark:hover:text-white text-slate-500 dark:text-gray-400 rounded-lg cursor-pointer"
   >
               <X className="w-4 h-4" />
             </button>
@@ -531,7 +531,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
     onDragOver={handleDragOver}
     onDrop={handleDrop}
     onClick={() => document.getElementById("csvFileInput")?.click()}
-    className="border-2 border-dashed border-slate-200 dark:border-[#333] hover:border-blue-500 bg-slate-50 dark:bg-[#222]/30 hover:bg-slate-100 dark:hover:bg-[#222]/80 p-8 rounded-xl text-center cursor-pointer mb-6 transition-all group"
+    className="border-2 border-dashed border-slate-200 dark:border-violet-500/15 hover:border-blue-500 bg-slate-50 dark:bg-[#151225]/45/30 hover:bg-slate-100 dark:hover:bg-[#222]/80 p-8 rounded-xl text-center cursor-pointer mb-6 transition-all group"
   >
               <Upload className="w-10 h-10 text-slate-400 group-hover:text-blue-500 mx-auto mb-3 transition-colors" />
               <p className="text-xs font-bold text-slate-600 dark:text-gray-300">
@@ -559,7 +559,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
       setCsvFile(null);
     }}
     disabled={isParsing}
-    className="px-4 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-[#222] border border-slate-200 dark:border-[#333] rounded-xl text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white cursor-pointer dark:hover:bg-[#292929]"
+    className="px-4 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-xl text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white cursor-pointer dark:hover:bg-violet-500/10"
   >
                 Cancel
               </button>
@@ -585,7 +585,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
     /* CONFIRM DELETE DIALOG */
   }
       {deleteConfirmId !== null && <div className="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in animate-duration-150">
-          <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] max-w-sm w-full rounded-2xl shadow-2xl p-6 relative">
+          <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 max-w-sm w-full rounded-2xl shadow-2xl p-6 relative">
             <h3 className="text-lg font-bold text-[#0f172a] dark:text-white mb-2">Delete Trade Record?</h3>
             <p className="text-xs text-slate-500 dark:text-gray-400 mb-6 leading-relaxed">
               Are you sure? This operation is permanent. This cannot be undone and deletes all associated statistics and fee records.
@@ -595,7 +595,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
               <button
     onClick={() => setDeleteConfirmId(null)}
     disabled={isDeleting}
-    className="px-4 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-[#222] dark:hover:bg-[#2b2b2b] text-slate-700 hover:text-black dark:text-gray-300 rounded-xl border border-slate-200 dark:border-[#333] cursor-pointer outline-none"
+    className="px-4 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-[#151225]/45 dark:hover:bg-violet-500/10 text-slate-700 hover:text-black dark:text-gray-300 rounded-xl border border-slate-200 dark:border-violet-500/15 cursor-pointer outline-none"
   >
                 Cancel
               </button>

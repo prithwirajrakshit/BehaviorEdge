@@ -47,7 +47,7 @@ export default function CalculatorView() {
       {
     /* Top Header info */
   }
-      <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-lg gap-4">
+      <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-lg gap-4">
         <div>
           <h2 className="text-xl font-bold text-[#0f172a] dark:text-white mt-2">Position Planning Suite</h2>
           <p className="text-xs text-slate-500 dark:text-gray-500 font-mono mt-1">Acquire type safety and capital calculation constraints dynamically beforehand.</p>
@@ -80,7 +80,7 @@ export default function CalculatorView() {
             {
     /* Sizing Input Form */
   }
-            <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-6 shadow-xl space-y-4">
+            <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-6 shadow-xl space-y-4">
               <h3 className="text-sm font-bold uppercase tracking-wider font-mono text-[#0f172a] dark:text-white">Position Sizing Parameters</h3>
               <form onSubmit={calculatePositionSizing} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -90,7 +90,7 @@ export default function CalculatorView() {
     type="number"
     value={accountBalance}
     onChange={(e) => setAccountBalance(parseFloat(e.target.value) || 0)}
-    className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-[#333] rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-blue-500 font-mono text-[#0f172a] dark:text-white"
+    className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-violet-500/15 rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-blue-500 font-mono text-[#0f172a] dark:text-white"
     required
   />
                   </div>
@@ -101,7 +101,7 @@ export default function CalculatorView() {
     step="0.01"
     value={riskPercent}
     onChange={(e) => setRiskPercent(parseFloat(e.target.value) || 0)}
-    className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-[#333] rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-blue-500 font-mono text-[#0f172a] dark:text-white"
+    className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-violet-500/15 rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-blue-500 font-mono text-[#0f172a] dark:text-white"
     required
   />
                   </div>
@@ -116,21 +116,21 @@ export default function CalculatorView() {
                     <button
     type="button"
     onClick={() => applyPresetRisk(0.5)}
-    className="px-2.5 py-1 text-[10px] bg-slate-50 hover:bg-slate-100 dark:bg-[#222] dark:hover:bg-[#333] text-slate-700 dark:text-gray-300 dark:hover:text-white border border-slate-200 dark:border-[#333] rounded-lg transition-colors font-mono cursor-pointer"
+    className="px-2.5 py-1 text-[10px] bg-slate-50 hover:bg-slate-100 dark:bg-[#151225]/45 dark:hover:bg-violet-500/10 text-slate-700 dark:text-gray-300 dark:hover:text-white border border-slate-200 dark:border-violet-500/15 rounded-lg transition-colors font-mono cursor-pointer"
   >
                       Conservative (0.5%)
                     </button>
                     <button
     type="button"
     onClick={() => applyPresetRisk(1)}
-    className="px-2.5 py-1 text-[10px] bg-slate-50 hover:bg-slate-100 dark:bg-[#222] dark:hover:bg-[#333] text-slate-700 dark:text-gray-300 dark:hover:text-white border border-slate-200 dark:border-[#333] rounded-lg transition-colors font-mono cursor-pointer"
+    className="px-2.5 py-1 text-[10px] bg-slate-50 hover:bg-slate-100 dark:bg-[#151225]/45 dark:hover:bg-violet-500/10 text-slate-700 dark:text-gray-300 dark:hover:text-white border border-slate-200 dark:border-violet-500/15 rounded-lg transition-colors font-mono cursor-pointer"
   >
                       Standard (1.0%)
                     </button>
                     <button
     type="button"
     onClick={() => applyPresetRisk(2.5)}
-    className="px-2.5 py-1 text-[10px] bg-slate-50 hover:bg-slate-100 dark:bg-[#222] dark:hover:bg-[#333] text-slate-700 dark:text-gray-300 dark:hover:text-white border border-slate-200 dark:border-[#333] rounded-lg transition-colors font-mono cursor-pointer"
+    className="px-2.5 py-1 text-[10px] bg-slate-50 hover:bg-slate-100 dark:bg-[#151225]/45 dark:hover:bg-violet-500/10 text-slate-700 dark:text-gray-300 dark:hover:text-white border border-slate-200 dark:border-violet-500/15 rounded-lg transition-colors font-mono cursor-pointer"
   >
                       Aggressive (2.5%)
                     </button>
@@ -145,7 +145,7 @@ export default function CalculatorView() {
     step="any"
     placeholder="e.g. 67500"
     onChange={(e) => setEntryPrice(parseFloat(e.target.value) || 0)}
-    className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-[#333] rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-blue-500 font-mono text-[#0f172a] dark:text-white"
+    className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-violet-500/15 rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-blue-500 font-mono text-[#0f172a] dark:text-white"
     required
   />
                   </div>
@@ -156,7 +156,7 @@ export default function CalculatorView() {
     step="any"
     placeholder="e.g. 66800"
     onChange={(e) => setStopLoss(parseFloat(e.target.value) || 0)}
-    className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-[#333] rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-blue-500 font-mono text-[#0f172a] dark:text-white"
+    className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-violet-500/15 rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-blue-500 font-mono text-[#0f172a] dark:text-white"
     required
   />
                   </div>
@@ -174,7 +174,7 @@ export default function CalculatorView() {
             {
     /* Sizing Performance Output */
   }
-            <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+            <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
               <div>
                 <h3 className="text-sm font-bold uppercase tracking-wider font-mono mb-4 text-[#0f172a] dark:text-white">Sizing Performance Results</h3>
                 {cashRisked === null ? <div className="text-center py-24 text-xs text-slate-400 dark:text-gray-500 font-mono uppercase">Provide Sizing parameters to trigger math outcome</div> : <div className="space-y-4">
@@ -204,7 +204,7 @@ export default function CalculatorView() {
             {
     /* RR Form */
   }
-            <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-6 shadow-xl space-y-4">
+            <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-6 shadow-xl space-y-4">
               <h3 className="text-sm font-bold uppercase tracking-wider font-mono text-[#0f172a] dark:text-white">Risk / Reward Input Parameters</h3>
               <form onSubmit={calculateRR} className="space-y-4">
                 <div className="space-y-1.5">
@@ -213,7 +213,7 @@ export default function CalculatorView() {
     type="number"
     step="any"
     onChange={(e) => setRrEntry(parseFloat(e.target.value) || 0)}
-    className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-[#333] rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-blue-500 font-mono text-[#0f172a] dark:text-white"
+    className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-violet-500/15 rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-blue-500 font-mono text-[#0f172a] dark:text-white"
     required
   />
                 </div>
@@ -225,7 +225,7 @@ export default function CalculatorView() {
     type="number"
     step="any"
     onChange={(e) => setRrStop(parseFloat(e.target.value) || 0)}
-    className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-[#333] rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-blue-500 font-mono text-[#0f172a] dark:text-white"
+    className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-violet-500/15 rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-blue-500 font-mono text-[#0f172a] dark:text-white"
     required
   />
                   </div>
@@ -235,7 +235,7 @@ export default function CalculatorView() {
     type="number"
     step="any"
     onChange={(e) => setRrTarget(parseFloat(e.target.value) || 0)}
-    className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-[#333] rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-blue-500 font-mono text-[#0f172a] dark:text-white"
+    className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-violet-500/15 rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-blue-500 font-mono text-[#0f172a] dark:text-white"
     required
   />
                   </div>
@@ -253,7 +253,7 @@ export default function CalculatorView() {
             {
     /* RR Results */
   }
-            <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+            <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
               <div>
                 <h3 className="text-sm font-bold uppercase tracking-wider font-mono mb-4 text-[#0f172a] dark:text-white">Risk Reward Extraction Calculations</h3>
                 {rrRatio === null ? <div className="text-center py-24 text-xs text-slate-400 dark:text-gray-500 font-mono uppercase">Provide targets to calculate profit-to-draw ratios</div> : <div className="space-y-4">

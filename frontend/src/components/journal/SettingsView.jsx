@@ -299,7 +299,7 @@ export default function SettingsView({ trades, onClearAll, showToast }) {
               <button
     onClick={() => setIsConfirmOpen(false)}
     disabled={isClearing}
-    className="px-4 py-2 bg-[#222] hover:bg-[#2b2b2b] text-gray-300 rounded-xl border border-[#333] cursor-pointer outline-none"
+    className="px-4 py-2 bg-[#151225]/45 hover:bg-violet-500/10 text-gray-300 rounded-xl border border-violet-500/15 cursor-pointer outline-none"
   >
                 No, Keep My Data
               </button>

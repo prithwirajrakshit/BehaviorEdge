@@ -88,7 +88,7 @@ export default function GoalsView({ trades, showToast }) {
       {
     /* Page Header */
   }
-      <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-md dark:shadow-lg gap-4">
+      <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-md dark:shadow-lg gap-4">
         <div>
           <h2 className="text-xl font-bold text-slate-800 dark:text-white mt-2">Milestones & Achievements</h2>
           <p className="text-xs text-slate-500 dark:text-gray-500 font-mono mt-1">Set actionable financial benchmarks and track performance badges.</p>
@@ -103,7 +103,7 @@ export default function GoalsView({ trades, showToast }) {
           {
     /* Create Goal Card */
   }
-          <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4">
+          <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-2xl shadow-md dark:shadow-xl space-y-4">
             <h3 className="text-sm font-bold tracking-wide uppercase font-mono text-slate-800 dark:text-white flex items-center gap-1.5">
               <Calendar className="w-4 h-4 text-blue-500 dark:text-blue-400" />
               <span>Establish Weekly Targets</span>
@@ -160,9 +160,9 @@ export default function GoalsView({ trades, showToast }) {
   }
           <div className="space-y-3">
             <h3 className="text-xs font-bold font-mono uppercase text-slate-400 dark:text-gray-400 tracking-wider">Weekly Benchmarks</h3>
-            {goals.length === 0 ? <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-10 rounded-2xl text-center text-xs text-slate-400 dark:text-gray-500 font-mono shadow-sm">
+            {goals.length === 0 ? <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-10 rounded-2xl text-center text-xs text-slate-400 dark:text-gray-500 font-mono shadow-sm">
                 No target goals recorded yet. Use the scheduler above to establish targets.
-              </div> : goals.map((g) => <div key={g.week_start} className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-5 rounded-xl shadow-md flex justify-between items-center text-slate-800 dark:text-white">
+              </div> : goals.map((g) => <div key={g.week_start} className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-xl shadow-md flex justify-between items-center text-slate-800 dark:text-white">
                   <div className="space-y-1 flex-1 pr-4">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-bold text-blue-600 dark:text-blue-400 font-mono">Week starting: {g.week_start}</span>
@@ -198,7 +198,7 @@ export default function GoalsView({ trades, showToast }) {
     /* Gamified Achievement Badges */
   }
         <div className="space-y-6">
-          <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-5 rounded-2xl shadow-md dark:shadow-xl flex flex-col justify-between h-full">
+          <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-2xl shadow-md dark:shadow-xl flex flex-col justify-between h-full">
             <div className="space-y-1 border-b border-slate-150 dark:border-[#222] pb-3 mb-4">
               <h3 className="text-sm font-bold tracking-wide uppercase font-mono text-slate-800 dark:text-white flex items-center gap-1.5">
                 <Award className="w-4 h-4 text-yellow-500 dark:text-yellow-400" />
@@ -212,7 +212,7 @@ export default function GoalsView({ trades, showToast }) {
     /* Badge 1 */
   }
               <div className={`p-3.5 rounded-xl border flex gap-3.5 items-center transition-all ${greenWeek ? "bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20" : "bg-slate-50/70 dark:bg-[#1e1e1e]/40 border-slate-150 dark:border-[#333] opacity-60"}`}>
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${greenWeek ? "bg-green-100 dark:bg-green-500/15 text-green-655 dark:text-green-400" : "bg-slate-100 dark:bg-[#222] text-slate-400 dark:text-gray-600"}`}>
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${greenWeek ? "bg-green-100 dark:bg-green-500/15 text-green-655 dark:text-green-400" : "bg-slate-100 dark:bg-[#151225]/45 text-slate-400 dark:text-gray-600"}`}>
                   <Zap className="w-5 h-5" />
                 </div>
                 <div>
@@ -225,7 +225,7 @@ export default function GoalsView({ trades, showToast }) {
     /* Badge 2 */
   }
               <div className={`p-3.5 rounded-xl border flex gap-3.5 items-center transition-all ${highYield ? "bg-yellow-50 dark:bg-yellow-500/5 border-yellow-200 dark:border-yellow-500/20" : "bg-slate-50/70 dark:bg-[#1e1e1e]/40 border-slate-150 dark:border-[#333] opacity-60"}`}>
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${highYield ? "bg-yellow-105 dark:bg-yellow-500/15 text-yellow-605 dark:text-yellow-400" : "bg-slate-100 dark:bg-[#222] text-slate-400 dark:text-gray-600"}`}>
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${highYield ? "bg-yellow-105 dark:bg-yellow-500/15 text-yellow-605 dark:text-yellow-400" : "bg-slate-100 dark:bg-[#151225]/45 text-slate-400 dark:text-gray-600"}`}>
                   <Award className="w-5 h-5" />
                 </div>
                 <div>
@@ -238,7 +238,7 @@ export default function GoalsView({ trades, showToast }) {
     /* Badge 3 */
   }
               <div className={`p-3.5 rounded-xl border flex gap-3.5 items-center transition-all ${sniperAccuracy ? "bg-blue-50 dark:bg-[#3b82f6]/5 border-blue-200 dark:border-[#3b82f6]/20" : "bg-slate-50/70 dark:bg-[#1e1e1e]/40 border-slate-150 dark:border-[#333] opacity-60"}`}>
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${sniperAccuracy ? "bg-blue-100 dark:bg-blue-500/15 text-blue-600 dark:text-blue-400" : "bg-slate-100 dark:bg-[#222] text-slate-400 dark:text-gray-600"}`}>
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${sniperAccuracy ? "bg-blue-100 dark:bg-blue-500/15 text-blue-600 dark:text-blue-400" : "bg-slate-100 dark:bg-[#151225]/45 text-slate-400 dark:text-gray-600"}`}>
                   <CheckCircle className="w-5 h-5" />
                 </div>
                 <div>
@@ -251,7 +251,7 @@ export default function GoalsView({ trades, showToast }) {
     /* Badge 4 */
   }
               <div className={`p-3.5 rounded-xl border flex gap-3.5 items-center transition-all ${absoluteDiscipline ? "bg-purple-50 dark:bg-purple-500/5 border-purple-200 dark:border-purple-500/20" : "bg-slate-50/70 dark:bg-[#1e1e1e]/40 border-slate-150 dark:border-[#333] opacity-60"}`}>
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${absoluteDiscipline ? "bg-purple-100 dark:bg-purple-500/15 text-purple-650 dark:text-purple-400" : "bg-slate-100 dark:bg-[#222] text-slate-400 dark:text-gray-600"}`}>
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${absoluteDiscipline ? "bg-purple-100 dark:bg-purple-500/15 text-purple-650 dark:text-purple-400" : "bg-slate-100 dark:bg-[#151225]/45 text-slate-400 dark:text-gray-600"}`}>
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>

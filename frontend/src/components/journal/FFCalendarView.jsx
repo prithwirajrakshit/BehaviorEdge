@@ -415,7 +415,7 @@ export default function FFCalendarView({ trades, showToast }) {
       {
     /* HEADER ROW */
   }
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-5 rounded-2xl shadow-lg">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-2xl shadow-lg">
         <div className="space-y-1">
           <h2 className="text-xl font-bold text-[#0f172a] dark:text-white tracking-tight flex items-center gap-2">
             📅 News Calendar (Forex)
@@ -428,7 +428,7 @@ export default function FFCalendarView({ trades, showToast }) {
         <div className="flex items-center gap-3 w-full md:w-auto self-stretch md:self-auto justify-end">
           <button
     onClick={() => setShowManualForm(!showManualForm)}
-    className="flex items-center gap-1.5 px-3 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-[#1a1a1a] dark:hover:bg-[#252525] border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold rounded-xl transition-all cursor-pointer shrink-0"
+    className="flex items-center gap-1.5 px-3 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-[#0e0b18]/65 dark:hover:bg-[#252525] border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold rounded-xl transition-all cursor-pointer shrink-0"
     title="Add economic event manually to database"
   >
             <Plus className="w-3.5 h-3.5" />
@@ -449,12 +449,12 @@ export default function FFCalendarView({ trades, showToast }) {
       {showManualForm && renderManualForm()}
 
       {loading ? (
-        <div className="flex flex-col items-center justify-center py-20 bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl shadow-lg space-y-4 animate-pulse">
+        <div className="flex flex-col items-center justify-center py-20 bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl shadow-lg space-y-4 animate-pulse">
           <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
           <p className="text-xs text-slate-500 dark:text-gray-400 font-medium">Fetching weekly economic calendar...</p>
         </div>
       ) : dbEvents.length === 0 ? (
-        <div className="max-w-md mx-auto text-center py-12 bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-6 shadow-xl space-y-4">
+        <div className="max-w-md mx-auto text-center py-12 bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-6 shadow-xl space-y-4">
           <AlertCircle className="w-10 h-10 text-slate-400 dark:text-gray-500 mx-auto" />
           <h3 className="text-sm font-bold text-slate-800 dark:text-white font-sans">No Economic Events Found</h3>
           <p className="text-xs text-slate-500 dark:text-gray-400 leading-relaxed font-sans">
@@ -478,7 +478,7 @@ export default function FFCalendarView({ trades, showToast }) {
             {
       /* Card 1: High Impact Count */
     }
-            <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-4 flex items-center justify-between shadow-md dark:shadow-lg">
+            <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-4 flex items-center justify-between shadow-md dark:shadow-lg">
               <div className="space-y-1">
                 <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-gray-400 tracking-wider font-mono">High Impact Total</span>
                 <div className="text-2xl font-black text-red-650 dark:text-red-500 font-mono">
@@ -494,7 +494,7 @@ export default function FFCalendarView({ trades, showToast }) {
             {
       /* Card 2: USD Events Count */
     }
-            <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-4 flex items-center justify-between shadow-md dark:shadow-lg">
+            <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-4 flex items-center justify-between shadow-md dark:shadow-lg">
               <div className="space-y-1">
                 <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-gray-400 tracking-wider font-mono">USD Events Total</span>
                 <div className="text-2xl font-black text-blue-600 dark:text-blue-400 font-mono">
@@ -510,7 +510,7 @@ export default function FFCalendarView({ trades, showToast }) {
             {
       /* Card 3: Next High Impact countdown */
     }
-            <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-4 flex items-center justify-between shadow-md dark:shadow-lg col-span-1">
+            <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-4 flex items-center justify-between shadow-md dark:shadow-lg col-span-1">
               <div className="space-y-1 w-full overflow-hidden">
                 <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-gray-400 tracking-wider font-mono">Next High Impact</span>
                 <div className="text-xs font-bold text-yellow-650 dark:text-yellow-500 truncate" title={nextHighImpact.title}>
@@ -528,7 +528,7 @@ export default function FFCalendarView({ trades, showToast }) {
             {
       /* Card 4: Total Events Count */
     }
-            <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-4 flex items-center justify-between shadow-md dark:shadow-lg">
+            <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-4 flex items-center justify-between shadow-md dark:shadow-lg">
               <div className="space-y-1">
                 <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-gray-400 tracking-wider font-mono">Total Events Imported</span>
                 <div className="text-2xl font-black text-slate-700 dark:text-gray-300 font-mono">
@@ -546,7 +546,7 @@ export default function FFCalendarView({ trades, showToast }) {
           {
       /* FILTER CONTROL BAR */
     }
-          <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-5 shadow-md dark:shadow-lg space-y-4">
+          <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-5 shadow-md dark:shadow-lg space-y-4">
             
             <div className="flex flex-col lg:flex-row gap-4 items-stretch lg:items-center justify-between">
               
@@ -630,7 +630,7 @@ export default function FFCalendarView({ trades, showToast }) {
           {
       /* DYNAMIC CALENDAR STICKY GROUP TABLE */
     }
-          {sortedDateKeys.length === 0 ? <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-12 rounded-2xl text-center space-y-3">
+          {sortedDateKeys.length === 0 ? <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-12 rounded-2xl text-center space-y-3">
               <AlertCircle className="w-10 h-10 text-slate-400 dark:text-gray-500 mx-auto" />
               <h3 className="text-sm font-bold text-slate-800 dark:text-white">No Matching Events Found</h3>
               <p className="text-xs text-slate-500 dark:text-gray-400 max-w-md mx-auto leading-relaxed">
@@ -656,10 +656,10 @@ export default function FFCalendarView({ trades, showToast }) {
                     {
         /* Table of Events grouped */
       }
-                    <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl overflow-hidden shadow-md dark:shadow-xl">
+                    <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl overflow-hidden shadow-md dark:shadow-xl">
                       <table className="w-full text-left border-collapse text-xs font-sans">
                         <thead>
-                          <tr className="border-b border-slate-200 dark:border-[#2a2a2a] bg-slate-50 dark:bg-[#121212]/80 text-[10px] uppercase font-bold text-slate-500 dark:text-gray-400 tracking-wider">
+                          <tr className="border-b border-slate-200 dark:border-violet-500/15 bg-slate-50 dark:bg-[#121212]/80 text-[10px] uppercase font-bold text-slate-500 dark:text-gray-400 tracking-wider">
                             <th className="py-3 px-4 font-bold">IST Time</th>
                             <th className="py-3 px-4 font-bold">EST Time (FF)</th>
                             <th className="py-3 px-4 font-bold">Currency</th>
@@ -722,7 +722,7 @@ export default function FFCalendarView({ trades, showToast }) {
     /* CLEAR ALL CONFIRMATION MODAL */
   }
       {isConfirmClearOpen && <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in" id="clear_all_modal">
-          <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-6 text-left">
+          <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-6 text-left">
             <div className="flex items-center gap-3 text-red-500">
               <div className="p-3 bg-red-100 dark:bg-red-500/10 rounded-xl">
                 <Trash2 className="w-6 h-6 text-red-650 dark:text-red-500" />
@@ -760,7 +760,7 @@ export default function FFCalendarView({ trades, showToast }) {
     /* DELETE SINGLE EVENT CONFIRMATION MODAL */
   }
       {eventToDelete !== null && <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in" id="delete_single_modal">
-          <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-6 text-left">
+          <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-6 text-left">
             <div className="flex items-center gap-3 text-yellow-500">
               <div className="p-3 bg-yellow-105 dark:bg-yellow-500/10 rounded-xl">
                 <AlertCircle className="w-6 h-6 text-yellow-600 dark:text-yellow-500" />

@@ -157,7 +157,7 @@ export default function NewsEventsView({ trades, showToast }) {
       {
     /* SECTION A: News Event entry Form */
   }
-      <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-6 shadow-md dark:shadow-xl space-y-4">
+      <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-6 shadow-md dark:shadow-xl space-y-4">
         <button
     onClick={() => {
       setIsFormCollapsed(!isFormCollapsed);
@@ -326,8 +326,8 @@ export default function NewsEventsView({ trades, showToast }) {
         {
     /* SECTION C: CALENDAR (Lg: 5/12 cols) */
   }
-        <div className="lg:col-span-5 bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-5 shadow-md dark:shadow-xl space-y-4 flex flex-col justify-between">
-          <div className="flex items-center justify-between border-b border-slate-150 dark:border-[#2a2a2a] pb-3">
+        <div className="lg:col-span-5 bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-5 shadow-md dark:shadow-xl space-y-4 flex flex-col justify-between">
+          <div className="flex items-center justify-between border-b border-slate-150 dark:border-violet-500/15 pb-3">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-blue-500 dark:text-blue-400" />
               <h4 className="font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-gray-400 font-mono">Monthly Event Dots</h4>
@@ -335,7 +335,7 @@ export default function NewsEventsView({ trades, showToast }) {
             <div className="flex items-center gap-1">
               <button
     onClick={prevMonth}
-    className="p-1.5 bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2a2a2a] hover:bg-slate-100 dark:hover:bg-[#222] text-slate-700 dark:text-gray-300 text-xs font-mono font-bold cursor-pointer rounded-lg"
+    className="p-1.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 hover:bg-slate-100 dark:hover:bg-violet-500/10 text-slate-700 dark:text-gray-300 text-xs font-mono font-bold cursor-pointer rounded-lg"
   >
                 &lt;
               </button>
@@ -344,7 +344,7 @@ export default function NewsEventsView({ trades, showToast }) {
               </span>
               <button
     onClick={nextMonth}
-    className="p-1.5 bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#2a2a2a] hover:bg-slate-100 dark:hover:bg-[#222] text-slate-700 dark:text-gray-300 text-xs font-mono font-bold cursor-pointer rounded-lg"
+    className="p-1.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 hover:bg-slate-100 dark:hover:bg-violet-500/10 text-slate-700 dark:text-gray-300 text-xs font-mono font-bold cursor-pointer rounded-lg"
   >
                 &gt;
               </button>
@@ -382,13 +382,13 @@ export default function NewsEventsView({ trades, showToast }) {
           {
     /* Day selection popover/details */
   }
-          <div className="mt-2 bg-slate-50 dark:bg-[#121212] rounded-xl border border-slate-200 dark:border-[#222] p-3 text-xs flex-1 min-h-[140px] flex flex-col justify-between">
+          <div className="mt-2 bg-slate-50 dark:bg-[#151225]/45 rounded-xl border border-slate-200 dark:border-violet-500/15 p-3 text-xs flex-1 min-h-[140px] flex flex-col justify-between">
             {selectedDayStr ? <div className="space-y-2">
-                <p className="font-bold text-blue-600 dark:text-blue-400 font-mono text-[10px] border-b border-slate-200 dark:border-[#222] pb-1.5">
+                <p className="font-bold text-blue-600 dark:text-blue-400 font-mono text-[10px] border-b border-slate-200 dark:border-violet-500/15 pb-1.5">
                   📅 Events on {selectedDayStr}
                 </p>
                 {selectedDayEvents && selectedDayEvents.length > 0 ? <div className="space-y-1.5 max-h-[120px] overflow-y-auto pr-1">
-                    {selectedDayEvents.map((e) => <div key={e.id} className="flex justify-between items-center bg-white dark:bg-[#1a1a1a] p-2 rounded-lg border border-slate-200 dark:border-[#2c2c2c]">
+                    {selectedDayEvents.map((e) => <div key={e.id} className="flex justify-between items-center bg-white dark:bg-[#151225]/45 p-2 rounded-lg border border-slate-200 dark:border-violet-500/15">
                         <div className="min-w-0 pr-2">
                           <p className="font-bold truncate text-[11px] text-slate-800 dark:text-white">{e.title}</p>
                           <p className="text-[9px] uppercase font-mono tracking-wider text-slate-400 dark:text-gray-500">
@@ -410,8 +410,8 @@ export default function NewsEventsView({ trades, showToast }) {
         {
     /* SECTION D: CORRELATION (Lg: 7/12 cols) */
   }
-        <div className="lg:col-span-7 bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-5 shadow-md dark:shadow-xl space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-150 dark:border-[#2a2a2a] pb-3">
+        <div className="lg:col-span-7 bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-5 shadow-md dark:shadow-xl space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-150 dark:border-violet-500/15 pb-3">
             <div className="flex items-center gap-2">
               <Award className="w-5 h-5 text-yellow-650 dark:text-yellow-500" />
               <div>
@@ -423,15 +423,15 @@ export default function NewsEventsView({ trades, showToast }) {
           </div>
 
           <div className="grid grid-cols-3 gap-2 text-center select-none font-mono">
-            <div className="bg-slate-50 dark:bg-[#121212] p-2.5 rounded-xl border border-slate-200 dark:border-[#222]">
+            <div className="bg-slate-50 dark:bg-[#151225]/45 p-2.5 rounded-xl border border-slate-200 dark:border-violet-500/15">
               <p className="text-[10px] text-slate-500 dark:text-gray-400 uppercase tracking-widest font-semibold">Tension Days</p>
               <p className="text-lg font-bold text-slate-800 dark:text-white mt-1">{eventDayTrades.length} <span className="text-[10px] font-normal text-slate-400 dark:text-gray-500">trades</span></p>
             </div>
-            <div className="bg-slate-50 dark:bg-[#121212] p-2.5 rounded-xl border border-slate-200 dark:border-[#222]">
+            <div className="bg-slate-50 dark:bg-[#151225]/45 p-2.5 rounded-xl border border-slate-200 dark:border-violet-500/15">
               <p className="text-[10px] text-slate-500 dark:text-gray-400 uppercase tracking-widest font-semibold">Event Win Rate</p>
               <p className={`text-lg font-bold mt-1 ${eventWinRate >= 50 ? "text-green-655 dark:text-green-500" : "text-red-655 dark:text-red-500"}`}>{eventWinRate}%</p>
             </div>
-            <div className="bg-slate-50 dark:bg-[#121212] p-2.5 rounded-xl border border-slate-200 dark:border-[#222]">
+            <div className="bg-slate-50 dark:bg-[#151225]/45 p-2.5 rounded-xl border border-slate-200 dark:border-violet-500/15">
               <p className="text-[10px] text-slate-500 dark:text-gray-400 uppercase tracking-widest font-semibold">Regular Win Rate</p>
               <p className={`text-lg font-bold mt-1 ${nonEventWinRate >= 50 ? "text-green-655 dark:text-green-500" : "text-red-655 dark:text-red-500"}`}>{nonEventWinRate}%</p>
             </div>
@@ -459,7 +459,7 @@ export default function NewsEventsView({ trades, showToast }) {
                   <th className="py-2 text-right">Net PnL</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-150 dark:divide-[#222] font-mono">
+              <tbody className="divide-y divide-slate-150 dark:divide-violet-500/10 font-mono">
                 {eventDayTrades.length > 0 ? eventDayTrades.slice(0, 5).map((t) => {
     const matchedEvent = events.find((e) => e.date === t.date && e.impact === "High");
     return <tr key={t.id} className="hover:bg-slate-50 dark:hover:bg-[#1f1f1f] transition-all text-slate-700 dark:text-gray-400">
@@ -491,7 +491,7 @@ export default function NewsEventsView({ trades, showToast }) {
       {
     /* FILTER BAR FOR TIMELINE VIEW */
   }
-      <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-4 shadow-md dark:shadow-lg">
+      <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-4 shadow-md dark:shadow-lg">
         <div className="flex flex-col md:flex-row gap-3 items-end justify-between">
           <div className="flex items-center gap-2">
             <ListFilter className="w-4 h-4 text-blue-500" />
@@ -557,7 +557,7 @@ export default function NewsEventsView({ trades, showToast }) {
     const impactColor = ev.impact === "High" ? "text-red-650 bg-red-50 dark:bg-red-500/10 border-red-200 dark:border-red-500/20" : ev.impact === "Medium" ? "text-yellow-650 bg-yellow-50 dark:bg-yellow-500/10 border-yellow-200 dark:border-yellow-500/20" : "text-green-655 bg-green-50 dark:bg-green-500/10 border-green-200 dark:border-green-500/20";
     return <div
       key={ev.id}
-      className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] hover:border-slate-350 dark:hover:border-[#3a3a3a] transition-all rounded-2xl p-5 shadow-md dark:shadow-lg flex flex-col justify-between"
+      className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 hover:border-slate-350 dark:hover:border-violet-500/25 transition-all rounded-2xl p-5 shadow-md dark:shadow-lg flex flex-col justify-between"
     >
                   <div className="space-y-3">
                     <div className="flex justify-between items-start gap-2">
@@ -569,7 +569,7 @@ export default function NewsEventsView({ trades, showToast }) {
                         <span className={`text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wide border ${impactColor}`}>
                           {ev.impact}
                         </span>
-                        <span className="text-[9px] bg-slate-50 dark:bg-[#121212] border border-slate-200 dark:border-[#222] px-2 py-0.5 rounded text-slate-650 dark:text-gray-400">
+                        <span className="text-[9px] bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 px-2 py-0.5 rounded text-slate-650 dark:text-gray-400">
                           {ev.category}
                         </span>
                       </div>
@@ -580,7 +580,7 @@ export default function NewsEventsView({ trades, showToast }) {
                     {
       /* Actual vs Forecast vs Previous values grid */
     }
-                    {(ev.actual || ev.forecast || ev.previous) && <div className="grid grid-cols-3 gap-1 bg-slate-50 dark:bg-[#121212] rounded-xl border border-slate-150 dark:border-[#222] p-2 text-center font-mono text-[10px] select-none text-slate-500 dark:text-gray-450">
+                    {(ev.actual || ev.forecast || ev.previous) && <div className="grid grid-cols-3 gap-1 bg-slate-50 dark:bg-[#151225]/45 rounded-xl border border-slate-150 dark:border-violet-500/15 p-2 text-center font-mono text-[10px] select-none text-slate-500 dark:text-gray-450">
                         <div>
                           <p className="text-[8px] text-slate-400 dark:text-gray-500">ACTUAL</p>
                           <p className="font-bold text-slate-800 dark:text-white max-w-[80px] truncate">{ev.actual || "-"}</p>
@@ -595,15 +595,15 @@ export default function NewsEventsView({ trades, showToast }) {
                         </div>
                       </div>}
 
-                    {ev.notes && <div className="bg-slate-55 dark:bg-[#121212] rounded-xl p-3 border border-slate-100 dark:border-[#222] text-xs text-slate-600 dark:text-gray-400 italic">
+                    {ev.notes && <div className="bg-slate-55 dark:bg-[#151225]/45 rounded-xl p-3 border border-slate-100 dark:border-violet-500/15 text-xs text-slate-600 dark:text-gray-400 italic">
                         {ev.notes}
                       </div>}
                   </div>
 
-                  <div className="flex justify-end gap-2 border-t border-slate-150 dark:border-[#2a2a2a] pt-3 mt-4">
+                  <div className="flex justify-end gap-2 border-t border-slate-150 dark:border-violet-500/15 pt-3 mt-4">
                     <button
       onClick={() => handleTriggerEdit(ev)}
-      className="p-1 px-2.5 bg-slate-50 dark:bg-[#222] hover:bg-slate-100 dark:hover:bg-[#333] hover:text-slate-850 dark:hover:text-white rounded-lg transition-colors border border-slate-200 dark:border-[#333] text-[10px] font-semibold text-slate-600 dark:text-gray-400 cursor-pointer flex items-center gap-1"
+      className="p-1 px-2.5 bg-slate-50 dark:bg-[#151225]/45 hover:bg-slate-100 dark:hover:bg-violet-500/10 hover:text-slate-850 dark:hover:text-white rounded-lg transition-colors border border-slate-200 dark:border-violet-500/15 text-[10px] font-semibold text-slate-600 dark:text-gray-400 cursor-pointer flex items-center gap-1"
     >
                       <Edit className="w-3 h-3" />
                       <span>Edit</span>
@@ -618,7 +618,7 @@ export default function NewsEventsView({ trades, showToast }) {
                   </div>
                 </div>;
   })}
-          </div> : <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-10 text-center text-xs text-slate-500 dark:text-gray-500 font-mono shadow-sm">
+          </div> : <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-10 text-center text-xs text-slate-500 dark:text-gray-500 font-mono shadow-sm">
             No events matches current filters scheduled. Record some macro releases above!
           </div>}
       </div>
