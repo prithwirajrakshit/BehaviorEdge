@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { OutcomeBadge, DirectionBadge, SessionBadge } from "./Badge";
 import { Eye, Clock, CheckSquare, X, Edit2, Star } from "lucide-react";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
-export default function WeeklyCalendar({ trades, showToast }) {
-  const [pivotDate, setPivotDate] = useState(() => /* @__PURE__ */ new Date("2026-05-27"));
+  const todayStr = new Date().toISOString().substring(0, 10);
+  const [pivotDate, setPivotDate] = useState(() => new Date());
   const [selectedTrade, setSelectedTrade] = useState(null);
   const [dailyNotes, setDailyNotes] = useState([]);
   const [selectedNotesDay, setSelectedNotesDay] = useState(null);
@@ -99,7 +99,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
     setPivotDate(newPivot);
   };
   const handleToday = () => {
-    setPivotDate(/* @__PURE__ */ new Date("2026-05-27"));
+    setPivotDate(new Date());
   };
   const getWeekRangeLabel = () => {
     const start = daysOfWeek[0].dateObj;
@@ -183,14 +183,14 @@ export default function WeeklyCalendar({ trades, showToast }) {
     const hasTrades = dayTrades.length > 0;
     return <div
       key={day.date}
-      className={`min-h-[220px] bg-white dark:bg-[#1a1a1a] border rounded-2xl p-4 flex flex-col justify-between shadow-sm dark:shadow-lg transition-all duration-300 hover:border-slate-350 dark:hover:border-neutral-700/80 ${day.date === "2026-05-27" ? "border-blue-500/50 shadow-blue-500/[0.04]" : "border-slate-200 dark:border-[#2a2a2a]"}`}
+      className={`min-h-[220px] bg-white dark:bg-[#1a1a1a] border rounded-2xl p-4 flex flex-col justify-between shadow-sm dark:shadow-lg transition-all duration-300 hover:border-slate-350 dark:hover:border-neutral-700/80 ${day.date === todayStr ? "border-blue-500/50 shadow-blue-500/[0.04]" : "border-slate-200 dark:border-[#2a2a2a]"}`}
     >
               {
       /* Day title & date info */
     }
               <div className="flex items-center justify-between border-b border-slate-100 dark:border-[#252525] pb-2">
                 <div className="flex items-center gap-1.5">
-                  <span className={`font-sans font-black text-sm uppercase ${day.date === "2026-05-27" ? "text-blue-600 dark:text-blue-400" : "text-slate-400 dark:text-gray-400"}`}>
+                  <span className={`font-sans font-black text-sm uppercase ${day.date === todayStr ? "text-blue-600 dark:text-blue-400" : "text-slate-400 dark:text-gray-400"}`}>
                     {day.dayName}
                   </span>
                   <button

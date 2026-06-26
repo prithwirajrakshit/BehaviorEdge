@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Calendar, TrendingUp, HelpCircle, Bookmark } from "lucide-react";
 export default function WeeklyReview({ trades, showToast }) {
   const [pivotWeekDate, setPivotWeekDate] = useState(() => {
-    const today = /* @__PURE__ */ new Date("2026-05-27");
+    const today = new Date();
     const day = today.getUTCDay();
     const diff = today.getUTCDate() - day + (day === 0 ? -6 : 1);
     today.setUTCDate(diff);
