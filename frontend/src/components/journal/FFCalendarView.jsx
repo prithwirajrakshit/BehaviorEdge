@@ -7,9 +7,7 @@ import {
   AlertCircle,
   Plus,
   Trash2,
-  Upload,
   Search,
-  ExternalLink,
   X
 } from "lucide-react";
 const currenciesList = ["USD", "EUR", "GBP", "JPY", "CAD", "AUD", "NZD", "CHF"];
@@ -25,8 +23,6 @@ export default function FFCalendarView({ trades, showToast }) {
   const [manImpact, setManImpact] = useState("High");
   const [manForecast, setManForecast] = useState("");
   const [manPrevious, setManPrevious] = useState("");
-  const [dragOver, setDragOver] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
   const [selectedCurrencies, setSelectedCurrencies] = useState(["USD", "EUR"]);
   const [selectedImpacts, setSelectedImpacts] = useState(["High"]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -149,156 +145,7 @@ export default function FFCalendarView({ trades, showToast }) {
       showToast(err.message || "Error creating manual event.", "error");
     }
   };
-  const parseCsvLine = (lineStr) => {
-    const result = [];
-    let curVal = "";
-    let insideQuote = false;
-    for (let i = 0; i < lineStr.length; i++) {
-      const char = lineStr[i];
-      if (char === '"') {
-        insideQuote = !insideQuote;
-      } else if (char === "," && !insideQuote) {
-        result.push(curVal.trim().replace(/^"|"$/g, ""));
-        curVal = "";
-      } else {
-        curVal += char;
-      }
-    }
-    result.push(curVal.trim().replace(/^"|"$/g, ""));
-    return result;
-  };
-  const convertCsvDate = (rawDate) => {
-    const clean = (rawDate || "").trim();
-    const parts = clean.split(/[-/]/);
-    if (parts.length === 3) {
-      const month = parts[0].padStart(2, "0");
-      const day = parts[1].padStart(2, "0");
-      let year = parts[2];
-      if (year.length === 2) {
-        year = "20" + year;
-      }
-      return `${year}-${month}-${day}`;
-    }
-    return clean;
-  };
-  const handleCsvImport = async () => {
-    if (!selectedFile) {
-      showToast("Select a Forex Factory CSV file first.", "error");
-      return;
-    }
-    setLoading(true);
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      try {
-        const csvText = e.target?.result;
-        if (!csvText) {
-          showToast("Empty CSV file content.", "error");
-          setLoading(false);
-          return;
-        }
-        const lines = csvText.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
-        if (lines.length < 2) {
-          showToast("CSV needs a header and rows.", "error");
-          setLoading(false);
-          return;
-        }
-        const headers = parseCsvLine(lines[0]);
-        const getColIndex = (names) => {
-          return headers.findIndex((h) => names.some((name) => h.toLowerCase() === name.toLowerCase()));
-        };
-        const iDate = getColIndex(["date"]);
-        const iTime = getColIndex(["time"]);
-        const iCurrency = getColIndex(["currency", "country"]);
-        const iImpact = getColIndex(["impact"]);
-        const iEvent = getColIndex(["event", "title"]);
-        const iActual = getColIndex(["actual"]);
-        const iForecast = getColIndex(["forecast"]);
-        const iPrevious = getColIndex(["previous"]);
-        if (iDate === -1 || iEvent === -1) {
-          showToast('Invalid CSV format. "Date" and "Event" are required columns.', "error");
-          setLoading(false);
-          return;
-        }
-        let importedCount = 0;
-        let skippedCount = 0;
-        const postPromises = [];
-        for (let i = 1; i < lines.length; i++) {
-          const row = parseCsvLine(lines[i]);
-          if (row.length < headers.length) continue;
-          const rawDate = row[iDate];
-          const rawEvent = row[iEvent];
-          const rawImpact = iImpact !== -1 ? row[iImpact] : "";
-          if (!rawDate || !rawEvent) continue;
-          if (rawImpact === "Non-Economic") {
-            continue;
-          }
-          const cleanDate = convertCsvDate(rawDate);
-          const rawTime = iTime !== -1 ? row[iTime] : "";
-          const currency = iCurrency !== -1 ? row[iCurrency] : "USD";
-          const actual = iActual !== -1 ? row[iActual] : "";
-          const forecast = iForecast !== -1 ? row[iForecast] : "";
-          const previous = iPrevious !== -1 ? row[iPrevious] : "";
-          const postPromise = authFetch("/api/market_events", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              date: cleanDate,
-              time: rawTime,
-              title: rawEvent,
-              category: currency,
-              impact: rawImpact,
-              forecast,
-              previous,
-              actual,
-              notes: "Forex Factory CSV Import"
-            })
-          }).then((res) => {
-            if (res.status === 201) {
-              importedCount++;
-            } else if (res.status === 409) {
-              skippedCount++;
-            }
-          }).catch((err) => {
-            console.error("Import line failed:", err);
-          });
-          postPromises.push(postPromise);
-        }
-        await Promise.all(postPromises);
-        showToast(`\u2705 Imported ${importedCount} events! ${skippedCount} duplicates skipped.`, "success");
-        fetchDbEvents();
-      } catch (err) {
-        showToast(`Error reading CSV: ${err.message}`, "error");
-        setLoading(false);
-      }
-    };
-    reader.readAsText(selectedFile);
-  };
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    setDragOver(true);
-  };
-  const handleDragLeave = () => {
-    setDragOver(false);
-  };
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setDragOver(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file) {
-      if (file.name.endsWith(".csv")) {
-        setSelectedFile(file);
-        showToast(`File selected: ${file.name}`, "success");
-      } else {
-        showToast("Only Forex Factory weekly CSV files are supported (.csv).", "error");
-      }
-    }
-  };
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-    }
-  };
+
   const convertESTtoIST = (timeStr, dateStr) => {
     if (!timeStr || timeStr.toLowerCase().trim() === "all day") {
       return { ist: "All Day", est: "All Day" };
@@ -601,174 +448,27 @@ export default function FFCalendarView({ trades, showToast }) {
 
       {showManualForm && renderManualForm()}
 
-      {
-    /* RENDER DYNAMIC MULTI-STATE DISPATCH (LANDING STATE VS CALENDAR LIST) */
-  }
-      {dbEvents.length === 0 ? (
-    /* LANDING INSTRUCTIONS STATE */
-    <div className="max-w-4xl mx-auto">
-          <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2b2b2b] rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 via-emerald-500 to-purple-500" />
-            
-            <div className="text-center space-y-2">
-              <CalendarDays className="w-12 h-12 text-blue-500 dark:text-blue-400 mx-auto" />
-              <h3 className="text-lg font-bold text-[#0f172a] dark:text-white font-sans tracking-tight">📅 News Calendar (Forex) & Import Controller</h3>
-              <p className="text-xs text-slate-500 dark:text-gray-400 max-w-lg mx-auto leading-relaxed">
-                No active calendar events found in the database. Please follow these simple step-by-step instructions below to import live weekly events from your news source.
-              </p>
-            </div>
-
-            {
-      /* THE FOUR STEPS */
-    }
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-4">
-              
-              {
-      /* STEP 1 */
-    }
-              <div className="bg-slate-50 dark:bg-[#131313] border border-slate-100 dark:border-[#222] rounded-xl p-5 space-y-3.5 hover:border-slate-350 dark:hover:border-[#333] transition-all">
-                <div className="flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-blue-600/10 text-blue-500 dark:text-blue-400 flex items-center justify-center font-mono font-bold text-xs ring-1 ring-blue-500/20">1</span>
-                  <h4 className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider">Open Calendar</h4>
-                </div>
-                <p className="text-[11px] text-slate-600 dark:text-gray-400 leading-relaxed font-semibold">
-                  Go to the official Forex Factory calendar schedules dynamically to view real-time macroeconomic reports.
-                </p>
-                <div className="pt-1">
-                  <a
-      href="https://www.forexfactory.com/calendar"
-      target="_blank"
-      rel="noreferrer"
-      className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-black text-[10px] uppercase tracking-wider rounded-lg transition-all cursor-pointer shadow"
-    >
-                    <span>🌐 Open Forex Factory Calendar</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
-              </div>
-
-              {
-      /* STEP 2 */
-    }
-              <div className="bg-slate-50 dark:bg-[#131313] border border-slate-100 dark:border-[#222] rounded-xl p-5 space-y-3.5 hover:border-slate-350 dark:hover:border-[#333] transition-all">
-                <div className="flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-blue-600/10 text-blue-500 dark:text-blue-400 flex items-center justify-center font-mono font-bold text-xs ring-1 ring-blue-500/20">2</span>
-                  <h4 className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider">Filter what you need</h4>
-                </div>
-                <p className="text-[11px] text-slate-600 dark:text-gray-400 leading-relaxed font-semibold">
-                  Filter by <span className="text-slate-850 dark:text-white font-bold">USD</span> and <span className="text-slate-850 dark:text-white font-bold">EUR</span> for crypto impact events. Filter by <span className="text-red-500 dark:text-red-400 font-bold">High Impact</span> only.
-                </p>
-                <div className="bg-slate-150 dark:bg-[#0c0c0c] border border-slate-200 dark:border-[#1e1e1e] p-2.5 rounded-lg flex flex-wrap gap-2 text-[10px] text-slate-500 dark:text-gray-500 font-mono">
-                  <span className="text-slate-700 dark:text-white font-bold">Filters:</span>
-                  <span className="text-green-600 dark:text-green-400 font-bold">USD 🇺🇸</span>
-                  <span className="text-green-600 dark:text-green-400 font-bold">EUR 🇪🇺</span>
-                  <span className="text-red-600 dark:text-red-400 font-bold">High Impact 🔴</span>
-                </div>
-              </div>
-
-              {
-      /* STEP 3 */
-    }
-              <div className="bg-slate-50 dark:bg-[#131313] border border-slate-100 dark:border-[#222] rounded-xl p-5 space-y-3.5 hover:border-slate-350 dark:hover:border-[#333] transition-all">
-                <div className="flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-blue-600/10 text-blue-500 dark:text-blue-400 flex items-center justify-center font-mono font-bold text-xs ring-1 ring-blue-500/20">3</span>
-                  <h4 className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider">Download the CSV</h4>
-                </div>
-                <p className="text-[11px] text-slate-600 dark:text-gray-400 leading-relaxed font-semibold">
-                  Click the <span className="text-slate-700 dark:text-gray-200 font-bold font-sans">CSV button</span> at the top right of the Forex Factory calendar page to download this week's events on your local machine.
-                </p>
-                
-                {
-      /* Visual export element mockup */
-    }
-                <div className="bg-slate-150 dark:bg-[#0a0a0a] border border-slate-200 dark:border-[#222] rounded-lg p-3 flex items-center justify-between text-[11px] text-slate-600 dark:text-gray-400 font-mono">
-                  <div className="flex gap-2">
-                    <span className="text-slate-500 dark:text-gray-500 font-bold">Export:</span>
-                    <span className="text-slate-400 dark:text-gray-500 line-through">XML</span>
-                    <span className="text-slate-400 dark:text-gray-500 line-through">JSON</span>
-                    <span className="text-emerald-600 dark:text-emerald-400 font-black underline border border-emerald-350 dark:border-emerald-500/35 px-1.5 py-0.5 rounded bg-white dark:bg-[#1e1e1e] shrink-0 animate-pulse">CSV</span>
-                  </div>
-                  <span className="text-slate-400 dark:text-gray-500 text-[9px] italic">Top Right button</span>
-                </div>
-              </div>
-
-              {
-      /* STEP 4 */
-    }
-              <div className="bg-slate-50 dark:bg-[#131313] border border-slate-100 dark:border-[#222] rounded-xl p-5 space-y-3.5 hover:border-slate-350 dark:hover:border-[#333] transition-all">
-                <div className="flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-[#10b981]/10 text-emerald-500 dark:text-emerald-400 flex items-center justify-center font-mono font-bold text-xs ring-1 ring-[#10b981]/20">4</span>
-                  <h4 className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider">Import CSV Here</h4>
-                </div>
-                <p className="text-[11px] text-slate-600 dark:text-gray-400 leading-relaxed font-semibold">
-                  Drop your downloaded weekly calendar CSV directly in the interactive upload zone below to trigger instantly.
-                </p>
-                <div className="text-[10px] text-slate-400 dark:text-gray-500 italic bg-slate-100 dark:bg-[#0c0c0c] px-2 py-1.5 rounded font-mono border border-slate-150 dark:border-[#1a1a1a]">
-                  Accepts standard .csv formats only.
-                </div>
-              </div>
-
-            </div>
-
-            {
-      /* BIG DROP ZONE & MANUAL FILE ATTACHMENT */
-    }
-            <div className="pt-2 border-t border-slate-200 dark:border-[#2d2d2d] space-y-4">
-              <div
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
-      className={`border-2 border-dashed rounded-2xl p-8 text-center transition-all cursor-pointer ${dragOver ? "border-emerald-500 bg-emerald-500/5 shadow-lg" : selectedFile ? "border-blue-500 bg-blue-500/5" : "border-slate-200 dark:border-[#333] hover:border-slate-400 dark:hover:border-gray-600 bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/[0.01]"}`}
-      onClick={() => document.getElementById("csv-file-selector")?.click()}
-    >
-                <input
-      type="file"
-      id="csv-file-selector"
-      accept=".csv"
-      className="hidden"
-      onChange={handleFileChange}
-    />
-                
-                <div className="space-y-2">
-                  <Upload className={`w-8 h-8 mx-auto ${selectedFile ? "text-blue-500" : "text-slate-400 dark:text-gray-500"}`} />
-                  {selectedFile ? <div className="space-y-1">
-                      <p className="text-xs text-slate-800 dark:text-white font-bold font-mono truncate max-w-md mx-auto">
-                        📂 {selectedFile.name}
-                      </p>
-                      <p className="text-[10px] text-slate-500 dark:text-gray-400 font-bold">
-                        {(selectedFile.size / 1024).toFixed(1)} KB — Click to change file
-                      </p>
-                    </div> : <div className="space-y-1 font-sans">
-                      <p className="text-xs text-slate-700 dark:text-gray-200 font-bold">
-                        📂 Drop your Forex Factory CSV here or click to browse
-                      </p>
-                      <p className="text-[10px] text-slate-400 dark:text-gray-500">
-                        File suffix must be .csv format
-                      </p>
-                    </div>}
-                </div>
-              </div>
-
-              {selectedFile && <div className="text-center">
-                  <button
-      onClick={(e) => {
-        e.stopPropagation();
-        handleCsvImport();
-      }}
-      disabled={loading}
-      className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 hover:scale-[1.02] text-white rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer inline-flex items-center gap-1.5 shadow"
-    >
-                    <CheckCircle className="w-4 h-4" />
-                    <span>Import Events</span>
-                  </button>
-                </div>}
-            </div>
-
-          </div>
+      {loading ? (
+        <div className="flex flex-col items-center justify-center py-20 bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl shadow-lg space-y-4 animate-pulse">
+          <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-xs text-slate-500 dark:text-gray-400 font-medium">Fetching weekly economic calendar...</p>
         </div>
-  ) : (
-    /* INSTANTIATED CALENDAR LIST VIEW (DISPLAY CARDS AND DATA) */
-    <div className="space-y-6">
+      ) : dbEvents.length === 0 ? (
+        <div className="max-w-md mx-auto text-center py-12 bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] rounded-2xl p-6 shadow-xl space-y-4">
+          <AlertCircle className="w-10 h-10 text-slate-400 dark:text-gray-500 mx-auto" />
+          <h3 className="text-sm font-bold text-slate-800 dark:text-white font-sans">No Economic Events Found</h3>
+          <p className="text-xs text-slate-500 dark:text-gray-400 leading-relaxed font-sans">
+            We couldn't retrieve any economic events for this week. Please check your internet connection or try again.
+          </p>
+          <button
+            onClick={fetchDbEvents}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-black transition-all cursor-pointer inline-flex items-center gap-1.5 shadow"
+          >
+            Retry Fetching
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-6">
           
           {
       /* TOP 4 SUMMARY STATISTICS CARDS */
@@ -864,84 +564,7 @@ export default function FFCalendarView({ trades, showToast }) {
     />
               </div>
 
-              {
-      /* Import fresh weekly file drag-drop label trigger */
-    }
-              <div className="flex items-center gap-3">
-                <label className="flex items-center gap-1.5 px-3 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-[#121212] dark:hover:bg-[#1a1a1a] border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-xl transition-all cursor-pointer shrink-0">
-                  <Upload className="w-3.5 h-3.5" />
-                  <span>Import Fresh CSV</span>
-                  <input
-      type="file"
-      accept=".csv"
-      className="hidden"
-      onChange={(e) => {
-        const file = e.target.files?.[0];
-        if (file) {
-          setSelectedFile(file);
-          const tempReader = new FileReader();
-          tempReader.onload = async (evt) => {
-            try {
-              const csvText = evt.target?.result;
-              if (!csvText) return;
-              const lines = csvText.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
-              if (lines.length < 2) return;
-              const headers = parseCsvLine(lines[0]);
-              const getColIndex = (names) => headers.findIndex((h) => names.some((name) => h.toLowerCase() === name.toLowerCase()));
-              const iDate = getColIndex(["date"]);
-              const iTime = getColIndex(["time"]);
-              const iCurrency = getColIndex(["currency", "country"]);
-              const iImpact = getColIndex(["impact"]);
-              const iEvent = getColIndex(["event", "title"]);
-              const iActual = getColIndex(["actual"]);
-              const iForecast = getColIndex(["forecast"]);
-              const iPrevious = getColIndex(["previous"]);
-              if (iDate === -1 || iEvent === -1) return;
-              let imported = 0;
-              let skipped = 0;
-              const promises = [];
-              for (let i = 1; i < lines.length; i++) {
-                const row = parseCsvLine(lines[i]);
-                if (row.length < headers.length) continue;
-                const rawDate = row[iDate];
-                const rawEvent = row[iEvent];
-                const rawImpact = iImpact !== -1 ? row[iImpact] : "";
-                if (!rawDate || !rawEvent) continue;
-                if (rawImpact === "Non-Economic") continue;
-                promises.push(
-                  authFetch("/api/market_events", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                      date: convertCsvDate(rawDate),
-                      time: iTime !== -1 ? row[iTime] : "",
-                      title: rawEvent,
-                      category: iCurrency !== -1 ? row[iCurrency] : "USD",
-                      impact: rawImpact,
-                      forecast: iForecast !== -1 ? row[iForecast] : "",
-                      previous: iPrevious !== -1 ? row[iPrevious] : "",
-                      actual: iActual !== -1 ? row[iActual] : "",
-                      notes: "Forex Factory CSV Import"
-                    })
-                  }).then((res) => {
-                    if (res.status === 201) imported++;
-                    else if (res.status === 409) skipped++;
-                  })
-                );
-              }
-              await Promise.all(promises);
-              showToast(`\u2705 Imported ${imported} events! ${skipped} duplicates skipped.`, "success");
-              fetchDbEvents();
-            } catch (err) {
-              showToast(`Failed to parse CSV: ${err.message}`, "error");
-            }
-          };
-          tempReader.readAsText(file);
-        }
-      }}
-    />
-                </label>
-              </div>
+
 
             </div>
 

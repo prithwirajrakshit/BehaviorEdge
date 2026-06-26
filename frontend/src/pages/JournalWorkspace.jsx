@@ -73,9 +73,9 @@ export default function JournalWorkspace() {
       const workspace = document.querySelector('.journal-workspace')
       if (!workspace) return
       
-      // Select all card elements in the Journal Workspace
+      // Select only major structural card elements in the Journal Workspace (those with rounded-2xl)
       const cards = workspace.querySelectorAll(
-        '.bg-white, .dark\\:bg-\\[\\#1a1a1a\\], .dark\\:bg-zinc-900\\/50, .dark\\:bg-zinc-950, .dark\\:bg-\\[\\#0e0b18\\]\\/80, .dark\\:bg-\\[\\#0e0b18\\]\\/40'
+        '.rounded-2xl.bg-white, .rounded-2xl.dark\\:bg-\\[\\#1a1a1a\\], .rounded-2xl.dark\\:bg-zinc-900\\/50, .rounded-2xl.dark\\:bg-zinc-950, .rounded-2xl.dark\\:bg-\\[\\#0e0b18\\]\\/80, .rounded-2xl.dark\\:bg-\\[\\#0e0b18\\]\\/40'
       )
       
       cards.forEach((card) => {

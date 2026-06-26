@@ -27,6 +27,10 @@ from schemas import (
 from routers.auth import get_current_user
 from typing import List, Optional
 import datetime
+import os
+import time
+import json
+import requests
 
 router = APIRouter(prefix="/journal", tags=["Journal Elements"])
 
@@ -128,6 +132,103 @@ def delete_account_balance(balance_id: int, user: User = Depends(get_user), db: 
 
 # ── Market Events ─────────────────────────────────────────────
 
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+BACKEND_DIR = os.path.dirname(CURRENT_DIR)
+CACHE_FILE = os.path.join(BACKEND_DIR, "last_calendar_fetch.json")
+
+def should_sync_calendar() -> bool:
+    if not os.path.exists(CACHE_FILE):
+        return True
+    try:
+        with open(CACHE_FILE, "r") as f:
+            data = json.load(f)
+            last_fetch = data.get("last_fetch", 0)
+            # Fetch every 6 hours (21600 seconds)
+            if time.time() - last_fetch > 21600:
+                return True
+    except Exception:
+        return True
+    return False
+
+def update_sync_timestamp(success: bool = True):
+    try:
+        # On success, wait 6 hours (current time).
+        # On failure/429, wait 5 minutes (current time - 6 hours + 5 minutes).
+        t = time.time() if success else (time.time() - 21600 + 300)
+        with open(CACHE_FILE, "w") as f:
+            json.dump({"last_fetch": t}, f)
+    except Exception:
+        pass
+
+def sync_forex_calendar(db: Session, user_id: int):
+    url = "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
+    headers = {"User-Agent": "Mozilla/5.0"}
+    try:
+        response = requests.get(url, headers=headers, timeout=5)
+        if response.status_code == 200:
+            events_data = response.json()
+            for item in events_data:
+                date_iso = item.get("date", "")
+                if not date_iso:
+                    continue
+                
+                try:
+                    dt = datetime.datetime.fromisoformat(date_iso)
+                    date_str = dt.strftime("%Y-%m-%d")
+                    time_str = dt.strftime("%I:%M%p").lower()
+                    if time_str.startswith("0"):
+                        time_str = time_str[1:]
+                except Exception:
+                    # Fallback
+                    date_str = date_iso.split("T")[0]
+                    time_str = "All Day"
+                
+                title = item.get("title", "Unknown Event")
+                category = item.get("country", "USD")
+                impact = item.get("impact", "High")
+                forecast = item.get("forecast", "")
+                previous = item.get("previous", "")
+                
+                # Check duplicate
+                duplicate = db.query(JournalMarketEvent).filter(
+                    JournalMarketEvent.user_id == user_id,
+                    JournalMarketEvent.date == date_str,
+                    JournalMarketEvent.title == title
+                ).first()
+                
+                if duplicate:
+                    duplicate.time = time_str
+                    duplicate.category = category
+                    duplicate.impact = impact
+                    duplicate.forecast = forecast
+                    duplicate.previous = previous
+                else:
+                    new_event = JournalMarketEvent(
+                        user_id=user_id,
+                        date=date_str,
+                        time=time_str,
+                        title=title,
+                        category=category,
+                        impact=impact,
+                        actual="",
+                        forecast=forecast,
+                        previous=previous,
+                        notes="Auto-Fetched"
+                    )
+                    db.add(new_event)
+            db.commit()
+            update_sync_timestamp(success=True)
+            print("Forex calendar synced successfully.")
+        elif response.status_code == 429:
+            print("Forex calendar sync rate limited (HTTP 429). Backing off for 5 minutes.")
+            update_sync_timestamp(success=False)
+        else:
+            print(f"Forex calendar sync failed with status code {response.status_code}. Backing off for 5 minutes.")
+            update_sync_timestamp(success=False)
+    except Exception as e:
+        print(f"Error syncing forex calendar: {e}")
+        update_sync_timestamp(success=False)
+
 @router.get("/market_events", response_model=List[MarketEventOut])
 def get_market_events(
     category: Optional[str] = None,
@@ -137,6 +238,11 @@ def get_market_events(
     user: User = Depends(get_user),
     db: Session = Depends(get_db)
 ):
+    # Check if database is empty for this user, or if we need to sync
+    events_count = db.query(JournalMarketEvent).filter(JournalMarketEvent.user_id == user.id).count()
+    if events_count == 0 or should_sync_calendar():
+        sync_forex_calendar(db, user.id)
+
     query = db.query(JournalMarketEvent).filter(JournalMarketEvent.user_id == user.id)
     if category:
         query = query.filter(JournalMarketEvent.category == category)

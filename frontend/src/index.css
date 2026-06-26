@@ -409,13 +409,13 @@ h6 {
   --border-workspace-glow: rgba(124, 58, 237, 0.22);
 }
 
-/* Glassmorphic Cards & Containers */
-.journal-workspace .bg-white,
-.journal-workspace .dark\:bg-\[\#1a1a1a\],
-.journal-workspace .dark\:bg-zinc-900\/50,
-.journal-workspace .dark\:bg-zinc-950,
-.journal-workspace .dark\:bg-\[\#0e0b18\]\/80,
-.journal-workspace .dark\:bg-\[\#0e0b18\]\/40 {
+/* Glassmorphic Cards & Containers (Target only major structural cards with rounded-2xl) */
+.journal-workspace .rounded-2xl.bg-white,
+.journal-workspace .rounded-2xl.dark\:bg-\[\#1a1a1a\],
+.journal-workspace .rounded-2xl.dark\:bg-zinc-900\/50,
+.journal-workspace .rounded-2xl.dark\:bg-zinc-950,
+.journal-workspace .rounded-2xl.dark\:bg-\[\#0e0b18\]\/80,
+.journal-workspace .rounded-2xl.dark\:bg-\[\#0e0b18\]\/40 {
   position: relative !important; /* Required for GlowCard spotlight borders */
   background: var(--bg-workspace-card) !important;
   backdrop-filter: blur(16px) !important;
