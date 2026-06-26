@@ -629,11 +629,12 @@ h6 {
   margin-left: 240px;
   padding: 36px 40px;
   min-height: 100vh;
-  transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s;
+  transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .main-content.sidebar-collapsed {
   margin-left: 0 !important;
+  padding-left: 64px; /* Shift content to right when collapsed to clear toggle button */
 }
 
 .sidebar-container {
@@ -731,6 +732,12 @@ h6 {
   overflow: hidden;
   margin: -36px -40px;
   width: calc(100% + 80px);
+  transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.main-content.sidebar-collapsed .journal-workspace-container {
+  margin-left: -64px;
+  width: calc(100% + 104px); /* 40px right + 64px left = 104px */
 }
 
 .journal-mobile-nav {
