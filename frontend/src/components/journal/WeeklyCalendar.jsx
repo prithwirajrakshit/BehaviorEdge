@@ -128,11 +128,6 @@ export default function WeeklyCalendar({ trades, showToast }) {
     /* Calendar Header with navigation controls */
   }
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center py-2 gap-4">
-        <div>
-          <span className="text-xs bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 font-mono text-blue-600 dark:text-blue-400 px-3 py-1.5 rounded-lg select-none font-bold">
-            Weekly Agenda View
-          </span>
-        </div>
 
         {
     /* Date navigators */

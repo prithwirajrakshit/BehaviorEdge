@@ -71,9 +71,6 @@ export default function WeeklyReview({ trades, showToast }) {
   }
       <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-md dark:shadow-lg gap-4">
         <div>
-          <span className="text-xs bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 font-mono text-blue-600 dark:text-blue-400 px-3 py-1.5 rounded-lg select-none font-bold">
-            📅 Weekly Reflective Dashboard
-          </span>
           <h2 className="text-xl font-bold text-slate-800 dark:text-white mt-2">Weekly Performance Review</h2>
           <p className="text-xs text-slate-500 dark:text-gray-500 font-mono mt-1">Review outcomes, evaluate week rules adherence, and capture core insights.</p>
         </div>

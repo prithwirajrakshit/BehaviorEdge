@@ -292,14 +292,15 @@ export default function JournalWorkspace() {
                       if (item.id !== 'add') setEditingTrade(null)
                       setCurrentPage(item.id)
                     }}
-                    className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-left text-sm transition-all font-semibold ${
+                    className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-left text-sm transition-all font-semibold ${
                       active
-                        ? 'bg-violet-600/20 text-[#a78bfa] border-l-2 border-violet-500 shadow-[0_0_15px_rgba(124,58,237,0.1)]'
-                        : 'text-violet-300/70 hover:text-white hover:bg-violet-500/5'
+                        ? 'bg-gradient-to-r from-violet-600 to-[#7c3aed] text-white shadow-[0_0_20px_rgba(124,58,237,0.25)]'
+                        : 'text-violet-300/70 hover:text-white hover:bg-violet-500/10'
                     }`}
                   >
                     <item.icon className="w-4 h-4 shrink-0" />
                     <span>{item.label}</span>
+                    {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white/80 shadow-[0_0_6px_#fff]" />}
                   </button>
                 )
               })}

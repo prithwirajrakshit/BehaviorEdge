@@ -97,11 +97,7 @@ export default function SettingsView({ trades, onClearAll, showToast }) {
       {
     /* Title */
   }
-      <div>
-        <span className="text-xs bg-blue-500/10 border border-blue-500/20 font-mono text-blue-400 px-3 py-1.5 rounded-lg select-none font-bold">
-          System Core Settings
-        </span>
-      </div>
+
 
       {
     /* SECTION 2: Data Management */

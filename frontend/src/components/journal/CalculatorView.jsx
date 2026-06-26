@@ -49,9 +49,6 @@ export default function CalculatorView() {
   }
       <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-lg gap-4">
         <div>
-          <span className="text-xs bg-slate-50 dark:bg-[#222] border border-slate-200 dark:border-[#333] font-mono text-blue-600 dark:text-blue-400 px-3 py-1.5 rounded-lg select-none font-bold">
-            🧮 Math Engineering Suite
-          </span>
           <h2 className="text-xl font-bold text-[#0f172a] dark:text-white mt-2">Position Planning Suite</h2>
           <p className="text-xs text-slate-500 dark:text-gray-500 font-mono mt-1">Acquire type safety and capital calculation constraints dynamically beforehand.</p>
         </div>

@@ -172,9 +172,6 @@ export default function RulesView({ trades, showToast }) {
   }
       <div className="bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-[#2a2a2a] p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-md dark:shadow-lg gap-4">
         <div>
-          <span className="text-xs bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 font-mono text-indigo-600 dark:text-indigo-400 px-3 py-1.5 rounded-lg select-none font-bold">
-            📜 Trading Policies & Risk Limits
-          </span>
           <h2 className="text-xl font-bold text-slate-800 dark:text-white mt-2">Compliance & Policy Administration</h2>
           <p className="text-xs text-slate-500 dark:text-gray-500 font-mono mt-1 font-bold">Formalize self-regulations, mindset policies, and process execution criteria.</p>
         </div>
