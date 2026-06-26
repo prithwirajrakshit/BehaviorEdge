@@ -156,7 +156,7 @@ export default function Profile() {
     <div style={{ maxWidth: '100%' }}>
       {/* Header */}
       <div className="animate-fade-up" style={{ marginBottom: 24 }}>
-        <h2 style={{ fontFamily: 'Khand', fontWeight: 700, fontSize: '1.75rem', color: 'var(--text-primary)', letterSpacing: '-0.03em', margin: 0 }}>
+        <h2 style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontWeight: 500, fontSize: '2.2rem', color: 'var(--text-primary)', letterSpacing: '0.02em', margin: 0 }}>
           Trader Profile
         </h2>
       </div>
@@ -171,7 +171,7 @@ export default function Profile() {
               width: 88, height: 88, borderRadius: '50%',
               background: avatarSrc ? 'transparent' : 'linear-gradient(135deg, #6d28d9, #c026d3)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '1.8rem', fontFamily: 'Khand', fontWeight: 700, color: 'white',
+              fontSize: '1.8rem', fontFamily: "'Instrument Serif', Georgia, serif", fontWeight: 500, color: 'white',
               boxShadow: '0 0 24px rgba(192,38,211,0.35)',
               overflow: 'hidden', border: '2px solid rgba(124,58,237,0.4)',
             }}>
@@ -200,13 +200,13 @@ export default function Profile() {
           {/* Identity info */}
           <div style={{ flex: 1 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-              <div style={{ fontFamily: 'Khand', fontWeight: 700, fontSize: '1.4rem', color: 'var(--text-primary)' }}>
+              <div style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontWeight: 500, fontSize: '1.6rem', color: 'var(--text-primary)' }}>
                 {me?.full_name || username}
               </div>
               <span className="badge-green">PRO</span>
             </div>
             <div style={{ fontFamily: 'JetBrains Mono', fontSize: '0.7rem', color: 'var(--accent-light)', marginBottom: 8 }}>@{username}</div>
-            {me?.bio && <div style={{ fontFamily: 'Hind', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: 8, lineHeight: 1.5 }}>{me.bio}</div>}
+            {me?.bio && <div style={{ fontFamily: 'Inter', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: 8, lineHeight: 1.5 }}>{me.bio}</div>}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
               {me?.location && <span style={{ fontFamily: 'JetBrains Mono', fontSize: '0.65rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 4 }}><MapPin size={10} />{me.location}</span>}
               {me?.experience_level && <span style={{ fontFamily: 'JetBrains Mono', fontSize: '0.65rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 4 }}><BarChart2 size={10} />{me.experience_level}</span>}
@@ -286,7 +286,7 @@ export default function Profile() {
                 style={{
                   width: '100%', background: 'var(--bg-base)', border: '1px solid var(--border)',
                   borderRadius: 10, padding: '12px 16px', color: 'var(--text-primary)',
-                  fontFamily: 'Hind', fontSize: '0.875rem', outline: 'none', resize: 'vertical',
+                  fontFamily: 'Inter', fontSize: '0.875rem', outline: 'none', resize: 'vertical',
                   transition: 'border-color 0.2s', boxSizing: 'border-box',
                 }}
                 onFocus={e => e.target.style.borderColor = 'var(--accent)'}
@@ -421,7 +421,7 @@ export default function Profile() {
                 <Shield size={14} color="var(--green)" />
               </div>
               <div>
-                <div style={{ fontFamily: 'Hind', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Trading Rules</div>
+                <div style={{ fontFamily: 'Inter', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Trading Rules</div>
                 <div className="label" style={{ fontSize: '0.58rem', marginTop: 1 }}>{rules.length} rule{rules.length !== 1 ? 's' : ''} defined</div>
               </div>
             </div>
@@ -447,7 +447,7 @@ export default function Profile() {
                   </div>
                 ) : (
                   <>
-                    <span style={{ flex: 1, fontFamily: 'Hind', fontSize: '0.85rem', color: 'var(--text-primary)', lineHeight: 1.5, paddingTop: 2 }}>{rule.rule_text}</span>
+                    <span style={{ flex: 1, fontFamily: 'Inter', fontSize: '0.85rem', color: 'var(--text-primary)', lineHeight: 1.5, paddingTop: 2 }}>{rule.rule_text}</span>
                     <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
                       <button onClick={() => { setEditingId(rule.id); setEditText(rule.rule_text) }} style={{ width: 28, height: 28, borderRadius: 7, cursor: 'pointer', border: '1px solid var(--border)', background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)', transition: 'all 0.15s' }} onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(124,58,237,0.3)'; e.currentTarget.style.color = 'var(--accent-light)'; e.currentTarget.style.background = 'var(--accent-dim)' }} onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'transparent' }}><Pencil size={11} /></button>
                       <button onClick={() => handleDelete(rule.id)} style={{ width: 28, height: 28, borderRadius: 7, cursor: 'pointer', border: '1px solid var(--border)', background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)', transition: 'all 0.15s' }} onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(244,63,94,0.3)'; e.currentTarget.style.color = 'var(--red)'; e.currentTarget.style.background = 'var(--red-glow)' }} onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'transparent' }}><Trash2 size={11} /></button>
@@ -475,7 +475,7 @@ export default function Profile() {
               <Lock size={14} color="var(--accent-light)" />
             </div>
             <div>
-              <div style={{ fontFamily: 'Hind', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Change Password</div>
+              <div style={{ fontFamily: 'Inter', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Change Password</div>
               <div className="label" style={{ fontSize: '0.58rem', marginTop: 1 }}>Minimum 6 characters</div>
             </div>
           </div>

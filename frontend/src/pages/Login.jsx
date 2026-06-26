@@ -153,11 +153,11 @@ export default function Login({ onLogin }) {
     textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4,
   }
   const stepTitleStyle = {
-    fontFamily: "'Space Grotesk', sans-serif", fontSize: '1.1rem', fontWeight: 600,
+    fontFamily: "'Inter', sans-serif", fontSize: '1.1rem', fontWeight: 700,
     color: 'var(--text-primary)', margin: '0 0 4px 0', textAlign: 'center',
   }
   const stepDescStyle = {
-    fontFamily: "'Hind', sans-serif", fontSize: '0.8rem',
+    fontFamily: "'Inter', sans-serif", fontSize: '0.8rem',
     color: 'var(--text-secondary)', margin: '0 0 20px 0', textAlign: 'center', lineHeight: 1.5,
   }
 
@@ -270,7 +270,7 @@ export default function Login({ onLogin }) {
 
           {/* Brand Name — large, gradient, unmissable */}
           <h1 style={{
-            fontFamily: "'Khand', sans-serif",
+            fontFamily: "'Instrument Serif', Georgia, serif",
             fontSize: '2rem',
             fontWeight: 700,
             letterSpacing: '0.18em',
@@ -316,7 +316,7 @@ export default function Login({ onLogin }) {
 
           {/* Tagline */}
           <p style={{
-            fontFamily: "'Hind', sans-serif", fontSize: '0.82rem',
+            fontFamily: "'Inter', sans-serif", fontSize: '0.82rem',
             color: 'var(--text-secondary)', letterSpacing: '0.04em',
             margin: 0, fontWeight: 300,
           }}>
@@ -346,7 +346,7 @@ export default function Login({ onLogin }) {
                 {['Login', 'Sign Up'].map((t, i) => (
                   <button key={t} onClick={() => switchView(i === 0 ? 'login' : 'signup')} style={{
                     flex: 1, padding: '8px', borderRadius: 999, border: 'none', cursor: 'pointer',
-                    fontFamily: 'Space Grotesk', fontSize: '0.8rem', fontWeight: 600,
+                    fontFamily: 'Inter', fontSize: '0.8rem', fontWeight: 600,
                     transition: 'all 0.2s',
                     background: (i === 0 && view === 'login') || (i === 1 && view === 'signup')
                       ? 'linear-gradient(135deg, #6d28d9, #7c3aed)' : 'transparent',

@@ -115,7 +115,7 @@ export default function Dashboard() {
 
       {/* Header */}
       <div className="animate-fade-up" style={{ marginBottom: 32 }}>
-        <h2 style={{ fontFamily: 'Khand', fontWeight: 700, fontSize: '1.75rem', color: 'var(--text-primary)', letterSpacing: '-0.03em', margin: 0 }}>
+        <h2 style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontWeight: 500, fontSize: '2.2rem', color: 'var(--text-primary)', letterSpacing: '0.02em', margin: 0 }}>
           Performance Dashboard
         </h2>
       </div>
@@ -164,7 +164,7 @@ export default function Dashboard() {
             ].map(s => (
               <div key={s.label} style={{ flex: 1, textAlign: 'center' }}>
                 <div style={{ fontFamily: 'JetBrains Mono', fontSize: '0.5rem', color: 'var(--text-muted)', letterSpacing: '0.1em', marginBottom: 2 }}>{s.label}</div>
-                <div style={{ fontFamily: 'Space Grotesk', fontSize: '0.95rem', fontWeight: 700, color: s.color }}>{s.value}</div>
+                <div style={{ fontFamily: 'Inter', fontSize: '0.95rem', fontWeight: 800, color: s.color }}>{s.value}</div>
               </div>
             ))}
           </div>
@@ -229,7 +229,7 @@ export default function Dashboard() {
             ].map(s => (
               <div key={s.label} style={{ flex: 1, textAlign: 'center' }}>
                 <div style={{ fontFamily: 'JetBrains Mono', fontSize: '0.5rem', color: 'var(--text-muted)', letterSpacing: '0.1em', marginBottom: 2 }}>{s.label}</div>
-                <div style={{ fontFamily: 'Space Grotesk', fontSize: '0.95rem', fontWeight: 700, color: s.color }}>{s.value}</div>
+                <div style={{ fontFamily: 'Inter', fontSize: '0.95rem', fontWeight: 800, color: s.color }}>{s.value}</div>
               </div>
             ))}
           </div>

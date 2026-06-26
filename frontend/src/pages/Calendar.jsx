@@ -43,7 +43,7 @@ export default function Calendar() {
       {/* Header */}
       <div className="animate-fade-up" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 28 }}>
         <div>
-          <h2 style={{ fontFamily: 'Khand', fontWeight: 700, fontSize: '1.75rem', color: 'var(--text-primary)', letterSpacing: '-0.03em', margin: 0 }}>
+          <h2 style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontWeight: 500, fontSize: '2.2rem', color: 'var(--text-primary)', letterSpacing: '0.02em', margin: 0 }}>
             Trade Calendar
           </h2>
         </div>
@@ -59,7 +59,7 @@ export default function Calendar() {
           ><ChevronLeft size={14} /></button>
 
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontFamily: 'Hind', fontWeight: 700, fontSize: '1.1rem', color: 'var(--text-primary)' }}>{MONTHS[month - 1]}</div>
+            <div style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '1.1rem', color: 'var(--text-primary)' }}>{MONTHS[month - 1]}</div>
             <div className="label" style={{ fontSize: '0.6rem' }}>{year}</div>
           </div>
 

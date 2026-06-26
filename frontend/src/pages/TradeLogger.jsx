@@ -102,7 +102,7 @@ export default function TradeLogger() {
       {/* Header */}
       <div className="animate-fade-up" style={{ marginBottom: 28 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <h2 style={{ fontFamily: 'Khand', fontWeight: 700, fontSize: '1.75rem', color: 'var(--text-primary)', letterSpacing: '-0.03em', margin: 0 }}>
+          <h2 style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontWeight: 500, fontSize: '2.2rem', color: 'var(--text-primary)', letterSpacing: '0.02em', margin: 0 }}>
             Trade Logger
           </h2>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -124,7 +124,7 @@ export default function TradeLogger() {
               <Brain size={16} color="var(--accent)" />
             </div>
             <div>
-              <div style={{ fontFamily: 'Hind', fontWeight: 700, fontSize: '1rem', color: 'var(--text-primary)' }}>Pre-Trade Psychological Gate</div>
+              <div style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '1rem', color: 'var(--text-primary)' }}>Pre-Trade Psychological Gate</div>
               <div className="label" style={{ fontSize: '0.58rem', marginTop: 1 }}>Complete this before every trade — Module 2</div>
             </div>
           </div>
@@ -140,7 +140,7 @@ export default function TradeLogger() {
                     <div style={{ width: 18, height: 18, borderRadius: 5, border: `1.5px solid ${checkedRules[rule.id] ? 'var(--green)' : 'var(--border)'}`, background: checkedRules[rule.id] ? 'var(--green-glow)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'all 0.15s' }}>
                       {checkedRules[rule.id] && <CheckCircle size={11} color="var(--green)" />}
                     </div>
-                    <span style={{ fontFamily: 'Hind', fontSize: '0.82rem', color: checkedRules[rule.id] ? 'var(--text-primary)' : 'var(--text-secondary)' }}>
+                    <span style={{ fontFamily: 'Inter', fontSize: '0.82rem', color: checkedRules[rule.id] ? 'var(--text-primary)' : 'var(--text-secondary)' }}>
                       <span style={{ color: 'var(--accent)', fontFamily: 'JetBrains Mono', fontSize: '0.65rem', marginRight: 6 }}>{i + 1}</span>
                       {rule.rule_text}
                     </span>
@@ -231,7 +231,7 @@ export default function TradeLogger() {
                     {gateResult.approved ? '✅ PSYCHOLOGICAL CHECK PASSED — You may proceed' : '🚫 TRADE NOT RECOMMENDED'}
                   </div>
                   {!gateResult.approved && gateResult.block_reasons.map((r, i) => (
-                    <div key={i} style={{ fontFamily: 'Hind', fontSize: '0.78rem', color: 'var(--red)', opacity: 0.85, marginTop: 4 }}>→ {r}</div>
+                    <div key={i} style={{ fontFamily: 'Inter', fontSize: '0.78rem', color: 'var(--red)', opacity: 0.85, marginTop: 4 }}>→ {r}</div>
                   ))}
                 </div>
               </div>
@@ -240,7 +240,7 @@ export default function TradeLogger() {
               {gateResult.ai_assessment && !gateResult.ai_assessment.startsWith('AI Coach unavailable') && (
                 <div style={{ padding: '14px 16px', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderLeft: '2px solid var(--accent)', borderRadius: 10 }}>
                   <div className="label" style={{ color: 'var(--accent)', marginBottom: 8, fontSize: '0.6rem' }}>🧠 BEHAVIUREDGE AI ASSESSMENT</div>
-                  <div style={{ fontFamily: 'Hind', fontSize: '0.85rem', color: 'var(--text-primary)', lineHeight: 1.6 }}>{gateResult.ai_assessment}</div>
+                  <div style={{ fontFamily: 'Inter', fontSize: '0.85rem', color: 'var(--text-primary)', lineHeight: 1.6 }}>{gateResult.ai_assessment}</div>
                 </div>
               )}
             </div>
@@ -324,7 +324,7 @@ export default function TradeLogger() {
               <div style={{ width: 18, height: 18, borderRadius: 5, border: `1.5px solid ${form.rule_followed ? 'var(--green)' : 'var(--border)'}`, background: form.rule_followed ? 'var(--green-glow)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s' }}>
                 {form.rule_followed && <CheckCircle size={12} color="var(--green)" />}
               </div>
-              <span style={{ fontFamily: 'Hind', fontSize: '0.85rem', color: 'var(--text-primary)' }}>Followed all setup rules during execution</span>
+              <span style={{ fontFamily: 'Inter', fontSize: '0.85rem', color: 'var(--text-primary)' }}>Followed all setup rules during execution</span>
             </div>
 
             {error && <div style={{ marginTop: 12, padding: '10px 14px', borderRadius: 8, background: 'var(--red-glow)', border: '1px solid rgba(244,63,94,0.25)', fontFamily: 'JetBrains Mono', fontSize: '0.75rem', color: 'var(--red)' }}>{error}</div>}

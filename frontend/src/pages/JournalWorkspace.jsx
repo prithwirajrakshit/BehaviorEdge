@@ -210,7 +210,7 @@ export default function JournalWorkspace() {
   }
 
   return (
-    <div className="flex h-[calc(100vh-72px)] overflow-hidden" style={{ margin: '-36px -40px' }}>
+    <div className="journal-workspace dark flex h-[calc(100vh-72px)] overflow-hidden" style={{ margin: '-36px -40px' }}>
       
       {/* Cohesive Sub-Sidebar inside the main viewport */}
       <aside className="w-56 flex flex-col border-r border-violet-500/20 bg-[#0e0b18]/60 backdrop-blur-md shrink-0 select-none overflow-y-auto">

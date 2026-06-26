@@ -40,7 +40,7 @@ export default function AICoach() {
       {/* Header */}
       <div className="animate-fade-up" style={{ marginBottom: 20, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
         <div>
-          <h2 style={{ fontFamily: 'Khand', fontWeight: 700, fontSize: '1.75rem', color: 'var(--text-primary)', letterSpacing: '-0.03em', margin: 0 }}>
+          <h2 style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontWeight: 500, fontSize: '2.2rem', color: 'var(--text-primary)', letterSpacing: '0.02em', margin: 0 }}>
             AI Behavioral Coach
           </h2>
         </div>
@@ -64,7 +64,7 @@ export default function AICoach() {
             <div style={{ width: 56, height: 56, borderRadius: 16, background: 'var(--accent-dim)', border: '1px solid rgba(124,58,237,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Brain size={24} color="var(--accent)" />
             </div>
-            <div style={{ fontFamily: 'Hind', fontSize: '1rem', color: 'var(--text-primary)', fontWeight: 500 }}>Your behavioral coach is ready</div>
+            <div style={{ fontFamily: 'Inter', fontSize: '1rem', color: 'var(--text-primary)', fontWeight: 500 }}>Your behavioral coach is ready</div>
             <div className="label">Ask about your trading psychology, patterns, or biases</div>
           </div>
         )}
@@ -78,7 +78,7 @@ export default function AICoach() {
             )}
             <div style={{
               maxWidth: '78%', padding: '12px 16px', borderRadius: 14,
-              fontFamily: 'Hind', fontSize: '0.875rem', lineHeight: 1.6,
+              fontFamily: 'Inter', fontSize: '0.875rem', lineHeight: 1.6,
               ...(msg.role === 'user' ? {
                 background: 'linear-gradient(135deg, #6d28d9, #7c3aed)',
                 color: 'white', borderBottomRightRadius: 4,

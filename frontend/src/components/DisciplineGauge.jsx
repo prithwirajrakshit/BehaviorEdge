@@ -91,7 +91,7 @@ export function DisciplineGauge({ value = 0, size = 120 }) {
         justifyContent: 'center',
       }}>
         <div style={{
-          fontFamily: "'Khand', sans-serif",
+          fontFamily: "'Instrument Serif', Georgia, serif",
           fontWeight: 700,
           fontSize: size * 0.32,
           lineHeight: 1,

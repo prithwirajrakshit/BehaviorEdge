@@ -51,7 +51,7 @@ export default function Sidebar({ page, setPage, onLogout }) {
             }}
           />
           <div>
-            <div style={{ fontFamily: 'Space Grotesk', fontWeight: 800, fontSize: '1.05rem', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
+            <div style={{ fontFamily: 'Inter', fontWeight: 800, fontSize: '1.05rem', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
               Behavior<span style={{ color: 'var(--accent-light)' }}>Edge</span>
             </div>
           </div>
@@ -69,12 +69,12 @@ export default function Sidebar({ page, setPage, onLogout }) {
             width: 30, height: 30, borderRadius: '50%',
             background: 'linear-gradient(135deg, #7c3aed, #a78bfa)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontFamily: 'Space Grotesk', fontWeight: 700, fontSize: '0.75rem', color: 'white',
+            fontFamily: 'Inter', fontWeight: 700, fontSize: '0.75rem', color: 'white',
             boxShadow: '0 0 10px rgba(124,58,237,0.3)',
           }}>
             {username[0].toUpperCase()}
           </div>
-          <div style={{ fontFamily: 'Space Grotesk', fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: 600 }}>{username}</div>
+          <div style={{ fontFamily: 'Inter', fontSize: '0.85rem', color: 'var(--text-primary)', fontWeight: 600 }}>{username}</div>
           <div style={{ marginLeft: 'auto' }}>
             <span className="badge-green">LIVE</span>
           </div>
@@ -92,7 +92,7 @@ export default function Sidebar({ page, setPage, onLogout }) {
               background: active ? 'linear-gradient(135deg, #6d28d9, #7c3aed)' : 'transparent',
               border: active ? 'none' : '1px solid transparent',
               color: active ? 'white' : 'var(--text-secondary)',
-              fontFamily: 'Hind', fontWeight: active ? 600 : 400, fontSize: '0.875rem',
+              fontFamily: 'Inter', fontWeight: active ? 600 : 400, fontSize: '0.875rem',
               cursor: 'pointer', transition: 'all 0.15s', textAlign: 'left',
               boxShadow: active ? '0 0 20px rgba(124,58,237,0.25)' : 'none',
             }}
@@ -123,7 +123,7 @@ export default function Sidebar({ page, setPage, onLogout }) {
           width: '100%', display: 'flex', alignItems: 'center', gap: 10,
           padding: '10px 16px', borderRadius: 999,
           background: 'transparent', border: '1px solid transparent',
-          color: 'var(--text-muted)', fontFamily: 'Hind', fontSize: '0.875rem',
+          color: 'var(--text-muted)', fontFamily: 'Inter', fontSize: '0.875rem',
           cursor: 'pointer', transition: 'all 0.15s',
         }}
           onMouseEnter={e => { e.currentTarget.style.background = 'rgba(244,63,94,0.08)'; e.currentTarget.style.color = 'var(--red)'; e.currentTarget.style.borderColor = 'rgba(244,63,94,0.2)' }}
