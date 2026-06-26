@@ -12,33 +12,38 @@ api.interceptors.request.use((config) => {
 
 // Auth
 export const signup = (data) => api.post('/auth/signup', data)
-export const login  = (data) => api.post('/auth/login', data)
+export const login = (data) => api.post('/auth/login', data)
+
+// Forgot Password (OTP Flow)
+export const forgotPassword = (data) => api.post('/auth/forgot-password', data)
+export const verifyOtp = (data) => api.post('/auth/verify-otp', data)
+export const resetPassword = (data) => api.post('/auth/reset-password', data)
 
 // Profile
-export const getProfile  = ()     => api.get('/profile/')
+export const getProfile = () => api.get('/profile/')
 export const saveProfile = (data) => api.post('/profile/', data)
 
 // Trades
-export const getTrades      = ()   => api.get('/trades/')
-export const logTrade       = (data) => api.post('/trades/', data)
-export const getTodayTrades = ()   => api.get('/trades/today')
-export const deleteTrade    = (id) => api.delete(`/trades/${id}`)
+export const getTrades = () => api.get('/trades/')
+export const logTrade = (data) => api.post('/trades/', data)
+export const getTodayTrades = () => api.get('/trades/today')
+export const deleteTrade = (id) => api.delete(`/trades/${id}`)
 
 // AI Coach
-export const sendMessage     = (data) => api.post('/coach/chat', data)
-export const getChatHistory  = ()     => api.get('/coach/history')
-export const clearChatHistory= ()     => api.delete('/coach/history')
+export const sendMessage = (data) => api.post('/coach/chat', data)
+export const getChatHistory = () => api.get('/coach/history')
+export const clearChatHistory = () => api.delete('/coach/history')
 
 // Dashboard
-export const getDashboardStats  = ()           => api.get('/dashboard/stats')
-export const getCalendar        = (y, m)       => api.get(`/dashboard/calendar?year=${y}&month=${m}`)
-export const getMonthlySummary  = (y, m)       => api.get(`/dashboard/monthly-summary?year=${y}&month=${m}`)
+export const getDashboardStats = () => api.get('/dashboard/stats')
+export const getCalendar = (y, m) => api.get(`/dashboard/calendar?year=${y}&month=${m}`)
+export const getMonthlySummary = (y, m) => api.get(`/dashboard/monthly-summary?year=${y}&month=${m}`)
 
 // Rules
-export const getRules    = ()          => api.get('/rules/')
-export const addRule     = (data)      => api.post('/rules/', data)
-export const updateRule  = (id, data)  => api.put(`/rules/${id}`, data)
-export const deleteRule  = (id)        => api.delete(`/rules/${id}`)
+export const getRules = () => api.get('/rules/')
+export const addRule = (data) => api.post('/rules/', data)
+export const updateRule = (id, data) => api.put(`/rules/${id}`, data)
+export const deleteRule = (id) => api.delete(`/rules/${id}`)
 
 export default api
 

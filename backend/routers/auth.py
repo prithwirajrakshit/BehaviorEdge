@@ -2,12 +2,14 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from database import get_db
 from models import User
-from schemas import UserCreate, UserLogin, Token
+from schemas import UserCreate, UserLogin, Token, ForgotPassword, VerifyOtp, ResetPassword
 from passlib.context import CryptContext
 from jose import jwt
 from dotenv import load_dotenv
 import os
 import datetime
+import random
+import hmac
 
 load_dotenv()
 
@@ -39,6 +41,16 @@ def get_current_user(token: str, db: Session):
     except:
         raise HTTPException(status_code=401, detail="Invalid token")
 
+def generate_otp() -> str:
+    """Generate a random 6-digit OTP."""
+    return str(random.randint(100000, 999999))
+
+def verify_otp_safe(stored: str, provided: str) -> bool:
+    """Constant-time OTP comparison to prevent timing attacks."""
+    return hmac.compare_digest(stored, provided)
+
+# ── Signup & Login (existing) ─────────────
+
 @router.post("/signup", response_model=Token)
 def signup(data: UserCreate, db: Session = Depends(get_db)):
     if db.query(User).filter(User.username == data.username).first():
@@ -63,3 +75,81 @@ def login(data: UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Invalid username or password")
     token = create_token({"sub": user.username})
     return {"access_token": token, "token_type": "bearer"}
+
+# ── Forgot Password (OTP Flow) ─────────────
+
+@router.post("/forgot-password")
+def forgot_password(data: ForgotPassword, db: Session = Depends(get_db)):
+    """Step 1: Accept email, generate OTP, send via email."""
+    from email_service import send_otp_email
+
+    user = db.query(User).filter(User.email == data.email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="No account found with this email")
+
+    otp_code = generate_otp()
+    otp_expires = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
+
+    user.otp_code = otp_code
+    user.otp_expires_at = otp_expires
+    db.commit()
+
+    email_sent = send_otp_email(to_email=user.email, otp_code=otp_code)
+    if not email_sent:
+        raise HTTPException(status_code=500, detail="Failed to send OTP email. Please try again later.")
+
+    return {"message": "OTP sent to your email"}
+
+@router.post("/verify-otp")
+def verify_otp_endpoint(data: VerifyOtp, db: Session = Depends(get_db)):
+    """Step 2: Verify OTP, return a one-time reset token."""
+    user = db.query(User).filter(User.email == data.email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="No account found with this email")
+
+    if not user.otp_code or not user.otp_expires_at:
+        raise HTTPException(status_code=400, detail="No OTP requested. Please request a new one.")
+
+    if datetime.datetime.utcnow() > user.otp_expires_at:
+        user.otp_code = None
+        user.otp_expires_at = None
+        db.commit()
+        raise HTTPException(status_code=400, detail="OTP has expired. Please request a new one.")
+
+    if not verify_otp_safe(user.otp_code, data.otp):
+        raise HTTPException(status_code=400, detail="Invalid OTP. Please try again.")
+
+    # OTP is valid — clear it (single-use) and issue a reset token
+    user.otp_code = None
+    user.otp_expires_at = None
+    db.commit()
+
+    # Create a short-lived reset token (10 minutes)
+    reset_token = jwt.encode(
+        {"sub": user.email, "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=10), "type": "reset"},
+        SECRET_KEY,
+        algorithm=ALGORITHM,
+    )
+
+    return {"reset_token": reset_token}
+
+@router.post("/reset-password")
+def reset_password(data: ResetPassword, db: Session = Depends(get_db)):
+    """Step 3: Use reset token to set a new password."""
+    try:
+        payload = jwt.decode(data.reset_token, SECRET_KEY, algorithms=[ALGORITHM])
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid or expired reset token")
+
+    if payload.get("type") != "reset":
+        raise HTTPException(status_code=400, detail="Invalid reset token")
+
+    email = payload.get("sub")
+    user = db.query(User).filter(User.email == email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    user.password_hash = hash_password(data.new_password)
+    db.commit()
+
+    return {"message": "Password reset successful"}

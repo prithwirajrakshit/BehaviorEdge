@@ -1,20 +1,79 @@
-import { useState } from 'react'
-import { login, signup } from '../api/client'
+import { useState, useEffect, useRef } from 'react'
+import { login, signup, forgotPassword, verifyOtp, resetPassword } from '../api/client'
 import { ElegantShape } from '../components/ElegantShape'
 import logo from '../assets/behavioredge-logo.png'
 
 export default function Login({ onLogin }) {
-  const [isSignup, setIsSignup] = useState(false)
+  // ── View state machine ────────────────────────
+  // 'login' | 'signup' | 'forgot' | 'verify-otp' | 'reset-password' | 'success'
+  const [view, setView] = useState('login')
+
+  // ── Auth form state ───────────────────────────
   const [form, setForm] = useState({ username: '', email: '', password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
+  // ── Forgot-password flow state ────────────────
+  const [forgotEmail, setForgotEmail] = useState('')
+  const [otp, setOtp] = useState('')
+  const [resetToken, setResetToken] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [otpCooldown, setOtpCooldown] = useState(0)
+  const cooldownRef = useRef(null)
+
+  // ── OTP resend cooldown timer ─────────────────
+  useEffect(() => {
+    if (otpCooldown <= 0) {
+      clearInterval(cooldownRef.current)
+      return
+    }
+    cooldownRef.current = setInterval(() => {
+      setOtpCooldown((prev) => {
+        if (prev <= 1) {
+          clearInterval(cooldownRef.current)
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(cooldownRef.current)
+  }, [otpCooldown])
+
+  // ── Success auto-redirect ─────────────────────
+  useEffect(() => {
+    if (view !== 'success') return
+    const timer = setTimeout(() => {
+      resetForgotState()
+      setView('login')
+    }, 2500)
+    return () => clearTimeout(timer)
+  }, [view])
+
+  // ── Helpers ───────────────────────────────────
   const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
-  const submit = async () => {
+  const resetForgotState = () => {
+    setForgotEmail('')
+    setOtp('')
+    setResetToken('')
+    setNewPassword('')
+    setConfirmPassword('')
+    setError('')
+    setOtpCooldown(0)
+  }
+
+  const switchView = (v) => {
+    setError('')
+    setView(v)
+  }
+
+  // ── Auth handlers ─────────────────────────────
+  const submitAuth = async () => {
     setError('')
     setLoading(true)
     try {
+      const isSignup = view === 'signup'
       const res = isSignup
         ? await signup(form)
         : await login({ username: form.username, password: form.password })
@@ -27,6 +86,85 @@ export default function Login({ onLogin }) {
     setLoading(false)
   }
 
+  // ── Forgot-password handlers ──────────────────
+  const handleForgotSubmit = async () => {
+    setError('')
+    if (!forgotEmail.trim()) { setError('Please enter your email'); return }
+    setLoading(true)
+    try {
+      await forgotPassword({ email: forgotEmail.trim() })
+      setOtpCooldown(60)
+      switchView('verify-otp')
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Failed to send OTP')
+    }
+    setLoading(false)
+  }
+
+  const handleResendOtp = async () => {
+    if (otpCooldown > 0) return
+    setError('')
+    setLoading(true)
+    try {
+      await forgotPassword({ email: forgotEmail.trim() })
+      setOtpCooldown(60)
+      setOtp('')
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Failed to resend OTP')
+    }
+    setLoading(false)
+  }
+
+  const handleVerifyOtp = async () => {
+    setError('')
+    if (!otp.trim() || otp.trim().length !== 6) { setError('Please enter a valid 6-digit OTP'); return }
+    setLoading(true)
+    try {
+      const res = await verifyOtp({ email: forgotEmail.trim(), otp: otp.trim() })
+      setResetToken(res.data.reset_token)
+      switchView('reset-password')
+    } catch (err) {
+      setError(err.response?.data?.detail || 'OTP verification failed')
+    }
+    setLoading(false)
+  }
+
+  const handleResetPassword = async () => {
+    setError('')
+    if (!newPassword) { setError('Please enter a new password'); return }
+    if (newPassword.length < 6) { setError('Password must be at least 6 characters'); return }
+    if (newPassword !== confirmPassword) { setError('Passwords do not match'); return }
+    setLoading(true)
+    try {
+      await resetPassword({ reset_token: resetToken, new_password: newPassword })
+      switchView('success')
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Password reset failed')
+    }
+    setLoading(false)
+  }
+
+  // ── Shared styles ─────────────────────────────
+  const labelStyle = { marginBottom: 6 }
+  const backLinkStyle = {
+    fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem',
+    color: 'var(--accent-light)', cursor: 'pointer',
+    border: 'none', background: 'none', padding: 0,
+    textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4,
+  }
+  const stepTitleStyle = {
+    fontFamily: "'Space Grotesk', sans-serif", fontSize: '1.1rem', fontWeight: 600,
+    color: 'var(--text-primary)', margin: '0 0 4px 0', textAlign: 'center',
+  }
+  const stepDescStyle = {
+    fontFamily: "'Hind', sans-serif", fontSize: '0.8rem',
+    color: 'var(--text-secondary)', margin: '0 0 20px 0', textAlign: 'center', lineHeight: 1.5,
+  }
+
+  // ── Determine card title for login/signup tabs ─
+  const showAuthTabs = view === 'login' || view === 'signup'
+
+  // ── Render ────────────────────────────────────
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden"
       style={{ background: 'var(--bg-base)' }}>
@@ -195,72 +333,353 @@ export default function Login({ onLogin }) {
           {/* Top purple accent line */}
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'linear-gradient(90deg, transparent, var(--accent), transparent)', opacity: 0.6 }} />
 
-          {/* Tab Toggle — pill style */}
-          <div style={{
-            display: 'flex', background: 'var(--bg-base)', borderRadius: 999,
-            padding: 3, marginBottom: 24, border: '1px solid var(--border)',
-          }}>
-            {['Login', 'Sign Up'].map((t, i) => (
-              <button key={t} onClick={() => setIsSignup(i === 1)} style={{
-                flex: 1, padding: '8px', borderRadius: 999, border: 'none', cursor: 'pointer',
-                fontFamily: 'Space Grotesk', fontSize: '0.8rem', fontWeight: 600,
-                transition: 'all 0.2s',
-                background: (i === 0 && !isSignup) || (i === 1 && isSignup)
-                  ? 'linear-gradient(135deg, #6d28d9, #7c3aed)' : 'transparent',
-                color: (i === 0 && !isSignup) || (i === 1 && isSignup)
-                  ? 'white' : 'var(--text-secondary)',
-                boxShadow: (i === 0 && !isSignup) || (i === 1 && isSignup)
-                  ? '0 2px 12px rgba(124,58,237,0.3)' : 'none',
+          {/* ═══════════════════════════════════════ */}
+          {/* LOGIN / SIGNUP TABS                    */}
+          {/* ═══════════════════════════════════════ */}
+          {showAuthTabs && (
+            <>
+              {/* Tab Toggle — pill style */}
+              <div style={{
+                display: 'flex', background: 'var(--bg-base)', borderRadius: 999,
+                padding: 3, marginBottom: 24, border: '1px solid var(--border)',
               }}>
-                {t}
-              </button>
-            ))}
-          </div>
-
-          {/* Fields */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            <div>
-              <div className="label" style={{ marginBottom: 6 }}>Username</div>
-              <input name="username" value={form.username} onChange={handle}
-                className="input-field" placeholder="Enter username"
-                onKeyDown={e => e.key === 'Enter' && submit()} />
-            </div>
-
-            {isSignup && (
-              <div>
-                <div className="label" style={{ marginBottom: 6 }}>Email</div>
-                <input name="email" value={form.email} onChange={handle}
-                  className="input-field" placeholder="Enter email"
-                  onKeyDown={e => e.key === 'Enter' && submit()} />
+                {['Login', 'Sign Up'].map((t, i) => (
+                  <button key={t} onClick={() => switchView(i === 0 ? 'login' : 'signup')} style={{
+                    flex: 1, padding: '8px', borderRadius: 999, border: 'none', cursor: 'pointer',
+                    fontFamily: 'Space Grotesk', fontSize: '0.8rem', fontWeight: 600,
+                    transition: 'all 0.2s',
+                    background: (i === 0 && view === 'login') || (i === 1 && view === 'signup')
+                      ? 'linear-gradient(135deg, #6d28d9, #7c3aed)' : 'transparent',
+                    color: (i === 0 && view === 'login') || (i === 1 && view === 'signup')
+                      ? 'white' : 'var(--text-secondary)',
+                    boxShadow: (i === 0 && view === 'login') || (i === 1 && view === 'signup')
+                      ? '0 2px 12px rgba(124,58,237,0.3)' : 'none',
+                  }}>
+                    {t}
+                  </button>
+                ))}
               </div>
-            )}
 
-            <div>
-              <div className="label" style={{ marginBottom: 6 }}>Password</div>
-              <input name="password" type="password" value={form.password} onChange={handle}
-                className="input-field" placeholder="Enter password"
-                onKeyDown={e => e.key === 'Enter' && submit()} />
-            </div>
-          </div>
+              {/* Fields */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                <div>
+                  <div className="label" style={labelStyle}>Username</div>
+                  <input name="username" value={form.username} onChange={handle}
+                    className="input-field" placeholder="Enter username"
+                    onKeyDown={e => e.key === 'Enter' && submitAuth()} />
+                </div>
 
-          {error && (
-            <div style={{
-              marginTop: 14, padding: '10px 14px', borderRadius: 10,
-              background: 'var(--red-glow)', border: '1px solid rgba(244,63,94,0.25)',
-              fontFamily: 'JetBrains Mono', fontSize: '0.72rem', color: 'var(--red)',
-            }}>{error}</div>
+                {view === 'signup' && (
+                  <div>
+                    <div className="label" style={labelStyle}>Email</div>
+                    <input name="email" value={form.email} onChange={handle}
+                      className="input-field" placeholder="Enter email"
+                      onKeyDown={e => e.key === 'Enter' && submitAuth()} />
+                  </div>
+                )}
+
+                <div>
+                  <div className="label" style={labelStyle}>Password</div>
+                  <input name="password" type="password" value={form.password} onChange={handle}
+                    className="input-field" placeholder="Enter password"
+                    onKeyDown={e => e.key === 'Enter' && submitAuth()} />
+                </div>
+              </div>
+
+              {error && (
+                <div style={{
+                  marginTop: 14, padding: '10px 14px', borderRadius: 10,
+                  background: 'var(--red-glow)', border: '1px solid rgba(244,63,94,0.25)',
+                  fontFamily: 'JetBrains Mono', fontSize: '0.72rem', color: 'var(--red)',
+                }}>{error}</div>
+              )}
+
+              <button onClick={submitAuth} disabled={loading} className="btn-primary"
+                style={{ width: '100%', marginTop: 20, padding: '14px', fontSize: '0.88rem' }}>
+                {loading ? 'Authenticating...' : view === 'signup' ? 'Create Account →' : 'Sign In →'}
+              </button>
+
+              {/* Forgot Password link — only on login view */}
+              {view === 'login' && (
+                <div style={{ textAlign: 'center', marginTop: 16 }}>
+                  <button
+                    onClick={() => { resetForgotState(); switchView('forgot') }}
+                    style={{
+                      ...backLinkStyle,
+                      justifyContent: 'center',
+                      color: 'var(--text-muted)',
+                      transition: 'color 0.2s',
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.color = 'var(--accent-light)'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
+                  >
+                    Forgot Password?
+                  </button>
+                </div>
+              )}
+            </>
           )}
 
-          <button onClick={submit} disabled={loading} className="btn-primary"
-            style={{ width: '100%', marginTop: 20, padding: '14px', fontSize: '0.88rem' }}>
-            {loading ? 'Authenticating...' : isSignup ? 'Create Account →' : 'Sign In →'}
-          </button>
+          {/* ═══════════════════════════════════════ */}
+          {/* STEP 1 — FORGOT PASSWORD (Enter Email) */}
+          {/* ═══════════════════════════════════════ */}
+          {view === 'forgot' && (
+            <>
+              {/* Step indicator */}
+              <StepIndicator current={1} />
+
+              <p style={stepTitleStyle}>Forgot Password</p>
+              <p style={stepDescStyle}>
+                Enter the email address linked to your account and we'll send you a verification code.
+              </p>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                <div>
+                  <div className="label" style={labelStyle}>Email Address</div>
+                  <input
+                    value={forgotEmail} onChange={e => setForgotEmail(e.target.value)}
+                    className="input-field" placeholder="you@example.com" type="email"
+                    onKeyDown={e => e.key === 'Enter' && handleForgotSubmit()}
+                    autoFocus
+                  />
+                </div>
+              </div>
+
+              {error && <ErrorBanner message={error} />}
+
+              <button onClick={handleForgotSubmit} disabled={loading} className="btn-primary"
+                style={{ width: '100%', marginTop: 20, padding: '14px', fontSize: '0.88rem' }}>
+                {loading ? 'Sending OTP…' : 'Send OTP →'}
+              </button>
+
+              <div style={{ textAlign: 'center', marginTop: 16 }}>
+                <button onClick={() => switchView('login')} style={backLinkStyle}>
+                  ← Back to Login
+                </button>
+              </div>
+            </>
+          )}
+
+          {/* ═══════════════════════════════════════ */}
+          {/* STEP 2 — VERIFY OTP                    */}
+          {/* ═══════════════════════════════════════ */}
+          {view === 'verify-otp' && (
+            <>
+              <StepIndicator current={2} />
+
+              <p style={stepTitleStyle}>Verify OTP</p>
+              <p style={stepDescStyle}>
+                We sent a 6-digit code to <strong style={{ color: 'var(--accent-light)' }}>{forgotEmail}</strong>. Enter it below.
+              </p>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                <div>
+                  <div className="label" style={labelStyle}>Verification Code</div>
+                  <input
+                    value={otp}
+                    onChange={e => {
+                      const val = e.target.value.replace(/\D/g, '').slice(0, 6)
+                      setOtp(val)
+                    }}
+                    className="input-field"
+                    placeholder="000000"
+                    maxLength={6}
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
+                    style={{
+                      textAlign: 'center',
+                      letterSpacing: '0.4em',
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: '1.4rem',
+                      fontWeight: 600,
+                    }}
+                    onKeyDown={e => e.key === 'Enter' && otp.length === 6 && handleVerifyOtp()}
+                    autoFocus
+                  />
+                </div>
+              </div>
+
+              {error && <ErrorBanner message={error} />}
+
+              <button onClick={handleVerifyOtp} disabled={loading || otp.length !== 6} className="btn-primary"
+                style={{ width: '100%', marginTop: 20, padding: '14px', fontSize: '0.88rem' }}>
+                {loading ? 'Verifying…' : 'Verify →'}
+              </button>
+
+              {/* Resend & Back row */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 16 }}>
+                <button onClick={() => switchView('forgot')} style={backLinkStyle}>
+                  ← Back
+                </button>
+                <button
+                  onClick={handleResendOtp}
+                  disabled={otpCooldown > 0 || loading}
+                  style={{
+                    ...backLinkStyle,
+                    color: otpCooldown > 0 ? 'var(--text-muted)' : 'var(--accent-light)',
+                    opacity: otpCooldown > 0 ? 0.5 : 1,
+                    cursor: otpCooldown > 0 ? 'not-allowed' : 'pointer',
+                  }}
+                >
+                  {otpCooldown > 0 ? `Resend in ${otpCooldown}s` : 'Resend OTP'}
+                </button>
+              </div>
+            </>
+          )}
+
+          {/* ═══════════════════════════════════════ */}
+          {/* STEP 3 — RESET PASSWORD                */}
+          {/* ═══════════════════════════════════════ */}
+          {view === 'reset-password' && (
+            <>
+              <StepIndicator current={3} />
+
+              <p style={stepTitleStyle}>Set New Password</p>
+              <p style={stepDescStyle}>
+                Choose a strong new password for your account.
+              </p>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                <div>
+                  <div className="label" style={labelStyle}>New Password</div>
+                  <input
+                    type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)}
+                    className="input-field" placeholder="At least 6 characters"
+                    onKeyDown={e => e.key === 'Enter' && handleResetPassword()}
+                    autoFocus
+                  />
+                </div>
+                <div>
+                  <div className="label" style={labelStyle}>Confirm Password</div>
+                  <input
+                    type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
+                    className="input-field" placeholder="Re-enter your password"
+                    onKeyDown={e => e.key === 'Enter' && handleResetPassword()}
+                  />
+                </div>
+              </div>
+
+              {error && <ErrorBanner message={error} />}
+
+              <button onClick={handleResetPassword} disabled={loading} className="btn-primary"
+                style={{ width: '100%', marginTop: 20, padding: '14px', fontSize: '0.88rem' }}>
+                {loading ? 'Resetting…' : 'Reset Password →'}
+              </button>
+            </>
+          )}
+
+          {/* ═══════════════════════════════════════ */}
+          {/* STEP 4 — SUCCESS                       */}
+          {/* ═══════════════════════════════════════ */}
+          {view === 'success' && (
+            <div style={{ textAlign: 'center', padding: '20px 0' }}>
+              {/* Animated checkmark */}
+              <div style={{
+                width: 64, height: 64, borderRadius: '50%', margin: '0 auto 20px',
+                background: 'var(--green-glow)',
+                border: '2px solid var(--green)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                animation: 'successPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+              }}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--green)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+
+              <p style={{ ...stepTitleStyle, color: 'var(--green)', marginBottom: 8 }}>
+                Password Reset Successful!
+              </p>
+              <p style={{ ...stepDescStyle, marginBottom: 0 }}>
+                Your password has been updated. Redirecting to login…
+              </p>
+            </div>
+          )}
         </div>
 
         <p style={{ textAlign: 'center', fontFamily: 'JetBrains Mono', fontSize: '0.58rem', color: 'var(--text-muted)', marginTop: 24, letterSpacing: '0.1em' }}>
           BEHAVIOREDGE © 2026
         </p>
       </div>
+
+      {/* Keyframe for success checkmark pop */}
+      <style>{`
+        @keyframes successPop {
+          0% { transform: scale(0); opacity: 0; }
+          60% { transform: scale(1.15); opacity: 1; }
+          100% { transform: scale(1); }
+        }
+      `}</style>
+    </div>
+  )
+}
+
+
+/* ─── Sub-components ──────────────────────────── */
+
+/** Compact 3-step progress indicator */
+function StepIndicator({ current }) {
+  const steps = ['Email', 'Verify', 'Reset']
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      gap: 0, marginBottom: 24,
+    }}>
+      {steps.map((label, i) => {
+        const stepNum = i + 1
+        const isActive = stepNum === current
+        const isDone = stepNum < current
+        return (
+          <div key={label} style={{ display: 'flex', alignItems: 'center' }}>
+            {/* Connector line (before step, skip first) */}
+            {i > 0 && (
+              <div style={{
+                width: 36, height: 2,
+                background: isDone ? 'var(--accent)' : 'var(--border)',
+                transition: 'background 0.3s',
+              }} />
+            )}
+            {/* Step dot + label */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+              <div style={{
+                width: 28, height: 28, borderRadius: '50%',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '0.7rem', fontWeight: 700,
+                fontFamily: "'JetBrains Mono', monospace",
+                transition: 'all 0.3s',
+                background: isActive
+                  ? 'linear-gradient(135deg, #6d28d9, #7c3aed)'
+                  : isDone ? 'var(--accent)' : 'var(--bg-base)',
+                border: `1.5px solid ${isActive || isDone ? 'var(--accent)' : 'var(--border)'}`,
+                color: isActive || isDone ? '#fff' : 'var(--text-muted)',
+                boxShadow: isActive ? '0 0 12px rgba(124,58,237,0.4)' : 'none',
+              }}>
+                {isDone ? '✓' : stepNum}
+              </div>
+              <span style={{
+                fontSize: '0.6rem', fontFamily: "'JetBrains Mono', monospace",
+                letterSpacing: '0.06em', textTransform: 'uppercase',
+                color: isActive ? 'var(--accent-light)' : isDone ? 'var(--text-secondary)' : 'var(--text-muted)',
+                transition: 'color 0.3s',
+              }}>
+                {label}
+              </span>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+/** Reusable error banner */
+function ErrorBanner({ message }) {
+  return (
+    <div style={{
+      marginTop: 14, padding: '10px 14px', borderRadius: 10,
+      background: 'var(--red-glow)', border: '1px solid rgba(244,63,94,0.25)',
+      fontFamily: 'JetBrains Mono', fontSize: '0.72rem', color: 'var(--red)',
+    }}>
+      {message}
     </div>
   )
 }

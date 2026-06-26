@@ -18,6 +18,9 @@ class User(Base):
     website = Column(String, nullable=True)
     twitter = Column(String, nullable=True)
     experience_level = Column(String, nullable=True, default="Intermediate")
+    # Password reset OTP
+    otp_code = Column(String(6), nullable=True)
+    otp_expires_at = Column(DateTime, nullable=True)
     trades = relationship("Trade", back_populates="user")
     profile = relationship("Profile", back_populates="user", uselist=False)
     chat_history = relationship("ChatMessage", back_populates="user")

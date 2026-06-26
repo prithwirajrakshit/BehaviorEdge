@@ -30,6 +30,18 @@ class PasswordChange(BaseModel):
     current_password: str
     new_password: str
 
+# ── Forgot Password (OTP Flow) ────────────
+class ForgotPassword(BaseModel):
+    email: str
+
+class VerifyOtp(BaseModel):
+    email: str
+    otp: str
+
+class ResetPassword(BaseModel):
+    reset_token: str
+    new_password: str
+
 class UserOut(BaseModel):
     id: int
     username: str

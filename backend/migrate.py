@@ -13,6 +13,9 @@ migrations = [
     "ALTER TABLE users ADD COLUMN IF NOT EXISTS website VARCHAR;",
     "ALTER TABLE users ADD COLUMN IF NOT EXISTS twitter VARCHAR;",
     "ALTER TABLE users ADD COLUMN IF NOT EXISTS experience_level VARCHAR DEFAULT 'Intermediate';",
+    # Password reset OTP columns
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_code VARCHAR(6);",
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_expires_at TIMESTAMP;",
 ]
 
 with engine.connect() as conn:
