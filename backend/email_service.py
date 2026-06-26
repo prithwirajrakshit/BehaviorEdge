@@ -1,10 +1,10 @@
 import os
-from resend import Resend
+import resend
 from dotenv import load_dotenv
 
 load_dotenv()
 
-resend_client = Resend(api_key=os.getenv("RESEND_API_KEY"))
+resend.api_key = os.getenv("RESEND_API_KEY")
 
 OTP_HTML_TEMPLATE = """
 <!DOCTYPE html>
@@ -85,7 +85,7 @@ OTP_HTML_TEMPLATE = """
 def send_otp_email(to_email: str, otp_code: str) -> bool:
     """Send an OTP email to the given address. Returns True on success."""
     try:
-        resend_client.emails.send(
+        resend.emails.send(
             {
                 "from": "BehaviorEdge <noreply@behavioredge.com>",
                 "to": [to_email],
