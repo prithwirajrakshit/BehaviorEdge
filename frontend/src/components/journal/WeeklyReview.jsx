@@ -113,14 +113,14 @@ export default function WeeklyReview({ trades, showToast }) {
           </h3>
 
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-slate-50 dark:bg-[#121212] p-3 rounded-xl border border-slate-150 dark:border-[#222] text-center">
+            <div className="bg-slate-50/20 dark:bg-[#151225]/45 p-3 rounded-xl border border-slate-200/40 dark:border-violet-500/15 text-center">
               <span className="text-[10px] text-slate-400 dark:text-gray-500 block uppercase">Net Return PnL</span>
               <span className={`text-lg font-black block font-mono mt-1 ${weeklyNetPnl >= 0 ? "text-green-655 dark:text-green-400" : "text-red-655 dark:text-red-400"}`}>
                 {weeklyNetPnl >= 0 ? `+$${weeklyNetPnl.toFixed(2)}` : `-$${Math.abs(weeklyNetPnl).toFixed(2)}`}
               </span>
             </div>
 
-            <div className="bg-slate-50 dark:bg-[#121212] p-3 rounded-xl border border-slate-150 dark:border-[#222] text-center">
+            <div className="bg-slate-50/20 dark:bg-[#151225]/45 p-3 rounded-xl border border-slate-200/40 dark:border-violet-500/15 text-center">
               <span className="text-[10px] text-slate-400 dark:text-gray-500 block uppercase">Win Rate</span>
               <span className="text-lg font-black block font-mono mt-1 text-green-655 dark:text-green-400">
                 {weeklyWinRate.toFixed(1)}%
@@ -128,12 +128,12 @@ export default function WeeklyReview({ trades, showToast }) {
             </div>
           </div>
 
-          <div className="bg-slate-50 dark:bg-[#121212] p-4 rounded-xl border border-slate-150 dark:border-[#222] flex justify-between items-center text-xs">
+          <div className="bg-slate-50/20 dark:bg-[#151225]/45 p-4 rounded-xl border border-slate-200/40 dark:border-violet-500/15 flex justify-between items-center text-xs">
             <span className="text-slate-600 dark:text-gray-400">Total Completed Trades:</span>
             <span className="font-bold font-mono text-slate-800 dark:text-white">{weekTrades.length} Trades</span>
           </div>
 
-          <div className="bg-slate-50 dark:bg-[#121212] p-4 rounded-xl border border-slate-150 dark:border-[#222] space-y-1 text-xs">
+          <div className="bg-slate-50/20 dark:bg-[#151225]/45 p-4 rounded-xl border border-slate-200/40 dark:border-violet-500/15 space-y-1 text-xs">
             <span className="text-slate-500 dark:text-gray-400 block font-semibold mb-1 uppercase tracking-wider text-[10px]">Setup Frequency List</span>
             {weekTrades.length === 0 ? <span className="text-[10px] text-slate-400 dark:text-gray-600 block italic">No setups loaded this week.</span> : <div className="space-y-1 font-mono text-[11px]">
                 {Array.from(new Set(weekTrades.map((x) => x.setup_type).filter(Boolean))).map((setup) => {
@@ -157,7 +157,7 @@ export default function WeeklyReview({ trades, showToast }) {
           </h3>
 
           {weeklyGoal ? <div className="space-y-4">
-              <div className="bg-slate-50 dark:bg-[#121212] p-4 rounded-xl border border-slate-200 dark:border-blue-500/10 space-y-2">
+              <div className="bg-slate-50/20 dark:bg-[#151225]/45 p-4 rounded-xl border border-slate-200/40 dark:border-violet-500/15 space-y-2">
                 <div className="flex justify-between items-center">
                   <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 font-mono uppercase">Target benchmark</span>
                   <span className={`px-2 py-0.5 rounded text-[9px] font-bold font-mono uppercase ${weeklyGoal.status === "Achieved" ? "bg-green-50 dark:bg-green-500/15 text-green-655 dark:text-green-400" : weeklyGoal.status === "Failed" ? "bg-red-50 dark:bg-red-500/15 text-red-655 dark:text-red-500" : "bg-yellow-50 dark:bg-yellow-500/15 text-yellow-650 dark:text-yellow-500"}`}>

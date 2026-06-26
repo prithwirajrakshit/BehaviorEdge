@@ -116,7 +116,7 @@ export default function FeesAnalytics({ showToast, trades }) {
         {
     /* Fees % of Gross PnL */
   }
-        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-xl p-5 shadow-md dark:shadow-lg flex items-center space-x-4">
+        <div className="bg-white dark:bg-[#1a1a1a] border border-[#e2e8f0] dark:border-[#2a2a2a] rounded-2xl p-5 shadow-md dark:shadow-lg flex items-center space-x-4">
           <div className="p-3 bg-yellow-50 text-yellow-605 border border-yellow-105 dark:bg-yellow-950/30 dark:text-yellow-500 dark:border-yellow-900/40 rounded-xl">
             <Percent className="w-6 h-6" />
           </div>

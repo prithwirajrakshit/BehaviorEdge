@@ -300,14 +300,14 @@ export default function WeeklyCalendar({ trades, showToast }) {
               {
     /* Financial Stats strip */
   }
-              <div className="grid grid-cols-3 bg-slate-50 dark:bg-[#121212] p-4 rounded-xl border border-slate-150 dark:border-[#2a2a2a] text-center font-mono">
+              <div className="grid grid-cols-3 bg-slate-50/20 dark:bg-[#151225]/45 p-4 rounded-xl border border-slate-150/40 dark:border-violet-500/15 text-center font-mono">
                 <div>
                   <span className="text-[10px] text-slate-500 dark:text-gray-500 block uppercase font-sans font-bold">Gross profit/Loss</span>
                   <span className={`text-sm font-black block mt-1 ${selectedTrade.pnl_usd >= 0 ? "text-green-600 dark:text-green-500" : "text-red-655 dark:text-red-500"}`}>
                     {selectedTrade.pnl_usd >= 0 ? `+$${selectedTrade.pnl_usd.toFixed(2)}` : `-$${Math.abs(selectedTrade.pnl_usd).toFixed(2)}`}
                   </span>
                 </div>
-                <div className="border-x border-slate-150 dark:border-[#2c2c2c]">
+                <div className="border-x border-slate-150/40 dark:border-violet-500/15">
                   <span className="text-[10px] text-slate-500 dark:text-gray-500 block uppercase font-sans font-bold">Margin Fees Paid</span>
                   <span className="text-sm font-black block mt-1 text-red-655 dark:text-red-400">
                     -${Math.abs(selectedTrade.fee_usd).toFixed(2)}
@@ -359,7 +359,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
               {
     /* Screenshot url if present */
   }
-              {selectedTrade.screenshot_url && <div className="bg-slate-50 dark:bg-[#121212] p-4 rounded-xl border border-slate-200 dark:border-[#2a2a2a] flex justify-between items-center">
+              {selectedTrade.screenshot_url && <div className="bg-slate-50/20 dark:bg-[#151225]/45 p-4 rounded-xl border border-slate-200/40 dark:border-violet-500/15 flex justify-between items-center">
                   <div className="flex items-center space-x-2">
                     <Clock className="w-4 h-4 text-blue-500" />
                     <span className="text-xs text-slate-405 dark:text-gray-400 font-mono">Screenshot attachment present</span>
@@ -380,7 +380,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
   }
               <div>
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-gray-405 mb-2">Reflective Log & Notes</h4>
-                <div className="bg-slate-50 dark:bg-[#121212] p-4 rounded-xl border border-slate-150 dark:border-[#232323] text-slate-700 dark:text-gray-300 text-xs leading-relaxed whitespace-pre-wrap max-h-40 overflow-y-auto">
+                <div className="bg-slate-50/20 dark:bg-[#151225]/45 p-4 rounded-xl border border-slate-150/40 dark:border-violet-500/15 text-slate-700 dark:text-gray-300 text-xs leading-relaxed whitespace-pre-wrap max-h-40 overflow-y-auto">
                   {selectedTrade.notes || <span className="text-slate-400 dark:text-gray-600 italic">No notes captured for this transaction record.</span>}
                 </div>
               </div>
@@ -389,7 +389,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
             {
     /* Modal action footer */
   }
-            <div className="p-4 bg-slate-50 dark:bg-[#121212] border-t border-slate-150 dark:border-[#2a2a2a] flex justify-end">
+            <div className="p-4 bg-slate-50/20 dark:bg-[#151225]/45 border-t border-slate-150/40 dark:border-violet-500/15 flex justify-end">
               <button
     onClick={() => setSelectedTrade(null)}
     className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg cursor-pointer transition-all active:scale-95 outline-none font-bold shadow-md"

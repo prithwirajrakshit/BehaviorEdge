@@ -602,7 +602,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
             {
     /* Inline custom confluence add */
   }
-            <div className="mt-3.5 flex flex-wrap items-center gap-2 bg-slate-50/50 dark:bg-[#1a1a1a] p-3 rounded-xl border border-slate-200/60 dark:border-[#2a2a2a]">
+            <div className="mt-3.5 flex flex-wrap items-center gap-2 bg-slate-50/20 dark:bg-[#151225]/45 p-3 rounded-xl border border-slate-200/40 dark:border-violet-500/15">
               <div className="text-xs font-bold font-mono text-slate-500 dark:text-gray-400 shrink-0">➕ Add Custom:</div>
               <input
     type="text"
@@ -632,7 +632,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
             {
     /* Live Confluence Score indicators */
   }
-            <div className="mt-3 bg-slate-50 dark:bg-[#222] p-3 rounded-xl border border-slate-200 dark:border-[#333]">
+            <div className="mt-3 bg-slate-50/20 dark:bg-[#151225]/45 p-3 rounded-xl border border-slate-200/40 dark:border-violet-500/15">
               <div className="flex items-center justify-between mb-1 text-xs">
                 <span className="text-slate-500 dark:text-gray-400 font-bold font-mono">Confluence Score</span>
                 <span className={`font-black font-mono ${getConfluenceScore(selectedConfluences, confluencesList).score < 4 ? "text-red-600 dark:text-red-400" : getConfluenceScore(selectedConfluences, confluencesList).score < 8 ? "text-yellow-600 dark:text-yellow-400" : "text-green-600 dark:text-green-400"}`}>
@@ -685,7 +685,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
             {
     /* Inline custom mistake add */
   }
-            <div className="mt-3.5 flex flex-wrap items-center gap-2 bg-slate-50/50 dark:bg-[#1a1a1a] p-3 rounded-xl border border-slate-200/60 dark:border-[#2a2a2a]">
+            <div className="mt-3.5 flex flex-wrap items-center gap-2 bg-slate-50/20 dark:bg-[#151225]/45 p-3 rounded-xl border border-slate-200/40 dark:border-violet-500/15">
               <div className="text-xs font-bold font-mono text-slate-500 dark:text-gray-400 shrink-0">➕ Add Custom:</div>
               <input
     type="text"
@@ -864,7 +864,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
                 {
     /* Inline custom preset add */
   }
-                <div className="mt-2.5 flex items-center gap-2 bg-slate-50/50 dark:bg-[#1a1a1a] p-2.5 rounded-xl border border-slate-200/60 dark:border-[#2a2a2a]">
+                <div className="mt-2.5 flex items-center gap-2 bg-slate-50/20 dark:bg-[#151225]/45 p-2.5 rounded-xl border border-slate-200/40 dark:border-violet-500/15">
                   <div className="text-[10px] font-bold font-mono text-slate-500 dark:text-gray-400 shrink-0">➕ Define Presets:</div>
                   <input
     type="text"
