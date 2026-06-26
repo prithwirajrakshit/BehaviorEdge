@@ -21,7 +21,8 @@ from schemas import (
     MarketEventCreate,
     MarketEventUpdate,
     MarketEventOut,
-    RuleCheckBulk
+    RuleCheckBulk,
+    RuleCheckOut
 )
 from routers.auth import get_current_user
 from typing import List, Optional
