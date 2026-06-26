@@ -659,9 +659,9 @@ h6 {
 
 /* Glassmorphic 3-dot desktop sidebar toggle button */
 .desktop-sidebar-toggle {
-  position: fixed;
-  top: 20px;
-  left: 256px; /* 240px sidebar width + 16px padding gap */
+  position: absolute;
+  top: 23px;
+  left: 192px; /* Placed next to the BehaviorEdge heading in the sidebar */
   z-index: 110;
   width: 32px;
   height: 32px;
@@ -686,8 +686,8 @@ h6 {
   box-shadow: 0 0 20px rgba(124, 58, 237, 0.35);
 }
 
-.desktop-sidebar-toggle.collapsed {
-  left: 16px;
+.sidebar-container.collapsed .desktop-sidebar-toggle {
+  left: 256px; /* 240px (sidebar width) + 16px (visible offset from screen edge) = 256px */
 }
 
 /* Hide desktop toggle button on mobile viewports */

@@ -1,4 +1,4 @@
-import { LayoutDashboard, TrendingUp, Bot, Calendar, LogOut, Activity, User, BookOpen, X } from 'lucide-react'
+import { LayoutDashboard, TrendingUp, Bot, Calendar, LogOut, Activity, User, BookOpen, X, MoreVertical } from 'lucide-react'
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard',    icon: LayoutDashboard },
@@ -9,7 +9,7 @@ const navItems = [
   { id: 'profile',   label: 'Profile',      icon: User },
 ]
 
-export default function Sidebar({ page, setPage, onLogout, isOpen, onClose, isCollapsed }) {
+export default function Sidebar({ page, setPage, onLogout, isOpen, onClose, isCollapsed, onToggleCollapse }) {
   const username = localStorage.getItem('username') || 'Trader'
 
   return (
@@ -28,6 +28,15 @@ export default function Sidebar({ page, setPage, onLogout, isOpen, onClose, isCo
         background: 'radial-gradient(ellipse at top left, rgba(124,58,237,0.12) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
+
+      {/* Desktop Sidebar Toggle Button */}
+      <button 
+        onClick={onToggleCollapse} 
+        className="desktop-sidebar-toggle"
+        aria-label="Toggle sidebar"
+      >
+        <MoreVertical size={16} />
+      </button>
 
       {/* Logo and Mobile close button */}
       <div style={{ padding: '20px 24px 16px', borderBottom: '1px solid var(--border)' }}>
