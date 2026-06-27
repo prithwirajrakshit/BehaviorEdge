@@ -19,6 +19,9 @@ migrations = [
     # Rules table columns
     "ALTER TABLE rules ADD COLUMN IF NOT EXISTS category VARCHAR DEFAULT 'General';",
     "ALTER TABLE rules ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT TRUE;",
+    "ALTER TABLE rules ADD COLUMN IF NOT EXISTS times_checked INTEGER DEFAULT 0;",
+    "ALTER TABLE rules ADD COLUMN IF NOT EXISTS times_broken INTEGER DEFAULT 0;",
+    "ALTER TABLE rules ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;",
 ]
 
 with engine.connect() as conn:

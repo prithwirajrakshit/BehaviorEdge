@@ -20,7 +20,10 @@ migrations = [
     "ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_code VARCHAR(6);",
     "ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_expires_at TIMESTAMP;",
     "ALTER TABLE rules ADD COLUMN IF NOT EXISTS category VARCHAR DEFAULT 'General';",
-    "ALTER TABLE rules ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT TRUE;"
+    "ALTER TABLE rules ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT TRUE;",
+    "ALTER TABLE rules ADD COLUMN IF NOT EXISTS times_checked INTEGER DEFAULT 0;",
+    "ALTER TABLE rules ADD COLUMN IF NOT EXISTS times_broken INTEGER DEFAULT 0;",
+    "ALTER TABLE rules ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;"
 ]
 with engine.connect() as conn:
     for sql in migrations:
