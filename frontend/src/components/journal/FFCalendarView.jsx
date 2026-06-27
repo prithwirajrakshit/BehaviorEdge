@@ -420,7 +420,7 @@ export default function FFCalendarView({ trades, showToast }) {
           <h2 className="text-xl font-bold text-[#0f172a] dark:text-white tracking-tight flex items-center gap-2">
             📅 News Calendar (Forex)
           </h2>
-          <p className="text-xs text-slate-500 dark:text-gray-400 font-sans">
+          <p className="text-xs text-slate-500 dark:text-gray-400 font-sans italic">
             Verify macro-economic schedules safely to filter out news-based trade execution risks.
           </p>
         </div>

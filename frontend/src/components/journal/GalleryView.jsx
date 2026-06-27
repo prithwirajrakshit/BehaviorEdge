@@ -54,7 +54,7 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
           <ImageIcon className="w-5 h-5 text-blue-500" />
           <div>
             <h3 className="font-bold text-slate-800 dark:text-white text-sm">Visual Screenshot Grid</h3>
-            <p className="text-xs text-slate-500 dark:text-gray-400">Total {tradesWithScreens.length} trades with active screenshot attachments linked.</p>
+            <p className="text-xs text-slate-500 dark:text-gray-400 italic">Total {tradesWithScreens.length} trades with active screenshot attachments linked.</p>
           </div>
         </div>
 

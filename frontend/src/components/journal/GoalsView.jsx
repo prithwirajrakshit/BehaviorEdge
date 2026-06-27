@@ -91,7 +91,7 @@ export default function GoalsView({ trades, showToast }) {
       <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-md dark:shadow-lg gap-4">
         <div>
           <h2 className="text-xl font-bold text-slate-800 dark:text-white mt-2">Milestones & Achievements</h2>
-          <p className="text-xs text-slate-500 dark:text-gray-500 font-mono mt-1">Set actionable financial benchmarks and track performance badges.</p>
+          <p className="text-xs text-slate-500 dark:text-gray-500 italic mt-1">Set actionable financial benchmarks and track performance badges.</p>
         </div>
       </div>
 

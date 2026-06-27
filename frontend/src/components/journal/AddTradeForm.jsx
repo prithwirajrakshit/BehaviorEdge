@@ -433,7 +433,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
           <h2 className="text-2xl font-bold tracking-tight text-[#0f172a] dark:text-white">
             {isEdit ? "\u270F\uFE0F Edit Trading Log" : "\u2795 Log New Trade"}
           </h2>
-          <p className="text-slate-500 dark:text-gray-400 text-sm mt-1">
+          <p className="text-slate-500 dark:text-gray-400 text-sm mt-1 italic">
             {isEdit ? "Modify recorded transaction properties" : "Record a trade to analyze statistics and improve metrics"}
           </p>
         </div>

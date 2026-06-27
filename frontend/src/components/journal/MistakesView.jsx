@@ -159,7 +159,7 @@ export default function MistakesView({ trades }) {
       <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-md dark:shadow-lg gap-4">
         <div>
           <h2 className="text-xl font-bold text-slate-800 dark:text-white mt-2">Trading Performance Center</h2>
-          <p className="text-xs text-slate-550 dark:text-gray-500 font-mono mt-1">Deep analysis covering emotional traps, confluence alignment, and setup optimization.</p>
+          <p className="text-xs text-slate-550 dark:text-gray-500 italic mt-1">Deep analysis covering emotional traps, confluence alignment, and setup optimization.</p>
         </div>
       </div>
 
