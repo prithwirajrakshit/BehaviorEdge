@@ -45,7 +45,7 @@ export default function App() {
   }
 
   return (
-    <div className="app-container">
+    <div className="app-container dark">
       {/* Mobile Sticky Header */}
       <header className="mobile-header">
         <button onClick={() => setIsSidebarOpen(true)} className="mobile-menu-btn" aria-label="Open menu">
