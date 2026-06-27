@@ -335,7 +335,7 @@ export default function JournalWorkspace() {
         
         {/* Header Bar */}
         <header className="h-16 border-b border-violet-500/10 flex items-center justify-between px-6 bg-[#0e0b18]/40 shrink-0">
-          <div>
+          <div className="hidden md:block">
             <h2 className="text-2xl font-medium text-white tracking-wide">{getPageTitle()}</h2>
           </div>
           
@@ -360,7 +360,7 @@ export default function JournalWorkspace() {
         </header>
 
         {/* Scrollable Content Container Shell */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
           {loading ? (
             <div className="flex flex-col items-center justify-center h-full min-h-[300px] space-y-4">
               <svg className="animate-spin h-8 w-8 text-violet-500" fill="none" viewBox="0 0 24 24">

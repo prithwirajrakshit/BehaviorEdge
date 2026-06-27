@@ -293,7 +293,7 @@ export default function MistakesView({ trades }) {
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="stroke-slate-100 dark:stroke-[#222]" />
                 <XAxis dataKey="bucket" stroke="currentColor" className="text-slate-405 dark:text-gray-500" fontSize={10} tickLine={false} />
-                <YAxis stroke="currentColor" className="text-slate-405 dark:text-gray-500" fontSize={10} tickLine={false} label={{ value: "Win Rate %", angle: -90, position: "insideLeft", stroke: "currentColor", className: "text-slate-400 dark:text-gray-550", fontSize: "11" }} />
+                <YAxis stroke="currentColor" className="text-slate-405 dark:text-gray-500" fontSize={10} tickLine={false} />
                 <Tooltip
                   contentStyle={{ 
                     backgroundColor: "rgba(14, 11, 24, 0.9)", 

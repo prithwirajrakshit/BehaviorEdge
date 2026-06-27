@@ -93,7 +93,7 @@ export default function Sidebar({ page, setPage, onLogout, isOpen, onClose, isCo
         {navItems.map(({ id, label, icon: Icon }) => {
           const active = page === id
           return (
-            <button key={id} onClick={() => setPage(id)} style={{
+            <button key={id} onClick={() => { setPage(id); if (onClose) onClose(); }} style={{
               width: '100%', display: 'flex', alignItems: 'center', gap: 10,
               padding: '10px 16px', borderRadius: 999, marginBottom: 4,
               background: active ? 'linear-gradient(135deg, #6d28d9, #7c3aed)' : 'transparent',
