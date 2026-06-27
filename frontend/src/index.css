@@ -25,6 +25,22 @@
   --text-muted:    #6e6294;   /* brightened so micro-text/captions stay legible (was #3d2f5a) */
 }
 
+/* Light Mode Theme Variables override */
+html:not(.dark) {
+  --bg-base:       #f8fafc;
+  --bg-card:       #ffffff;
+  --bg-elevated:   #f1f5f9;
+  --border:        #e2e8f0;
+  --border-bright: #cbd5e1;
+  --accent:        #7c3aed;
+  --accent-light:  #6d28d9;
+  --accent-glow:   rgba(124, 58, 237, 0.08);
+  --accent-dim:    rgba(124, 58, 237, 0.03);
+  --text-primary:  #0f172a;
+  --text-secondary:#475569;
+  --text-muted:    #94a3b8;
+}
+
 * { box-sizing: border-box; }
 
 body {
@@ -541,28 +557,28 @@ h6 {
   font-weight: 500 !important;
 }
 
-.journal-workspace .text-slate-800,
-.journal-workspace .text-slate-700,
-.journal-workspace .text-slate-900 {
+.dark .journal-workspace .text-slate-800,
+.dark .journal-workspace .text-slate-700,
+.dark .journal-workspace .text-slate-900 {
   color: #f0ecff !important;
 }
 
-.journal-workspace .text-slate-500,
-.journal-workspace .text-slate-400,
-.journal-workspace .text-gray-400,
-.journal-workspace .text-gray-555,
-.journal-workspace .text-gray-500 {
+.dark .journal-workspace .text-slate-500,
+.dark .journal-workspace .text-slate-400,
+.dark .journal-workspace .text-gray-400,
+.dark .journal-workspace .text-gray-555,
+.dark .journal-workspace .text-gray-500 {
   color: #c8c0e0 !important;
 }
 
-.journal-workspace .text-slate-600 {
+.dark .journal-workspace .text-slate-600 {
   color: #a78bfa !important;
 }
 
 /* Form Controls: Inputs, Selects, Textareas */
-.journal-workspace input,
-.journal-workspace textarea,
-.journal-workspace select {
+.dark .journal-workspace input,
+.dark .journal-workspace textarea,
+.dark .journal-workspace select {
   background: rgba(7, 5, 15, 0.7) !important;
   border: 1px solid rgba(124, 58, 237, 0.25) !important;
   border-radius: 12px !important;

@@ -198,7 +198,7 @@ export default function GoalsView({ trades, showToast }) {
     /* Gamified Achievement Badges */
   }
         <div className="space-y-6">
-          <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-2xl shadow-md dark:shadow-xl flex flex-col justify-between h-full">
+          <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-2xl shadow-md dark:shadow-xl flex flex-col justify-between lg:h-full">
             <div className="space-y-1 border-b border-slate-150 dark:border-[#222] pb-3 mb-4">
               <h3 className="text-sm font-bold tracking-wide uppercase font-mono text-slate-800 dark:text-white flex items-center gap-1.5">
                 <Award className="w-4 h-4 text-yellow-500 dark:text-yellow-400" />

@@ -14,11 +14,25 @@ export default function App() {
   const [page, setPage] = useState('dashboard')
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+  const [isDark, setIsDark] = useState(() => {
+    const saved = localStorage.getItem('theme');
+    return saved !== 'light';
+  });
 
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) setLoggedIn(true)
   }, [])
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDark]);
 
   // Automatically close sidebar drawer on mobile navigation
   useEffect(() => {
@@ -45,7 +59,7 @@ export default function App() {
   }
 
   return (
-    <div className="app-container dark">
+    <div className={`app-container ${isDark ? 'dark' : ''}`}>
       {/* Mobile Sticky Header */}
       <header className="mobile-header">
         <button onClick={() => setIsSidebarOpen(true)} className="mobile-menu-btn" aria-label="Open menu">
@@ -75,6 +89,8 @@ export default function App() {
         onClose={() => setIsSidebarOpen(false)} 
         isCollapsed={isSidebarCollapsed}
         onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+        isDark={isDark}
+        onToggleDark={() => setIsDark(!isDark)}
       />
       
       <main className={`main-content ${isSidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
