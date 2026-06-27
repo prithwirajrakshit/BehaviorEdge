@@ -330,7 +330,7 @@ export default function NewsEventsView({ trades, showToast }) {
           <div className="flex items-center justify-between border-b border-slate-150 dark:border-violet-500/15 pb-3">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-blue-500 dark:text-blue-400" />
-              <h4 className="font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-gray-400 font-mono">Monthly Event Dots</h4>
+              <h3 className="font-bold text-slate-800 dark:text-white text-sm">Monthly Event Dots</h3>
             </div>
             <div className="flex items-center gap-1">
               <button
@@ -415,8 +415,8 @@ export default function NewsEventsView({ trades, showToast }) {
             <div className="flex items-center gap-2">
               <Award className="w-5 h-5 text-yellow-650 dark:text-yellow-500" />
               <div>
-                <h4 className="font-bold text-slate-800 dark:text-white text-xs">Macro Correlation Assessment</h4>
-                <p className="text-[10px] text-slate-500 dark:text-gray-400">Review historical trades executed on High impact event dates.</p>
+                <h3 className="font-bold text-slate-800 dark:text-white text-sm">Macro Correlation Assessment</h3>
+                <p className="text-xs text-slate-500 dark:text-gray-500 italic mt-0.5">Review historical trades executed on High impact event dates.</p>
               </div>
             </div>
             <span className="text-[10px] font-mono text-slate-400 dark:text-gray-500 tracking-wider font-bold">EVENT CORRELATION</span>

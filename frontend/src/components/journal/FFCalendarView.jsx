@@ -420,7 +420,7 @@ export default function FFCalendarView({ trades, showToast }) {
           <h2 className="text-xl font-bold text-[#0f172a] dark:text-white tracking-tight flex items-center gap-2">
             📅 News Calendar (Forex)
           </h2>
-          <p className="text-xs text-slate-500 dark:text-gray-400 font-sans italic">
+          <p className="text-xs text-slate-500 dark:text-gray-500 font-sans italic">
             Verify macro-economic schedules safely to filter out news-based trade execution risks.
           </p>
         </div>
@@ -484,7 +484,7 @@ export default function FFCalendarView({ trades, showToast }) {
                 <div className="text-2xl font-black text-red-650 dark:text-red-500 font-mono">
                   {highImpactCount}
                 </div>
-                <p className="text-[10px] text-slate-450 dark:text-gray-505 font-sans leading-none">🔴 High gravity volatility schedules stored</p>
+                <p className="text-[10px] text-slate-450 dark:text-gray-505 font-sans italic leading-normal">🔴 High gravity volatility schedules stored</p>
               </div>
               <div className="p-3 bg-red-50 dark:bg-red-500/10 text-red-650 dark:text-red-500 rounded-xl">
                 <ShieldAlert className="w-5 h-5 bg-transparent" />
@@ -500,7 +500,7 @@ export default function FFCalendarView({ trades, showToast }) {
                 <div className="text-2xl font-black text-blue-600 dark:text-blue-400 font-mono">
                   {usdEventsCount}
                 </div>
-                <p className="text-[10px] text-slate-450 dark:text-gray-505 font-sans leading-none">🇺🇸 Driving core interest & market index trendlines</p>
+                <p className="text-[10px] text-slate-450 dark:text-gray-505 font-sans italic leading-normal">🇺🇸 Driving core interest & market index trendlines</p>
               </div>
               <div className="p-3 bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-xl">
                 <CalendarDays className="w-5 h-5" />
@@ -513,12 +513,12 @@ export default function FFCalendarView({ trades, showToast }) {
             <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 rounded-2xl p-4 flex items-center justify-between shadow-md dark:shadow-lg col-span-1">
               <div className="space-y-1 w-full overflow-hidden">
                 <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-gray-400 tracking-wider font-mono">Next High Impact</span>
-                <div className="text-xs font-bold text-yellow-650 dark:text-yellow-500 truncate" title={nextHighImpact.title}>
-                  {nextHighImpact.title}
-                </div>
                 <div className="text-sm font-black text-slate-800 dark:text-white font-mono leading-tight">
                   {nextHighImpact.countdown || "None Scheduled"}
                 </div>
+                <p className="text-[10px] text-slate-450 dark:text-gray-505 font-sans italic leading-normal truncate" title={nextHighImpact.title}>
+                  {nextHighImpact.countdown ? nextHighImpact.title : "No volatile events pending"}
+                </p>
               </div>
               <div className="p-3 bg-yellow-50 dark:bg-yellow-500/10 text-yellow-650 dark:text-yellow-500 rounded-xl shrink-0">
                 <AlertCircle className="w-5 h-5" />
@@ -534,7 +534,7 @@ export default function FFCalendarView({ trades, showToast }) {
                 <div className="text-2xl font-black text-slate-700 dark:text-gray-300 font-mono">
                   {dbEvents.length}
                 </div>
-                <p className="text-[10px] text-slate-450 dark:text-gray-505 font-sans leading-none">Events stored inside SQLite</p>
+                <p className="text-[10px] text-slate-450 dark:text-gray-505 font-sans italic leading-normal">Events stored inside SQLite</p>
               </div>
               <div className="p-3 bg-slate-100 dark:bg-[#2d2d2d] text-slate-700 dark:text-gray-300 rounded-xl">
                 <CheckCircle className="w-5 h-5" />

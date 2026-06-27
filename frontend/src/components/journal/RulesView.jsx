@@ -259,7 +259,7 @@ export default function RulesView({ trades, showToast }) {
           <div className="border-b border-slate-150 dark:border-[#2a2a2a] pb-3 flex justify-between items-center">
             <div>
               <h3 className="font-bold text-slate-800 dark:text-white text-sm">Policy Book Checklist</h3>
-              <p className="text-xs text-slate-400 dark:text-gray-400 italic">Review status and performance rates of all listed items.</p>
+              <p className="text-xs text-slate-500 dark:text-gray-500 italic">Review status and performance rates of all listed items.</p>
             </div>
             <span className="text-[10px] font-mono bg-pink-50 dark:bg-pink-500/10 text-[#e11d75] dark:text-[#f43f5e] border border-pink-200 dark:border-pink-500/20 px-2.5 py-1 rounded-full font-bold">
               {rules.length} total rules
