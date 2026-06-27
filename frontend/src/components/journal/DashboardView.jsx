@@ -74,6 +74,7 @@ export default function DashboardView({ showToast, onNavigate }) {
   const [charts, setCharts] = useState(null);
   const [trades, setTrades] = useState([]);
   const [newsEvents, setNewsEvents] = useState([]);
+  const [profile, setProfile] = useState(null);
   const [isStreakBannerDismissed, setIsStreakBannerDismissed] = useState(() => {
     const today = (/* @__PURE__ */ new Date()).toISOString().substring(0, 10);
     return localStorage.getItem("dismissed_dashboard_streak_date") === today;
@@ -81,11 +82,12 @@ export default function DashboardView({ showToast, onNavigate }) {
   const fetchAnalytics = async () => {
     setLoading(true);
     try {
-      const [sumRes, chartRes, tradesRes, dbRes] = await Promise.all([
+      const [sumRes, chartRes, tradesRes, dbRes, profileRes] = await Promise.all([
         authFetch("/api/analytics/summary"),
         authFetch("/api/analytics/charts"),
         authFetch("/api/trades"),
-        authFetch("/api/market_events").catch(() => null)
+        authFetch("/api/market_events").catch(() => null),
+        authFetch("/profile/").catch(() => null)
       ]);
       if (!sumRes.ok || !chartRes.ok || !tradesRes.ok) throw new Error("Failed to retrieve analytics databases.");
       const sumData = await sumRes.json();
@@ -105,6 +107,10 @@ export default function DashboardView({ showToast, onNavigate }) {
           previous: row.previous || "",
           actual: row.actual || ""
         }));
+      }
+      if (profileRes && profileRes.ok) {
+        const profileData = await profileRes.json();
+        setProfile(profileData);
       }
       setSummary(sumData);
       setCharts(chartData);
@@ -149,7 +155,7 @@ export default function DashboardView({ showToast, onNavigate }) {
   const todayStr = (/* @__PURE__ */ new Date()).toISOString().substring(0, 10);
   const todayTrades = trades.filter((t) => t.date === todayStr);
   const todaysNetPnl = todayTrades.reduce((acc, t) => acc + (t.net_pnl_usd || 0), 0);
-  const dailyLossLimit = parseFloat(localStorage.getItem("daily_loss_limit") || "500");
+  const dailyLossLimit = profile && profile.daily_max_loss ? profile.daily_max_loss : parseFloat(localStorage.getItem("daily_loss_limit") || "500");
   const dailyProfitTarget = parseFloat(localStorage.getItem("daily_profit_target") || "1000");
   const lossPct = todaysNetPnl < 0 ? Math.min(100, Math.abs(todaysNetPnl) / dailyLossLimit * 100) : 0;
   const profitPct = todaysNetPnl > 0 ? Math.min(100, todaysNetPnl / dailyProfitTarget * 100) : 0;
@@ -159,7 +165,7 @@ export default function DashboardView({ showToast, onNavigate }) {
   } else if (todaysNetPnl >= dailyProfitTarget) {
     todayStatus = "target";
   }
-  const initialBalanceSetting = parseFloat(localStorage.getItem("initial_balance") || "10000");
+  const initialBalanceSetting = profile && profile.capital ? profile.capital : parseFloat(localStorage.getItem("initial_balance") || "10000");
   const drawdownThresholdSetting = parseFloat(localStorage.getItem("drawdown_threshold") || "10");
   const drawdownMetrics = calculateDrawdownMetrics(trades, initialBalanceSetting);
   const showDrawdownLimitWarning = drawdownMetrics.currentDrawdownPct >= drawdownThresholdSetting;

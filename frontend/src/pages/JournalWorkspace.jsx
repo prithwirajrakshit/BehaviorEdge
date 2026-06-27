@@ -51,7 +51,7 @@ export default function JournalWorkspace() {
 
   const fetchProfile = async () => {
     try {
-      const res = await authFetch('/api/profile')
+      const res = await authFetch('/profile/')
       if (res.ok) {
         const data = await res.json()
         if (data && data.capital) {
