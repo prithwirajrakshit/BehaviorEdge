@@ -42,10 +42,25 @@ export default function JournalWorkspace() {
   const [toastMessage, setToastMessage] = useState(null)
   const [toastType, setToastType] = useState('success')
   const [loading, setLoading] = useState(true)
+  const [capital, setCapital] = useState(10000)
 
   const showToast = (message, type = 'success') => {
     setToastMessage(message)
     setToastType(type)
+  }
+
+  const fetchProfile = async () => {
+    try {
+      const res = await authFetch('/api/profile')
+      if (res.ok) {
+        const data = await res.json()
+        if (data && data.capital) {
+          setCapital(data.capital)
+        }
+      }
+    } catch (err) {
+      // Keep fallback capital
+    }
   }
 
   const fetchTrades = async () => {
@@ -63,6 +78,7 @@ export default function JournalWorkspace() {
 
   useEffect(() => {
     fetchTrades()
+    fetchProfile()
   }, [])
 
   // Document-level pointer tracking to dynamically inject GlowCard spotlight borders
@@ -200,7 +216,7 @@ export default function JournalWorkspace() {
   }
 
   const totalNetPnL = trades.reduce((acc, t) => acc + (t.net_pnl_usd || 0), 0)
-  const currentEquity = 10000 + totalNetPnL
+  const currentEquity = capital + totalNetPnL
 
   // Sub-navigation menu groups for 14 views
   const menuGroups = [
