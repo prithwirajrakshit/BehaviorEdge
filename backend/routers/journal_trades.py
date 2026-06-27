@@ -18,6 +18,105 @@ def get_user(authorization: str = Header(...), db: Session = Depends(get_db)):
     token = authorization.replace("Bearer ", "")
     return get_current_user(token, db)
 
+def sync_journal_trade_to_platform(jt: JournalTrade, user: User, db: Session):
+    try:
+        from models import Trade, Profile
+        from scoring import compute_discipline_score, calculate_rdi, calculate_evi
+        
+        jt_date = jt.date
+        existing_trades = db.query(Trade).filter(
+            Trade.user_id == user.id,
+            Trade.pnl_amount == jt.net_pnl_usd
+        ).all()
+        
+        matched = False
+        for et in existing_trades:
+            if et.timestamp.strftime("%Y-%m-%d") == jt_date:
+                # Update existing trade emotions and EVI if already matched, to sync edits!
+                et.emotion_before = jt.emotion_before or "Neutral"
+                et.emotion_after = jt.emotion_after or "Neutral"
+                new_evi = calculate_evi(et.emotion_before, et.emotion_after)
+                et.evi = round(new_evi, 2)
+                db.commit()
+                matched = True
+                break
+                
+        if matched:
+            return
+
+        profile = db.query(Profile).filter(Profile.user_id == user.id).first()
+        capital = profile.capital if profile else 10000.0
+        risk_percent = profile.risk_percent if profile else 1.0
+        
+        planned_risk = capital * risk_percent / 100.0
+        actual_risk = abs(jt.net_pnl_usd) if jt.net_pnl_usd < 0 else planned_risk
+        
+        try:
+            mistakes_list = json.loads(jt.mistakes or "[]")
+        except Exception:
+            mistakes_list = []
+        rule_followed = len(mistakes_list) == 0
+
+        outcome_lower = (jt.outcome or "Breakeven").lower()
+        emotion_b = jt.emotion_before or "Neutral"
+        emotion_a = jt.emotion_after or "Neutral"
+        
+        try:
+            dt_val = datetime.datetime.strptime(jt_date, "%Y-%m-%d")
+        except Exception:
+            dt_val = datetime.datetime.utcnow()
+            
+        past_trades = db.query(Trade).filter(
+            Trade.user_id == user.id
+        ).order_by(Trade.timestamp.asc()).all()
+        
+        new_trade_dict = {
+            "timestamp": dt_val.isoformat(),
+            "actual_risk": actual_risk,
+            "planned_risk": planned_risk,
+            "rule_followed": rule_followed,
+            "emotion_before": emotion_b,
+            "emotion_after": emotion_a,
+            "outcome": outcome_lower,
+        }
+        
+        discipline_score = compute_discipline_score(past_trades, new_trade_dict)
+        rdi = calculate_rdi(actual_risk, planned_risk)
+        evi_val = calculate_evi(emotion_b, emotion_a)
+        
+        violations = []
+        if actual_risk > planned_risk:
+            violations.append("Over-risking")
+        if not rule_followed:
+            violations.append("Rule violation")
+        for m in mistakes_list:
+            violations.append(m)
+            
+        new_trade = Trade(
+            user_id=user.id,
+            capital=capital,
+            risk_percent=risk_percent,
+            planned_risk=planned_risk,
+            actual_risk=actual_risk,
+            emotion_before=emotion_b,
+            emotion_after=emotion_a,
+            rule_followed=rule_followed,
+            outcome=outcome_lower,
+            pnl_amount=jt.net_pnl_usd,
+            rdi=round(rdi, 3),
+            evi=round(evi_val, 2),
+            discipline_score=discipline_score,
+            daily_loss=abs(jt.net_pnl_usd) if jt.net_pnl_usd < 0 else 0.0,
+            violations=json.dumps(violations),
+            pre_trade_approved=True,
+            timestamp=dt_val
+        )
+        db.add(new_trade)
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        print(f"Failed to sync journal trade backward: {e}")
+
 def format_trade_out(trade: JournalTrade) -> dict:
     try:
         confluences_list = json.loads(trade.confluences or "[]")
@@ -51,6 +150,8 @@ def format_trade_out(trade: JournalTrade) -> dict:
         "actual_rr": trade.actual_rr,
         "rules_followed_count": trade.rules_followed_count,
         "rules_broken_count": trade.rules_broken_count,
+        "emotion_before": trade.emotion_before or "Neutral",
+        "emotion_after": trade.emotion_after or "Neutral",
         "created_at": trade.created_at,
     }
 
@@ -109,6 +210,10 @@ def get_trades(
                 )
                 db.add(new_jt)
                 db.commit()
+        # ── Retroactive Sync: Import JournalTrade entries back to Trade Logger ────
+        for jt in journal_trades:
+            sync_journal_trade_to_platform(jt, user, db)
+            
     except Exception as e:
         db.rollback()
         print(f"Error during retroactive journal trade synchronization: {e}")
@@ -165,11 +270,17 @@ def create_trade(data: JournalTradeCreate, user: User = Depends(get_user), db: S
         notes=data.notes or "",
         trade_quality=data.trade_quality or "",
         planned_rr=data.planned_rr or 0.0,
-        actual_rr=data.actual_rr or 0.0
+        actual_rr=data.actual_rr or 0.0,
+        emotion_before=data.emotion_before or "Neutral",
+        emotion_after=data.emotion_after or "Neutral"
     )
     db.add(trade)
     db.commit()
     db.refresh(trade)
+    
+    # Sync backward to platform Trade table
+    sync_journal_trade_to_platform(trade, user, db)
+    
     return format_trade_out(trade)
 
 @router.put("/trades/{trade_id}", response_model=JournalTradeOut)
@@ -219,9 +330,17 @@ def update_trade(trade_id: int, data: JournalTradeUpdate, user: User = Depends(g
         trade.planned_rr = data.planned_rr
     if data.actual_rr is not None:
         trade.actual_rr = data.actual_rr
+    if data.emotion_before is not None:
+        trade.emotion_before = data.emotion_before
+    if data.emotion_after is not None:
+        trade.emotion_after = data.emotion_after
 
     db.commit()
     db.refresh(trade)
+    
+    # Sync modifications backward to platform Trade table
+    sync_journal_trade_to_platform(trade, user, db)
+    
     return format_trade_out(trade)
 
 @router.delete("/trades/{trade_id}")

@@ -63,6 +63,8 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
   const [tradeQuality, setTradeQuality] = useState("A");
   const [plannedRR, setPlannedRR] = useState("0");
   const [actualRR, setActualRR] = useState("0");
+  const [emotionBefore, setEmotionBefore] = useState("Neutral");
+  const [emotionAfter, setEmotionAfter] = useState("Neutral");
   const [confluencesList, setConfluencesList] = useState(() => {
     const saved = localStorage.getItem("custom_confluences");
     if (saved) {
@@ -252,6 +254,8 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
       setTradeQuality(editingTrade.trade_quality || "A");
       setPlannedRR((editingTrade.planned_rr || 0).toString());
       setActualRR((editingTrade.actual_rr || 0).toString());
+      setEmotionBefore(editingTrade.emotion_before || "Neutral");
+      setEmotionAfter(editingTrade.emotion_after || "Neutral");
     } else {
       setPair("");
       setDate((/* @__PURE__ */ new Date()).toISOString().substring(0, 10));
@@ -270,6 +274,8 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
       setTradeQuality("A");
       setPlannedRR("0");
       setActualRR("0");
+      setEmotionBefore("Neutral");
+      setEmotionAfter("Neutral");
     }
   }, [editingTrade]);
   useEffect(() => {
@@ -333,6 +339,8 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
         setTradeQuality("A");
         setPlannedRR("0");
         setActualRR("0");
+        setEmotionBefore("Neutral");
+        setEmotionAfter("Neutral");
       }
     } catch (err) {
       showToast(err.message || "Failed to save trade.", "error");
@@ -381,7 +389,9 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
       notes: notes.trim(),
       trade_quality: tradeQuality,
       planned_rr: parseFloat(plannedRR) || 0,
-      actual_rr: parseFloat(actualRR) || 0
+      actual_rr: parseFloat(actualRR) || 0,
+      emotion_before: emotionBefore,
+      emotion_after: emotionAfter
     };
     if (activeRules.length > 0) {
       setPendingPayload(payload);
@@ -924,8 +934,49 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
             </div>
 
             {
-    /* Notes */
-  }
+              /* Psychology & Emotion (EVI calculations inputs) */
+            }
+            <div className="border-t border-slate-100 dark:border-violet-500/15 pt-6">
+              <h3 className="text-xs font-bold tracking-wider font-mono text-slate-500 dark:text-gray-400 uppercase mb-4">
+                Psychology & Emotion (EVI Inputs)
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="emotionBefore" className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-2">
+                    Emotion Before Trade
+                  </label>
+                  <select
+                    id="emotionBefore"
+                    value={emotionBefore}
+                    onChange={(e) => setEmotionBefore(e.target.value)}
+                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 focus:border-violet-500 rounded-lg text-[#0f172a] dark:text-white outline-none transition-all cursor-pointer text-sm"
+                  >
+                    {['Calm', 'Neutral', 'Anxious', 'Fear', 'Frustrated', 'Overconfident', 'Angry', 'Euphoric'].map((emo) => (
+                      <option key={emo} value={emo} className="bg-slate-900 text-white">{emo}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="emotionAfter" className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-2">
+                    Emotion After Trade
+                  </label>
+                  <select
+                    id="emotionAfter"
+                    value={emotionAfter}
+                    onChange={(e) => setEmotionAfter(e.target.value)}
+                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 focus:border-violet-500 rounded-lg text-[#0f172a] dark:text-white outline-none transition-all cursor-pointer text-sm"
+                  >
+                    {['Calm', 'Neutral', 'Anxious', 'Fear', 'Frustrated', 'Overconfident', 'Angry', 'Euphoric'].map((emo) => (
+                      <option key={emo} value={emo} className="bg-slate-900 text-white">{emo}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {
+              /* Notes */
+            }
             <div>
               <label htmlFor="notes" className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-gray-400 mb-2">
                 Trading Notes & Reflections

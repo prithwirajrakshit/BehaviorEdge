@@ -111,6 +111,8 @@ class JournalTrade(Base):
     actual_rr = Column(Float, default=0.0)
     rules_followed_count = Column(Integer, default=0)
     rules_broken_count = Column(Integer, default=0)
+    emotion_before = Column(String, default="Neutral")
+    emotion_after = Column(String, default="Neutral")
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
     user = relationship("User", back_populates="journal_trades")

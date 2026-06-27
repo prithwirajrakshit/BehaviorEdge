@@ -171,6 +171,8 @@ class JournalTradeCreate(BaseModel):
     trade_quality: Optional[str] = ""
     planned_rr: Optional[float] = 0.0
     actual_rr: Optional[float] = 0.0
+    emotion_before: Optional[str] = "Neutral"
+    emotion_after: Optional[str] = "Neutral"
 
 class JournalTradeUpdate(BaseModel):
     pair_instrument: Optional[str] = None
@@ -191,6 +193,8 @@ class JournalTradeUpdate(BaseModel):
     trade_quality: Optional[str] = None
     planned_rr: Optional[float] = None
     actual_rr: Optional[float] = None
+    emotion_before: Optional[str] = None
+    emotion_after: Optional[str] = None
 
 class JournalTradeOut(BaseModel):
     id: int
@@ -214,6 +218,8 @@ class JournalTradeOut(BaseModel):
     actual_rr: float
     rules_followed_count: int
     rules_broken_count: int
+    emotion_before: str
+    emotion_after: str
     created_at: datetime
 
     class Config:
