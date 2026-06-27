@@ -505,21 +505,22 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
   }
       {isCsvModalOpen && <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white dark:bg-[#0e0b18]/65 border border-[#e2e8f0] dark:border-violet-500/15 max-w-lg w-full rounded-2xl shadow-2xl p-6 relative">
-            <button
-    id="closeImportModalBtn"
-    onClick={() => {
-      setIsCsvModalOpen(false);
-      setCsvFile(null);
-    }}
-    className="absolute right-4 top-4 p-1.5 bg-slate-50 hover:bg-slate-100 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 hover:text-[#0f172a] dark:hover:text-white text-slate-500 dark:text-gray-400 rounded-lg cursor-pointer"
-  >
-              <X className="w-4 h-4" />
-            </button>
-
-            <h3 className="text-lg font-bold text-[#0f172a] dark:text-white flex items-center space-x-2 mb-2">
-              <FileSpreadsheet className="w-5 h-5 text-blue-500" />
-              <span>Import Delta Exchange CSV</span>
-            </h3>
+            <div className="flex justify-between items-start mb-2">
+              <h3 className="text-lg font-bold text-[#0f172a] dark:text-white flex items-center space-x-2">
+                <FileSpreadsheet className="w-5 h-5 text-blue-500 shrink-0" />
+                <span>Import Delta Exchange CSV</span>
+              </h3>
+              <button
+                id="closeImportModalBtn"
+                onClick={() => {
+                  setIsCsvModalOpen(false);
+                  setCsvFile(null);
+                }}
+                className="p-1.5 bg-slate-50 hover:bg-slate-100 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 hover:text-[#0f172a] dark:hover:text-white text-slate-500 dark:text-gray-400 rounded-lg cursor-pointer shrink-0 ml-4"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
             <p className="text-xs text-slate-500 dark:text-gray-400 mb-6 leading-relaxed">
               Drag or selector-upload your Delta Exchange export CSV. Rules: status columns must equal "closed" and have non-zero gains.
             </p>

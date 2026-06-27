@@ -597,6 +597,11 @@ h6 {
   transition: border-color 0.2s, box-shadow 0.2s !important;
 }
 
+.dark .journal-workspace input.pl-9,
+.journal-workspace input.pl-9 {
+  padding-left: 36px !important;
+}
+
 .journal-workspace input:focus,
 .journal-workspace textarea:focus,
 .journal-workspace select:focus {
