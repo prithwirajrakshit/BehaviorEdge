@@ -558,12 +558,12 @@ h6 {
 .journal-workspace h4,
 .journal-workspace h5,
 .journal-workspace h6 {
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 600 !important;
+  font-family: 'Instrument Serif', Georgia, serif !important;
 }
 
 .journal-workspace h3 {
-  font-size: 1.15rem !important; /* Scale up card titles */
+  font-size: 1.35rem !important; /* Scale up card titles */
+  font-weight: 500 !important;
 }
 
 .dark .journal-workspace .text-slate-800,
