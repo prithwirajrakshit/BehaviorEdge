@@ -1,4 +1,4 @@
-import { LayoutDashboard, TrendingUp, Bot, Calendar, LogOut, Activity, User, BookOpen, X, MoreVertical, Sun, Moon } from 'lucide-react'
+import { LayoutDashboard, TrendingUp, Bot, Calendar, LogOut, Activity, User, BookOpen, X, MoreVertical } from 'lucide-react'
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard',    icon: LayoutDashboard },

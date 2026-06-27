@@ -51,9 +51,7 @@ export default function MistakesView({ trades }) {
     }
     return acc;
   }, 0);
-  const profitLostToMistakes = tradesWithMistakes.reduce((acc, t) => {
-    return acc + (t.net_pnl_usd < 0 ? Math.abs(t.net_pnl_usd) : 0);
-  }, 0);
+  const profitLostToMistakes = totalCostOfMistakes;
   const avgLossWithMistakes = tradesWithMistakes.length > 0 ? tradesWithMistakes.reduce((acc, t) => acc + (t.net_pnl_usd < 0 ? t.net_pnl_usd : 0), 0) / tradesWithMistakes.length : 0;
   const avgLossClean = cleanTrades.length > 0 ? cleanTrades.reduce((acc, t) => acc + (t.net_pnl_usd < 0 ? t.net_pnl_usd : 0), 0) / cleanTrades.length : 0;
   const freqMap = {};

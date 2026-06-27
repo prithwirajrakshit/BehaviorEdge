@@ -13,9 +13,7 @@ import {
   Globe,
   Newspaper,
   CheckSquare,
-  Settings,
-  Sun,
-  Moon
+  Settings
 } from 'lucide-react'
 
 // Import all ported journal views
@@ -418,6 +416,7 @@ export default function JournalWorkspace() {
                   trades={trades}
                   onClearAll={handleClearAllTrades}
                   showToast={showToast}
+                  onExportCSV={handleExportCSV}
                 />
               )}
 
