@@ -180,7 +180,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
         <button
     id="openImportModalBtn"
     onClick={() => setIsCsvModalOpen(true)}
-    className="flex items-center space-x-2 px-4 py-2 bg-white hover:bg-slate-50 dark:bg-[#0e0b18]/65 dark:hover:bg-[#222] text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white border border-[#e2e8f0] dark:border-violet-500/15 rounded-lg text-xs font-semibold cursor-pointer outline-none transition-all shadow-sm"
+    className="btn-neon btn-neon-sm flex items-center space-x-2 cursor-pointer"
   >
           <span>📂 Import CSV</span>
         </button>

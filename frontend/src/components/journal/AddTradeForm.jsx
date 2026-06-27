@@ -440,7 +440,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
         {onCancel && <button
     onClick={onCancel}
     type="button"
-    className="px-4 py-2 bg-white hover:bg-slate-50 dark:bg-[#151225]/45 dark:hover:bg-violet-500/10 text-slate-700 hover:text-black dark:text-gray-300 border border-slate-200 dark:border-violet-500/15 dark:hover:text-white rounded-lg text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-100"
+    className="btn-neon btn-neon-ghost btn-neon-sm cursor-pointer"
   >
             Cancel
           </button>}
@@ -496,7 +496,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     key={m}
     type="button"
     onClick={() => setMarket(m)}
-    className={`py-1.5 rounded-md text-xs font-semibold transition-all ${market === m ? "bg-white dark:bg-violet-500/20 text-[#0f172a] dark:text-white shadow-sm" : "text-slate-500 hover:text-slate-800 dark:text-gray-500 dark:hover:text-gray-300"}`}
+    className={`py-1.5 rounded-md text-xs font-semibold transition-all ${market === m ? "bg-gradient-to-r from-[#c2185b] to-[#e11d75] text-white shadow-sm shadow-pink-500/20" : "text-slate-500 hover:text-slate-800 dark:text-gray-500 dark:hover:text-gray-300"}`}
   >
                     {m}
                   </button>)}
@@ -949,7 +949,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
           {onCancel && <button
     onClick={onCancel}
     type="button"
-    className="px-6 py-3 bg-slate-50 hover:bg-slate-100 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 dark:hover:bg-violet-500/10 text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white rounded-xl text-sm font-semibold transition-all cursor-pointer"
+    className="btn-neon btn-neon-ghost cursor-pointer"
   >
               Cancel
             </button>}
