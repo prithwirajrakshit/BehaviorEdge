@@ -7,6 +7,29 @@ import os
 
 Base.metadata.create_all(bind=engine)
 
+# Programmatic startup migrations to keep production schema synchronized
+from sqlalchemy import text
+migrations = [
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS full_name VARCHAR;",
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS bio TEXT;",
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_url VARCHAR;",
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS location VARCHAR;",
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS website VARCHAR;",
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS twitter VARCHAR;",
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS experience_level VARCHAR DEFAULT 'Intermediate';",
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_code VARCHAR(6);",
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_expires_at TIMESTAMP;",
+    "ALTER TABLE rules ADD COLUMN IF NOT EXISTS category VARCHAR DEFAULT 'General';",
+    "ALTER TABLE rules ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT TRUE;"
+]
+with engine.connect() as conn:
+    for sql in migrations:
+        try:
+            conn.execute(text(sql))
+            conn.commit()
+        except Exception as e:
+            print(f"Startup migration status: {sql} -> {e}")
+
 os.makedirs("avatars", exist_ok=True)
 
 app = FastAPI(

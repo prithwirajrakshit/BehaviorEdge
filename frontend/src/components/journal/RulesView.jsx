@@ -91,7 +91,7 @@ export default function RulesView({ trades, showToast }) {
     setEditingId(rule.id || null);
     setRuleText(rule.rule_text);
     setCategory(rule.category || CATEGORIES[0]);
-    setIsActive(rule.is_active === 1);
+    setIsActive(!!rule.is_active);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const handleDeleteRule = async (id) => {

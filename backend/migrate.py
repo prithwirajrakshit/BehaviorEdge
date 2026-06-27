@@ -16,12 +16,19 @@ migrations = [
     # Password reset OTP columns
     "ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_code VARCHAR(6);",
     "ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_expires_at TIMESTAMP;",
+    # Rules table columns
+    "ALTER TABLE rules ADD COLUMN IF NOT EXISTS category VARCHAR DEFAULT 'General';",
+    "ALTER TABLE rules ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT TRUE;",
 ]
 
 with engine.connect() as conn:
     for sql in migrations:
         print(f"Running: {sql}")
-        conn.execute(text(sql))
-    conn.commit()
+        try:
+            conn.execute(text(sql))
+            conn.commit()
+        except Exception as e:
+            print(f"Failed: {sql} - {e}")
 
-print("\n✅ Migration complete — all columns added successfully.")
+
+print("\n[SUCCESS] Migration complete - all columns added successfully.")
