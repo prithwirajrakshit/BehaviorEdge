@@ -25,21 +25,7 @@
   --text-muted:    #6e6294;   /* brightened so micro-text/captions stay legible (was #3d2f5a) */
 }
 
-/* Light Mode Theme Variables override */
-html:not(.dark) {
-  --bg-base:       #f8fafc;
-  --bg-card:       #ffffff;
-  --bg-elevated:   #f1f5f9;
-  --border:        #e2e8f0;
-  --border-bright: #cbd5e1;
-  --accent:        #7c3aed;
-  --accent-light:  #6d28d9;
-  --accent-glow:   rgba(124, 58, 237, 0.08);
-  --accent-dim:    rgba(124, 58, 237, 0.03);
-  --text-primary:  #0f172a;
-  --text-secondary:#475569;
-  --text-muted:    #94a3b8;
-}
+
 
 * { box-sizing: border-box; }
 
@@ -63,11 +49,6 @@ body::before {
   z-index: 0;
 }
 
-/* Hide grid texture in light mode */
-html:not(.dark) body::before {
-  opacity: 0;
-}
-
 /* Purple radial glow — top right like FIFA WC */
 body::after {
   content: '';
@@ -81,11 +62,6 @@ body::after {
   z-index: 0;
 }
 
-/* Soften glow in light mode */
-html:not(.dark) body::after {
-  opacity: 0.3;
-}
-
 /* Second glow bottom left */
 #root::before {
   content: '';
@@ -97,10 +73,6 @@ html:not(.dark) body::after {
   background: radial-gradient(ellipse, rgba(167, 139, 250, 0.05) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
-}
-
-html:not(.dark) #root::before {
-  opacity: 0.2;
 }
 
 #root { position: relative; z-index: 1; }
@@ -369,12 +341,6 @@ html:not(.dark) #root::before {
   background-clip: text;
 }
 
-html:not(.dark) .gradient-text {
-  background: linear-gradient(135deg, #1e1b4b 0%, #6d28d9 60%, #7c3aed 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
 
 /* Pill nav button — active state */
 .pill-active {
@@ -536,11 +502,6 @@ h6 {
 
 /* Scoped variables for Journal components */
 .journal-workspace {
-  --bg-workspace-card: rgba(255, 255, 255, 0.85); /* light mode */
-  --border-workspace-glow: rgba(203, 213, 225, 0.6); /* light mode */
-}
-
-.dark .journal-workspace {
   --bg-workspace-card: rgba(14, 11, 24, 0.65); /* dark mode */
   --border-workspace-glow: rgba(124, 58, 237, 0.22); /* dark mode */
 }

@@ -9,8 +9,9 @@ const navItems = [
   { id: 'profile',   label: 'Profile',      icon: User },
 ]
 
-export default function Sidebar({ page, setPage, onLogout, isOpen, onClose, isCollapsed, onToggleCollapse, isDark, onToggleDark }) {
+export default function Sidebar({ page, setPage, onLogout, isOpen, onClose, isCollapsed, onToggleCollapse }) {
   const username = localStorage.getItem('username') || 'Trader'
+  const isDark = true;
 
   return (
     <div className={`sidebar-container ${isOpen ? 'open' : ''} ${isCollapsed ? 'collapsed' : ''}`}>
@@ -75,37 +76,6 @@ export default function Sidebar({ page, setPage, onLogout, isOpen, onClose, isCo
       <div style={{ padding: '16px 24px', borderBottom: '1px solid var(--border)' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
           <div style={{ fontFamily: 'JetBrains Mono', fontSize: '0.58rem', color: 'var(--text-secondary)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Session</div>
-          <button 
-            onClick={onToggleDark} 
-            style={{
-              background: 'var(--accent-dim)',
-              border: '1px solid var(--border)',
-              borderRadius: '6px',
-              padding: '3px 6px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 4,
-              color: 'var(--text-primary)',
-              fontFamily: 'Inter',
-              fontSize: '0.62rem',
-              fontWeight: 600,
-              transition: 'all 0.2s',
-            }}
-            title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-          >
-            {isDark ? (
-              <>
-                <Sun size={10} className="text-amber-500" style={{ color: '#f59e0b' }} />
-                <span>LIGHT</span>
-              </>
-            ) : (
-              <>
-                <Moon size={10} className="text-indigo-400" style={{ color: '#818cf8' }} />
-                <span>DARK</span>
-              </>
-            )}
-          </button>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{
