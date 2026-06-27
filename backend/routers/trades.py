@@ -72,6 +72,40 @@ def log_trade(trade: TradeCreate, user: User = Depends(get_user), db: Session = 
     db.add(new_trade)
     db.commit()
     db.refresh(new_trade)
+
+    # ── Automatically populate corresponding JournalTrade entry ─────
+    try:
+        from models import JournalTrade
+        outcome_str = trade.outcome.capitalize() if trade.outcome else "Breakeven"
+        new_jt = JournalTrade(
+            user_id=user.id,
+            pair_instrument="Logged Trade",
+            date=new_trade.timestamp.strftime("%Y-%m-%d"),
+            market="Crypto",
+            direction="Long",
+            session="",
+            setup_type="Gate Logged",
+            confluences="[]",
+            mistakes="[]",
+            pnl_usd=trade.pnl_amount,
+            fee_usd=0.0,
+            net_pnl_usd=trade.pnl_amount,
+            net_daily_amount_usd=trade.pnl_amount,
+            outcome=outcome_str,
+            screenshot_url="",
+            notes=f"Logged from Pre-trade Gate. Emotion Before: {trade.emotion_before}, Emotion After: {trade.emotion_after}.",
+            trade_quality="3",
+            planned_rr=0.0,
+            actual_rr=0.0,
+            rules_followed_count=1 if trade.rule_followed else 0,
+            rules_broken_count=0 if trade.rule_followed else 1
+        )
+        db.add(new_jt)
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        print(f"Failed to auto-populate JournalTrade: {e}")
+
     return new_trade
 
 @router.get("/", response_model=List[TradeOut])

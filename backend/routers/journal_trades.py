@@ -67,6 +67,52 @@ def get_trades(
     user: User = Depends(get_user),
     db: Session = Depends(get_db)
 ):
+    # ── Retroactive Sync: Import Trade Logger entries into Journal ────
+    try:
+        from models import Trade
+        gate_trades = db.query(Trade).filter(Trade.user_id == user.id).all()
+        journal_trades = db.query(JournalTrade).filter(JournalTrade.user_id == user.id).all()
+
+        for gt in gate_trades:
+            gt_date = gt.timestamp.strftime("%Y-%m-%d")
+            matched = False
+            for jt in journal_trades:
+                # Match by date and same net pnl amount (allowing minor float variations)
+                if jt.date == gt_date and abs(jt.net_pnl_usd - gt.pnl_amount) < 0.01:
+                    matched = True
+                    break
+            
+            if not matched:
+                outcome_str = gt.outcome.capitalize() if gt.outcome else "Breakeven"
+                new_jt = JournalTrade(
+                    user_id=user.id,
+                    pair_instrument="Logged Trade",
+                    date=gt_date,
+                    market="Crypto",
+                    direction="Long",
+                    session="",
+                    setup_type="Gate Logged",
+                    confluences="[]",
+                    mistakes="[]",
+                    pnl_usd=gt.pnl_amount,
+                    fee_usd=0.0,
+                    net_pnl_usd=gt.pnl_amount,
+                    net_daily_amount_usd=gt.pnl_amount,
+                    outcome=outcome_str,
+                    screenshot_url="",
+                    notes=f"Logged from Pre-trade Gate. Emotion Before: {gt.emotion_before}, Emotion After: {gt.emotion_after}.",
+                    trade_quality="3",
+                    planned_rr=0.0,
+                    actual_rr=0.0,
+                    rules_followed_count=1 if gt.rule_followed else 0,
+                    rules_broken_count=0 if gt.rule_followed else 1
+                )
+                db.add(new_jt)
+                db.commit()
+    except Exception as e:
+        db.rollback()
+        print(f"Error during retroactive journal trade synchronization: {e}")
+
     query = db.query(JournalTrade).filter(JournalTrade.user_id == user.id)
     if outcome:
         query = query.filter(JournalTrade.outcome == outcome)
