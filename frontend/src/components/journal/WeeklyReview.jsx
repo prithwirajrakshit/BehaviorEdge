@@ -213,7 +213,7 @@ export default function WeeklyReview({ trades, showToast }) {
           <button
     onClick={handleSaveReview}
     disabled={saving}
-    className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-all mt-4 cursor-pointer shadow-md"
+    className="w-full btn-neon mt-4 cursor-pointer"
   >
             {saving ? "Saving Reflection Logs..." : "Save Weekly Review Logs"}
           </button>

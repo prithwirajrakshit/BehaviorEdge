@@ -591,7 +591,7 @@ export default function DashboardView({ showToast, onNavigate }) {
                 <button
     type="button"
     onClick={() => onNavigate && onNavigate("ff_calendar")}
-    className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] rounded-lg transition-all cursor-pointer shadow"
+    className="btn-neon btn-neon-sm cursor-pointer"
   >
                   Go to Calendar
                 </button>

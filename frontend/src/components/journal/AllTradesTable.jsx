@@ -567,7 +567,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
     id="importTradesBtn"
     onClick={handleCsvImport}
     disabled={!csvFile || isParsing}
-    className="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl shadow-lg shadow-blue-500/10 cursor-pointer disabled:opacity-50 flex items-center space-x-1.5"
+    className="btn-neon btn-neon-sm cursor-pointer disabled:opacity-50 flex items-center space-x-1.5"
   >
                 {isParsing ? <>
                     <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">

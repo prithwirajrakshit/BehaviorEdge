@@ -16,6 +16,10 @@
   --red:           #f43f5e;
   --red-glow:      rgba(244, 63, 94, 0.15);
   --amber:         #f59e0b;
+  --pink:          #e11d75;
+  --pink-hot:      #f43f5e;
+  --pink-glow:     rgba(225, 29, 117, 0.35);
+  --pink-dim:      rgba(225, 29, 117, 0.12);
   --text-primary:  #f0ecff;
   --text-secondary:#c8c0e0;   /* brightened so labels stay legible at low brightness (was #7c6fa0) */
   --text-muted:    #6e6294;   /* brightened so micro-text/captions stay legible (was #3d2f5a) */
@@ -173,36 +177,126 @@ body::after {
   box-shadow: 0 0 0 3px var(--accent-dim);
 }
 
-/* Primary button — pill shape like FIFA WC */
+/* ── Neon Button ────────────────────────────────────────────── */
+/* Pink/rose pill button with animated neon glow lines on hover */
+.btn-neon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #c2185b, #e11d75, #f43f5e);
+  color: #fff;
+  border: 1px solid rgba(225, 29, 117, 0.4);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 11px 24px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  white-space: nowrap;
+}
+.btn-neon:hover {
+  background: linear-gradient(135deg, #d81b60, #e91e8c, #f64f6e);
+  box-shadow:
+    0 0 18px var(--pink-glow),
+    0 4px 28px rgba(225, 29, 117, 0.4);
+  transform: translateY(-1px);
+}
+.btn-neon:active {
+  transform: translateY(0);
+  box-shadow: 0 0 10px var(--pink-glow);
+}
+.btn-neon:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Ghost variant — transparent with pink border */
+.btn-neon.btn-neon-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-bright);
+  box-shadow: none;
+}
+.btn-neon.btn-neon-ghost:hover {
+  background: var(--pink-dim);
+  color: #fff;
+  border-color: rgba(225, 29, 117, 0.5);
+  box-shadow: 0 0 14px var(--pink-dim);
+  transform: translateY(-1px);
+}
+
+/* Sizes */
+.btn-neon.btn-neon-sm {
+  font-size: 0.72rem;
+  padding: 7px 16px;
+}
+.btn-neon.btn-neon-lg {
+  font-size: 0.9rem;
+  padding: 14px 32px;
+}
+
+/* Neon glow line spans (top + bottom edge) */
+.btn-neon-line {
+  position: absolute;
+  left: 12.5%;
+  width: 75%;
+  height: 1px;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 180, 210, 0.9),
+    transparent
+  );
+  pointer-events: none;
+}
+.btn-neon:hover .btn-neon-line {
+  opacity: 1;
+}
+.btn-neon-line-top  { top: 0; }
+.btn-neon-line-bottom { bottom: 0; }
+
+/* Keep .btn-primary as pink alias for backwards compatibility */
 .btn-primary {
-  background: linear-gradient(135deg, #6d28d9, #7c3aed);
+  background: linear-gradient(135deg, #c2185b, #e11d75, #f43f5e);
   color: white;
-  border: none;
+  border: 1px solid rgba(225, 29, 117, 0.4);
   border-radius: 999px;
   font-family: 'Inter', sans-serif;
   font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  padding: 12px 24px;
+  padding: 11px 24px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.22s ease;
   position: relative;
   overflow: hidden;
-}
-.btn-primary::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.06));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
 }
 .btn-primary:hover {
+  background: linear-gradient(135deg, #d81b60, #e91e8c, #f64f6e);
+  box-shadow:
+    0 0 18px var(--pink-glow),
+    0 4px 28px rgba(225, 29, 117, 0.4);
   transform: translateY(-1px);
-  box-shadow: 0 4px 24px rgba(124, 58, 237, 0.4);
 }
 .btn-primary:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
 /* Badges */

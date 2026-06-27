@@ -35,6 +35,7 @@ import FFCalendarView from '../components/journal/FFCalendarView'
 import RulesView from '../components/journal/RulesView'
 import { ToastNotification } from '../components/journal/Toast'
 import { authFetch } from '../components/journal/utils/authFetch'
+import NeonButton from '../components/ui/NeonButton'
 
 export default function JournalWorkspace() {
   const [currentPage, setCurrentPage] = useState('dashboard')
@@ -339,21 +340,22 @@ export default function JournalWorkspace() {
           </div>
           
           <div className="flex gap-2 items-center">
-            <button
+            <NeonButton
+              variant="ghost"
+              size="sm"
               onClick={handleExportCSV}
-              className="px-3 py-1.5 bg-[#0e0b18] hover:bg-violet-500/10 text-xs font-semibold rounded-lg border border-violet-500/20 text-violet-300 hover:text-white transition-all cursor-pointer shadow-sm"
             >
               Export CSV
-            </button>
-            <button
+            </NeonButton>
+            <NeonButton
+              size="sm"
               onClick={() => {
                 setEditingTrade(null)
                 setCurrentPage('add')
               }}
-              className="px-3 py-1.5 bg-violet-600 hover:bg-violet-500 text-xs font-semibold rounded-lg text-white transition-all cursor-pointer shadow-md shadow-violet-600/15"
             >
               + New Trade
-            </button>
+            </NeonButton>
           </div>
         </header>
 

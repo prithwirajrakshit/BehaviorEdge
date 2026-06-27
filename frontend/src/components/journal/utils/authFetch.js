@@ -19,8 +19,12 @@ export async function authFetch(url, options = {}) {
     targetUrl = url.replace('/api/account_balance', '/api/journal/account_balance');
   } else if (url.startsWith('/api/market_events')) {
     targetUrl = url.replace('/api/market_events', '/api/journal/market_events');
-  } else if (url.startsWith('/api/trading_rules')) {
-    targetUrl = url.replace('/api/trading_rules', '/rules');
+  } else if (url.startsWith('/api/trading_rules/')) {
+    // e.g. /api/trading_rules/5 → /rules/5
+    targetUrl = url.replace('/api/trading_rules/', '/rules/');
+  } else if (url === '/api/trading_rules') {
+    // POST/GET to collection — must have trailing slash to avoid FastAPI 307 redirect breaking CORS
+    targetUrl = '/rules/';
   } else if (url.startsWith('/api/rule_checks')) {
     targetUrl = url.replace('/api/rule_checks', '/api/journal/rule_checks');
   } else if (url.startsWith('/api/analytics/')) {

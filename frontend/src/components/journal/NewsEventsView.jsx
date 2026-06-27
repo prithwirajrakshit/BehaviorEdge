@@ -309,7 +309,7 @@ export default function NewsEventsView({ trades, showToast }) {
               </button>
               <button
     type="submit"
-    className="px-5 py-2 bg-blue-600 hover:bg-blue-500 rounded-xl text-xs text-white font-bold flex items-center gap-1.5 cursor-pointer shadow-md"
+    className="btn-neon btn-neon-sm flex items-center gap-1.5 cursor-pointer"
   >
                 <Save className="w-3.5 h-3.5" />
                 <span>{editingId ? "Update Event" : "Save Event"}</span>

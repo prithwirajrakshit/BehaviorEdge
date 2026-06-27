@@ -164,7 +164,7 @@ export default function CalculatorView() {
 
                 <button
     type="submit"
-    className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-all mt-4 cursor-pointer"
+    className="w-full btn-neon mt-4 cursor-pointer"
   >
                   Calculate Sizing Constraints
                 </button>
@@ -243,7 +243,7 @@ export default function CalculatorView() {
 
                 <button
     type="submit"
-    className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-all mt-4 cursor-pointer"
+    className="w-full btn-neon mt-4 cursor-pointer"
   >
                   Calculate Risk vs Reward
                 </button>

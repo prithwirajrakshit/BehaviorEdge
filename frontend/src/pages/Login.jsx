@@ -395,7 +395,7 @@ export default function Login({ onLogin }) {
               )}
 
               <button onClick={submitAuth} disabled={loading} className="btn-primary"
-                style={{ width: '100%', marginTop: 20, padding: '14px', fontSize: '0.88rem' }}>
+                style={{ width: '100%', marginTop: 20, padding: '14px', fontSize: '0.88rem', borderRadius: 12 }}>
                 {loading ? 'Authenticating...' : view === 'signup' ? 'Create Account →' : 'Sign In →'}
               </button>
 
@@ -448,7 +448,7 @@ export default function Login({ onLogin }) {
               {error && <ErrorBanner message={error} />}
 
               <button onClick={handleForgotSubmit} disabled={loading} className="btn-primary"
-                style={{ width: '100%', marginTop: 20, padding: '14px', fontSize: '0.88rem' }}>
+                style={{ width: '100%', marginTop: 20, padding: '14px', fontSize: '0.88rem', borderRadius: 12 }}>
                 {loading ? 'Sending OTP…' : 'Send OTP →'}
               </button>
 
@@ -502,7 +502,7 @@ export default function Login({ onLogin }) {
               {error && <ErrorBanner message={error} />}
 
               <button onClick={handleVerifyOtp} disabled={loading || otp.length !== 6} className="btn-primary"
-                style={{ width: '100%', marginTop: 20, padding: '14px', fontSize: '0.88rem' }}>
+                style={{ width: '100%', marginTop: 20, padding: '14px', fontSize: '0.88rem', borderRadius: 12 }}>
                 {loading ? 'Verifying…' : 'Verify →'}
               </button>
 
@@ -562,7 +562,7 @@ export default function Login({ onLogin }) {
               {error && <ErrorBanner message={error} />}
 
               <button onClick={handleResetPassword} disabled={loading} className="btn-primary"
-                style={{ width: '100%', marginTop: 20, padding: '14px', fontSize: '0.88rem' }}>
+                style={{ width: '100%', marginTop: 20, padding: '14px', fontSize: '0.88rem', borderRadius: 12 }}>
                 {loading ? 'Resetting…' : 'Reset Password →'}
               </button>
             </>

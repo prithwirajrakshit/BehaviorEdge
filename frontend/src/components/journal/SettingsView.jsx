@@ -272,7 +272,7 @@ export default function SettingsView({ trades, onClearAll, showToast }) {
           <div className="flex justify-end pt-2">
             <button
     type="submit"
-    className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-all transition-colors cursor-pointer"
+    className="btn-neon btn-neon-sm cursor-pointer"
   >
               Save Configuration Options
             </button>

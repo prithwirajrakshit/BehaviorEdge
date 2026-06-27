@@ -134,7 +134,7 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
                   <div className="absolute inset-0 bg-[#000]/60 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center gap-3">
                     <button
       onClick={() => openSlideshow(trade.id)}
-      className="p-2 bg-blue-500 hover:bg-blue-600 rounded-full text-white cursor-pointer shadow shadow-blue-500/20"
+      className="p-2 btn-neon rounded-full cursor-pointer"
       title="Inspect full visual"
     >
                       <Maximize2 className="w-4 h-4" />
@@ -348,7 +348,7 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
       closeSlideshow();
       onEditTrade(currentSlideTrade);
     }}
-    className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold p-2.5 rounded-xl text-center select-none block cursor-pointer"
+    className="w-full btn-neon p-2.5 text-center select-none block cursor-pointer"
   >
                 Go to original parameters &rarr;
               </button>

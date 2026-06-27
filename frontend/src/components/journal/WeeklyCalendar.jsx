@@ -368,7 +368,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
     href={selectedTrade.screenshot_url}
     target="_blank"
     rel="noopener noreferrer"
-    className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition-all inline-flex items-center space-x-1 shadow-md shadow-blue-600/10"
+    className="btn-neon btn-neon-sm inline-flex items-center space-x-1 no-underline"
   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>Inspect Setup Chart</span>
@@ -392,7 +392,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
             <div className="p-4 bg-slate-50/20 dark:bg-[#151225]/45 border-t border-slate-150/40 dark:border-violet-500/15 flex justify-end">
               <button
     onClick={() => setSelectedTrade(null)}
-    className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg cursor-pointer transition-all active:scale-95 outline-none font-bold shadow-md"
+    className="btn-neon btn-neon-sm cursor-pointer"
   >
                 Acknowledge Review
               </button>
@@ -520,7 +520,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
     type="button"
     onClick={handleSaveNotes}
     disabled={savingNotes}
-    className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg cursor-pointer transition-all active:scale-95 flex items-center gap-1 shadow-md"
+    className="btn-neon btn-neon-sm cursor-pointer flex items-center gap-1"
   >
                 {savingNotes ? "Saving..." : "Save Daily Notes"}
               </button>

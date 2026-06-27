@@ -957,7 +957,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
     id="submitTradeBtn"
     type="submit"
     disabled={isSubmitting}
-    className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-500/20 active:scale-95 disabled:opacity-50 transition-all outline-none cursor-pointer"
+    className="btn-neon btn-neon-lg disabled:opacity-50 cursor-pointer"
   >
             {isSubmitting ? "Saving Trades..." : isEdit ? "\u{1F4BE} Save Changes" : "\u{1F680} Log Trade"}
           </button>
@@ -1015,7 +1015,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
               <button
     type="button"
     onClick={handleConfirmChecklist}
-    className="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-xl text-xs text-white font-bold cursor-pointer"
+    className="btn-neon btn-neon-sm cursor-pointer"
   >
                 Confirm State & Save Trade
               </button>

@@ -403,7 +403,7 @@ export default function FFCalendarView({ trades, showToast }) {
           </button>
           <button
     type="submit"
-    className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-black transition-colors cursor-pointer"
+    className="btn-neon btn-neon-sm cursor-pointer"
   >
             Save Event
           </button>
@@ -462,7 +462,7 @@ export default function FFCalendarView({ trades, showToast }) {
           </p>
           <button
             onClick={fetchDbEvents}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-black transition-all cursor-pointer inline-flex items-center gap-1.5 shadow"
+            className="btn-neon btn-neon-sm cursor-pointer inline-flex items-center gap-1.5"
           >
             Retry Fetching
           </button>
