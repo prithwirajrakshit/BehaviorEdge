@@ -18,16 +18,19 @@ export default function Sidebar({ page, setPage, onLogout, isOpen, onClose, isCo
       <div style={{
         position: 'absolute', top: 0, right: -1, width: 2, height: '100%',
         background: 'linear-gradient(180deg, transparent 0%, rgba(124,58,237,0.9) 15%, rgba(232,121,249,0.9) 50%, rgba(124,58,237,0.9) 85%, transparent 100%)',
-        boxShadow: '0 0 20px 3px rgba(124,58,237,0.6)',
+        boxShadow: isDark ? '0 0 20px 3px rgba(124,58,237,0.6)' : 'none',
+        opacity: isDark ? 1 : 0.35,
         pointerEvents: 'none',
       }} />
 
       {/* Soft top glow wash */}
-      <div style={{
-        position: 'absolute', top: 0, left: 0, right: 0, height: 200,
-        background: 'radial-gradient(ellipse at top left, rgba(124,58,237,0.12) 0%, transparent 70%)',
-        pointerEvents: 'none',
-      }} />
+      {isDark && (
+        <div style={{
+          position: 'absolute', top: 0, left: 0, right: 0, height: 200,
+          background: 'radial-gradient(ellipse at top left, rgba(124,58,237,0.12) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }} />
+      )}
 
       {/* Desktop Sidebar Toggle Button */}
       <button 
@@ -75,7 +78,7 @@ export default function Sidebar({ page, setPage, onLogout, isOpen, onClose, isCo
           <button 
             onClick={onToggleDark} 
             style={{
-              background: 'rgba(255, 255, 255, 0.05)',
+              background: 'var(--accent-dim)',
               border: '1px solid var(--border)',
               borderRadius: '6px',
               padding: '3px 6px',

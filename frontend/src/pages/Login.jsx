@@ -326,7 +326,7 @@ export default function Login({ onLogin }) {
 
         {/* Card */}
         <div style={{
-          background: 'rgba(14, 11, 24, 0.8)', border: '1px solid var(--border)',
+          background: 'var(--bg-card)', border: '1px solid var(--border)',
           borderRadius: 20, padding: '28px', position: 'relative', overflow: 'hidden',
           backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
         }}>

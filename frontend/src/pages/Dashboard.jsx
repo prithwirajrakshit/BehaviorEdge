@@ -36,8 +36,8 @@ const CustomTooltip = ({ active, payload, label }) => {
         : 'var(--text-primary)')
     return (
       <div style={{
-        background: 'rgba(14, 11, 24, 0.85)',
-        border: '1px solid rgba(124,58,237,0.25)',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-bright)',
         borderRadius: 10,
         padding: '10px 14px',
         backdropFilter: 'blur(12px)',

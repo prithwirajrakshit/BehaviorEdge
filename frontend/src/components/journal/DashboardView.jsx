@@ -672,10 +672,10 @@ export default function DashboardView({ showToast, onNavigate }) {
                   <YAxis stroke="#64748b" />
                   <Tooltip
                     contentStyle={{ 
-                      backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                      backgroundColor: "var(--bg-card)", 
                       backdropFilter: "blur(12px)",
                       WebkitBackdropFilter: "blur(12px)",
-                      borderColor: "rgba(124, 58, 237, 0.4)", 
+                      borderColor: "var(--border-bright)", 
                       borderRadius: "12px",
                       boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
                       borderWidth: "1px",
@@ -722,10 +722,10 @@ export default function DashboardView({ showToast, onNavigate }) {
                   <YAxis stroke="#64748b" />
                   <Tooltip
                     contentStyle={{ 
-                      backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                      backgroundColor: "var(--bg-card)", 
                       backdropFilter: "blur(12px)",
                       WebkitBackdropFilter: "blur(12px)",
-                      borderColor: "rgba(124, 58, 237, 0.4)", 
+                      borderColor: "var(--border-bright)", 
                       borderRadius: "12px",
                       boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
                       borderWidth: "1px",
@@ -768,10 +768,10 @@ export default function DashboardView({ showToast, onNavigate }) {
                 <YAxis stroke="#64748b" unit="%" />
                 <Tooltip
                   contentStyle={{ 
-                    backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                    backgroundColor: "var(--bg-card)", 
                     backdropFilter: "blur(12px)",
                     WebkitBackdropFilter: "blur(12px)",
-                    borderColor: "rgba(124, 58, 237, 0.4)", 
+                    borderColor: "var(--border-bright)", 
                     borderRadius: "12px",
                     boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
                     borderWidth: "1px",
@@ -816,10 +816,10 @@ export default function DashboardView({ showToast, onNavigate }) {
                   <XAxis stroke="#64748b" type="number" />
                   <Tooltip
                     contentStyle={{ 
-                      backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                      backgroundColor: "var(--bg-card)", 
                       backdropFilter: "blur(12px)",
                       WebkitBackdropFilter: "blur(12px)",
-                      borderColor: "rgba(124, 58, 237, 0.4)", 
+                      borderColor: "var(--border-bright)", 
                       borderRadius: "12px",
                       boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
                       borderWidth: "1px",
@@ -862,10 +862,10 @@ export default function DashboardView({ showToast, onNavigate }) {
                   <XAxis stroke="#64748b" type="number" allowDecimals={false} />
                   <Tooltip
                     contentStyle={{ 
-                      backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                      backgroundColor: "var(--bg-card)", 
                       backdropFilter: "blur(12px)",
                       WebkitBackdropFilter: "blur(12px)",
-                      borderColor: "rgba(124, 58, 237, 0.4)", 
+                      borderColor: "var(--border-bright)", 
                       borderRadius: "12px",
                       boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
                       borderWidth: "1px",
@@ -943,10 +943,10 @@ export default function DashboardView({ showToast, onNavigate }) {
                       </Pie>
                       <Tooltip
                         contentStyle={{ 
-                          backgroundColor: "rgba(14, 11, 24, 0.9)", 
+                          backgroundColor: "var(--bg-card)", 
                           backdropFilter: "blur(12px)",
                           WebkitBackdropFilter: "blur(12px)",
-                          borderColor: "rgba(124, 58, 237, 0.4)", 
+                          borderColor: "var(--border-bright)", 
                           borderRadius: "12px",
                           boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
                           borderWidth: "1px",
