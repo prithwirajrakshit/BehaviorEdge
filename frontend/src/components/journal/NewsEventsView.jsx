@@ -169,9 +169,9 @@ export default function NewsEventsView({ trades, showToast }) {
             <Newspaper className="w-5 h-5 text-blue-500 animate-pulse bg-transparent" />
             <div>
               <h3 className="font-bold text-slate-800 dark:text-white text-sm">
-                {editingId ? `\u{1F4DD} Edit Event Diary: ${title}` : "\u{1F4F0} Record Market News/Event Event"}
+                {editingId ? `Edit Event Diary: ${title}` : "Record Market News/Event Event"}
               </h3>
-              <p className="text-xs text-slate-500 dark:text-gray-400">Keep track of Macro events, FOMC briefings or major crypto catalyst listings.</p>
+              <p className="text-xs text-slate-500 dark:text-gray-400 italic">Keep track of Macro events, FOMC briefings or major crypto catalyst listings.</p>
             </div>
           </div>
           {isFormCollapsed ? <ChevronDown className="w-4 h-4 text-slate-400 dark:text-gray-400" /> : <ChevronUp className="w-4 h-4 text-slate-400 dark:text-gray-400" />}

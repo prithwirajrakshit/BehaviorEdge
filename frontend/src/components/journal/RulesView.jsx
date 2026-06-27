@@ -190,9 +190,9 @@ export default function RulesView({ trades, showToast }) {
             <Scroll className="w-5 h-5 text-blue-500 dark:text-blue-400" />
             <div>
               <h3 className="font-bold text-slate-800 dark:text-white text-sm">
-                {editingId ? "\u{1F4DD} Edit Policy Rule" : "\u{1F4DC} Create Trading Policy Directive"}
+                {editingId ? "Edit Policy Rule" : "Create Trading Policy Directive"}
               </h3>
-              <p className="text-xs text-slate-400 dark:text-gray-400">Formalize self-regulations and psychological risk thresholds.</p>
+              <p className="text-xs text-slate-400 dark:text-gray-400 italic">Formalize self-regulations and psychological risk thresholds.</p>
             </div>
           </div>
 
