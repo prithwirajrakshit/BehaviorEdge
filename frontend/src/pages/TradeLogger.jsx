@@ -136,8 +136,8 @@ export default function TradeLogger() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 {rules.map((rule, i) => (
                   <div key={rule.id} onClick={() => setCheckedRules(prev => ({ ...prev, [rule.id]: !prev[rule.id] }))}
-                    style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: checkedRules[rule.id] ? 'rgba(16,185,129,0.05)' : 'var(--bg-base)', border: `1px solid ${checkedRules[rule.id] ? 'rgba(16,185,129,0.25)' : 'var(--border)'}`, borderRadius: 8, cursor: 'pointer', transition: 'all 0.15s' }}>
-                    <div style={{ width: 18, height: 18, borderRadius: 5, border: `1.5px solid ${checkedRules[rule.id] ? 'var(--green)' : 'var(--border)'}`, background: checkedRules[rule.id] ? 'var(--green-glow)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'all 0.15s' }}>
+                    style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: checkedRules[rule.id] ? 'rgba(16,185,129,0.05)' : 'var(--bg-base)', border: `1px solid ${checkedRules[rule.id] ? 'rgba(16,185,129,0.25)' : 'var(--border-bright)'}`, borderRadius: 8, cursor: 'pointer', transition: 'all 0.15s' }}>
+                    <div style={{ width: 18, height: 18, borderRadius: 5, border: `1.5px solid ${checkedRules[rule.id] ? 'var(--green)' : 'var(--text-muted)'}`, background: checkedRules[rule.id] ? 'var(--green-glow)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'all 0.15s' }}>
                       {checkedRules[rule.id] && <CheckCircle size={11} color="var(--green)" />}
                     </div>
                     <span style={{ fontFamily: 'Inter', fontSize: '0.82rem', color: checkedRules[rule.id] ? 'var(--text-primary)' : 'var(--text-secondary)' }}>
