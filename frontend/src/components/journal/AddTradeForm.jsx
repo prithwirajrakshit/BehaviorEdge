@@ -623,7 +623,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
               <button
     type="button"
     onClick={addCustomConfluence}
-    className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-xs transition active:scale-95 cursor-pointer"
+    className="btn-neon btn-neon-sm cursor-pointer"
   >
                 Add Confluence
               </button>
@@ -697,7 +697,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
               <button
     type="button"
     onClick={addCustomMistake}
-    className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-xs transition active:scale-95 cursor-pointer"
+    className="btn-neon btn-neon-sm cursor-pointer"
   >
                 Add Behavior
               </button>
@@ -837,7 +837,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
       "B": "bg-yellow-500 text-slate-900 border-yellow-400 shadow-sm shadow-yellow-500/10",
       "C": "bg-red-600 text-white border-red-500 shadow-sm shadow-red-600/10"
     };
-    const defaultActiveCol = "bg-blue-600 text-white border-blue-500 shadow-sm shadow-blue-600/10";
+    const defaultActiveCol = "bg-gradient-to-r from-[#c2185b] to-[#e11d75] text-white border-[#e11d75] shadow-sm shadow-pink-500/20";
     const activeColor = colorMapping[preset] || defaultActiveCol;
     const finalColor = isActive ? `${activeColor}` : "bg-slate-50 dark:bg-[#151225]/45 text-slate-500 dark:text-gray-400 border-slate-200 dark:border-violet-500/15 hover:bg-slate-100 dark:hover:bg-violet-500/10 hover:text-[#0f172a] dark:text-white";
     const isPresetDefault = ["A+", "A", "B", "C"].includes(preset);
@@ -876,7 +876,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
                   <button
     type="button"
     onClick={addCustomTradeQualityPreset}
-    className="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-xs transition active:scale-95 cursor-pointer"
+    className="btn-neon btn-neon-sm cursor-pointer"
   >
                     Save Preset
                   </button>

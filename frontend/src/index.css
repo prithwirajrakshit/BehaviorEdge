@@ -590,14 +590,14 @@ h6 {
 .journal-workspace button.bg-indigo-600,
 .journal-workspace button.bg-violet-600,
 .journal-workspace button[type="submit"] {
-  background: linear-gradient(135deg, #6d28d9, #7c3aed) !important;
+  background: linear-gradient(135deg, #c2185b, #e11d75, #f43f5e) !important;
   color: white !important;
-  border: none !important;
+  border: 1px solid rgba(225, 29, 117, 0.4) !important;
   border-radius: 999px !important;
   font-family: 'Inter', sans-serif !important;
   font-weight: 600 !important;
   padding: 10px 20px !important;
-  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3) !important;
+  box-shadow: 0 0 14px var(--pink-glow), 0 4px 20px rgba(225, 29, 117, 0.3) !important;
   cursor: pointer !important;
   transition: all 0.2s ease !important;
 }
@@ -606,8 +606,9 @@ h6 {
 .journal-workspace button.bg-indigo-600:hover,
 .journal-workspace button.bg-violet-600:hover,
 .journal-workspace button[type="submit"]:hover {
+  background: linear-gradient(135deg, #d81b60, #e91e8c, #f64f6e) !important;
   transform: translateY(-1px) !important;
-  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.55) !important;
+  box-shadow: 0 0 20px var(--pink-glow), 0 4px 26px rgba(225, 29, 117, 0.45) !important;
 }
 
 /* Secondary / Cancel / Grey Buttons */

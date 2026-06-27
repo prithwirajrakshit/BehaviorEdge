@@ -261,7 +261,7 @@ export default function RulesView({ trades, showToast }) {
               <h3 className="font-bold text-slate-800 dark:text-white text-sm">Policy Book Checklist</h3>
               <p className="text-xs text-slate-400 dark:text-gray-400">Review status and performance rates of all listed items.</p>
             </div>
-            <span className="text-[10px] font-mono bg-blue-50 dark:bg-blue-500/10 text-blue-605 dark:text-blue-400 border border-blue-200 dark:border-blue-550/20 px-2.5 py-1 rounded-full font-bold">
+            <span className="text-[10px] font-mono bg-pink-50 dark:bg-pink-500/10 text-[#e11d75] dark:text-[#f43f5e] border border-pink-200 dark:border-pink-500/20 px-2.5 py-1 rounded-full font-bold">
               {rules.length} total rules
             </span>
           </div>
@@ -282,7 +282,7 @@ export default function RulesView({ trades, showToast }) {
                             <div className="flex gap-2 font-mono text-[9px] select-none flex-wrap">
                               <span className="text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-500/10 border border-green-200/50 dark:border-green-500/10 px-1.5 py-0.5 rounded font-bold">Checked: {rule.times_checked}</span>
                               <span className="text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-500/10 border border-red-200/50 dark:border-red-500/10 px-1.5 py-0.5 rounded font-bold">Broken: {rule.times_broken}</span>
-                              <span className="text-blue-605 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 border border-blue-200/50 dark:border-blue-500/10 px-1.5 py-0.5 rounded font-bold">
+                              <span className="text-[#e11d75] dark:text-[#f43f5e] bg-pink-50 dark:bg-pink-500/10 border border-pink-200/50 dark:border-pink-500/10 px-1.5 py-0.5 rounded font-bold">
                                 {calcBrokenRate(rule.times_broken, rule.times_checked)}% rate
                               </span>
                             </div>

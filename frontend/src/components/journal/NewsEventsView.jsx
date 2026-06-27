@@ -367,7 +367,7 @@ export default function NewsEventsView({ trades, showToast }) {
     return <button
       key={`day-${dayNum}`}
       onClick={() => handleDayClick(dayNum)}
-      className={`relative p-2 rounded-lg text-xs font-mono font-bold transition-all hover:bg-slate-105 dark:hover:bg-[#2a2a2a] group cursor-pointer ${isSelected ? "bg-blue-600 text-white font-black" : "bg-slate-50 dark:bg-[#121212] text-slate-700 dark:text-gray-300"}`}
+      className={`relative p-2 rounded-lg text-xs font-mono font-bold transition-all hover:bg-slate-105 dark:hover:bg-[#2a2a2a] group cursor-pointer ${isSelected ? "bg-gradient-to-r from-[#c2185b] to-[#e11d75] text-white font-black shadow-sm shadow-pink-500/20" : "bg-slate-50 dark:bg-[#121212] text-slate-700 dark:text-gray-300"}`}
     >
                   <span>{dayNum}</span>
                   <div className="absolute bottom-1 left-0 right-0 flex justify-center gap-0.5 pointer-events-none">

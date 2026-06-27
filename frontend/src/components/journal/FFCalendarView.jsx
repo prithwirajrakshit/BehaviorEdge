@@ -428,7 +428,7 @@ export default function FFCalendarView({ trades, showToast }) {
         <div className="flex items-center gap-3 w-full md:w-auto self-stretch md:self-auto justify-end">
           <button
     onClick={() => setShowManualForm(!showManualForm)}
-    className="flex items-center gap-1.5 px-3 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-[#0e0b18]/65 dark:hover:bg-[#252525] border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold rounded-xl transition-all cursor-pointer shrink-0"
+    className="btn-neon btn-neon-ghost btn-neon-sm cursor-pointer shrink-0"
     title="Add economic event manually to database"
   >
             <Plus className="w-3.5 h-3.5" />
@@ -578,7 +578,7 @@ export default function FFCalendarView({ trades, showToast }) {
                 <div className="flex flex-wrap gap-1.5">
                   <button
       onClick={() => toggleCurrency("ALL")}
-      className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${selectedCurrencies.length === currenciesList.length ? "bg-blue-600 text-white font-black" : "bg-slate-100 dark:bg-[#121212]/50 text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-white border border-slate-200 dark:border-[#2d2d2d]"}`}
+      className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${selectedCurrencies.length === currenciesList.length ? "bg-gradient-to-r from-[#c2185b] to-[#e11d75] text-white font-black shadow-sm shadow-pink-500/20" : "bg-slate-100 dark:bg-[#121212]/50 text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-white border border-slate-200 dark:border-[#2d2d2d]"}`}
     >
                     ALL
                   </button>
@@ -587,12 +587,12 @@ export default function FFCalendarView({ trades, showToast }) {
       return <button
         key={curr}
         onClick={() => toggleCurrency(curr)}
-        className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1 border ${active ? "bg-blue-605/10 text-blue-600 dark:text-blue-400 border-blue-500/40" : "bg-slate-100 dark:bg-[#121212]/50 text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-white border-slate-200 dark:border-[#2d2d2d]"}`}
+        className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1 border ${active ? "bg-[#e11d75]/10 text-[#e11d75] dark:text-[#f43f5e] border-[#e11d75]/40" : "bg-slate-100 dark:bg-[#121212]/50 text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-white border-slate-200 dark:border-[#2d2d2d]"}`}
       >
                         <span>{getCurrencyFlag(curr)}</span>
                         <span>{curr}</span>
                       </button>;
-    })}
+     })}
                 </div>
               </div>
 
@@ -604,7 +604,7 @@ export default function FFCalendarView({ trades, showToast }) {
                 <div className="flex flex-wrap gap-1.5">
                   <button
       onClick={() => toggleImpact("ALL")}
-      className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${selectedImpacts.length === impactsList.length ? "bg-blue-600 text-white font-black" : "bg-slate-100 dark:bg-[#121212]/50 text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-white border border-slate-200 dark:border-[#2d2d2d]"}`}
+      className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${selectedImpacts.length === impactsList.length ? "bg-gradient-to-r from-[#c2185b] to-[#e11d75] text-white font-black shadow-sm shadow-pink-500/20" : "bg-slate-100 dark:bg-[#121212]/50 text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-white border border-slate-200 dark:border-[#2d2d2d]"}`}
     >
                     ALL
                   </button>

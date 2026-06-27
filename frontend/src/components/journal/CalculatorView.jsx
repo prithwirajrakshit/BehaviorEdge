@@ -60,13 +60,13 @@ export default function CalculatorView() {
       <div className="flex border-b border-slate-200 dark:border-[#222]">
         <button
     onClick={() => setActiveTab("position")}
-    className={`py-3 px-6 text-xs sm:text-sm font-semibold transition-all border-b-2 cursor-pointer ${activeTab === "position" ? "border-blue-500 text-blue-600 dark:text-white font-bold" : "border-transparent text-slate-400 hover:text-slate-700 dark:text-gray-400 dark:hover:text-white"}`}
+    className={`py-3 px-6 text-xs sm:text-sm font-semibold transition-all border-b-2 cursor-pointer ${activeTab === "position" ? "border-[#e11d75] text-[#e11d75] dark:text-white font-bold" : "border-transparent text-slate-400 hover:text-slate-700 dark:text-gray-400 dark:hover:text-white"}`}
   >
           🧮 Position Size Planning
         </button>
         <button
     onClick={() => setActiveTab("rr")}
-    className={`py-3 px-6 text-xs sm:text-sm font-semibold transition-all border-b-2 cursor-pointer ${activeTab === "rr" ? "border-blue-500 text-blue-600 dark:text-white font-bold" : "border-transparent text-slate-400 hover:text-slate-700 dark:text-gray-400 dark:hover:text-white"}`}
+    className={`py-3 px-6 text-xs sm:text-sm font-semibold transition-all border-b-2 cursor-pointer ${activeTab === "rr" ? "border-[#e11d75] text-[#e11d75] dark:text-white font-bold" : "border-transparent text-slate-400 hover:text-slate-700 dark:text-gray-400 dark:hover:text-white"}`}
   >
           🎯 Risk / Reward Metric Planning
         </button>
