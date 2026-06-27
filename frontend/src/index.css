@@ -572,8 +572,8 @@ h6 {
 
 /* Sub-containers & inner panels */
 .journal-workspace .bg-slate-50 {
-  background: #f1f5f9 !important; /* light mode fallback */
-  border: 1px solid #cbd5e1 !important;
+  background: var(--bg-base) !important; /* light mode fallback */
+  border: 1px solid var(--border) !important;
   border-radius: 12px !important;
 }
 
@@ -593,9 +593,16 @@ h6 {
   letter-spacing: 0.02em !important;
 }
 
+.journal-workspace h3,
+.journal-workspace h4,
+.journal-workspace h5,
+.journal-workspace h6 {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+}
+
 .journal-workspace h3 {
-  font-size: 1.35rem !important; /* Scale up card titles */
-  font-weight: 500 !important;
+  font-size: 1.15rem !important; /* Scale up card titles */
 }
 
 .dark .journal-workspace .text-slate-800,
@@ -771,15 +778,15 @@ h6 {
   border-bottom-right-radius: 12px !important;
 }
 
-/* Flat border lines & list dividers */
-.journal-workspace .border-slate-200,
-.journal-workspace .dark\:border-\[\#2a2a2a\],
-.journal-workspace .border-slate-150,
-.journal-workspace .dark\:border-\[\#222\] {
+/* Flat border lines & list dividers in dark mode */
+.dark .journal-workspace .border-slate-200,
+.dark .journal-workspace .dark\:border-\[\#2a2a2a\],
+.dark .journal-workspace .border-slate-150,
+.dark .journal-workspace .dark\:border-\[\#222\] {
   border-color: rgba(124, 58, 237, 0.15) !important;
 }
 
-.journal-workspace .border-b {
+.dark .journal-workspace .border-b {
   border-bottom-width: 1px !important;
   border-bottom-color: rgba(124, 58, 237, 0.15) !important;
 }
@@ -920,6 +927,7 @@ h6 {
   margin: -36px -40px;
   width: calc(100% + 80px);
   transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--bg-base) !important;
 }
 
 .main-content.sidebar-collapsed .journal-workspace-container {
