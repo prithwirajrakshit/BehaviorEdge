@@ -263,25 +263,25 @@ export default function JournalWorkspace() {
   }
 
   return (
-    <div className="journal-workspace-container journal-workspace dark">
+    <div className="journal-workspace-container journal-workspace">
       
       {/* Cohesive Sub-Sidebar inside the main viewport */}
-      <aside className="w-60 flex flex-col border-r border-violet-500/20 bg-[#0e0b18]/60 backdrop-blur-md shrink-0 select-none overflow-y-auto">
+      <aside className="w-60 flex flex-col border-r border-slate-200 dark:border-violet-500/20 bg-slate-100/70 dark:bg-[#0e0b18]/60 backdrop-blur-md shrink-0 select-none overflow-y-auto">
         {/* Workspace Title */}
-        <div className="journal-sidebar-header p-4 border-b border-violet-500/10">
-          <h3 className="font-bold text-sm text-violet-400 uppercase tracking-wider font-sans">
+        <div className="journal-sidebar-header p-4 border-b border-slate-200 dark:border-violet-500/10">
+          <h3 className="font-bold text-sm text-violet-600 dark:text-violet-400 uppercase tracking-wider font-sans">
             Journal Workspace
           </h3>
-          <div className="mt-2 text-sm text-[#c8c0e0] font-sans">
-            Equity: <strong className="text-white">${currentEquity.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+          <div className="mt-2 text-sm text-slate-600 dark:text-[#c8c0e0] font-sans">
+            Equity: <strong className="text-slate-800 dark:text-white">${currentEquity.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
           </div>
         </div>
-
+ 
         {/* Navigation Items grouped */}
         <div className="flex-1 p-3 space-y-4">
           {menuGroups.map((group) => (
             <div key={group.title} className="space-y-1.5">
-              <span className="px-3 text-xs font-bold text-violet-500/80 uppercase tracking-wider font-sans">
+              <span className="px-3 text-xs font-bold text-slate-500 dark:text-violet-500/80 uppercase tracking-wider font-sans">
                 {group.title}
               </span>
               {group.items.map((item) => {
@@ -296,7 +296,7 @@ export default function JournalWorkspace() {
                     className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-left text-sm transition-all font-semibold ${
                       active
                         ? 'bg-gradient-to-r from-violet-600 to-[#7c3aed] text-white shadow-[0_0_20px_rgba(124,58,237,0.25)]'
-                        : 'text-violet-300/70 hover:text-white hover:bg-violet-500/10'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 dark:text-violet-300/70 dark:hover:text-white dark:hover:bg-violet-500/10'
                     }`}
                   >
                     <item.icon className="w-4 h-4 shrink-0" />

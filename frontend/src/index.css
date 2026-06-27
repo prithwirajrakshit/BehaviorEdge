@@ -515,8 +515,13 @@ h6 {
 
 /* Scoped variables for Journal components */
 .journal-workspace {
-  --bg-workspace-card: rgba(14, 11, 24, 0.65);
-  --border-workspace-glow: rgba(124, 58, 237, 0.22);
+  --bg-workspace-card: rgba(255, 255, 255, 0.85); /* light mode */
+  --border-workspace-glow: rgba(203, 213, 225, 0.6); /* light mode */
+}
+
+.dark .journal-workspace {
+  --bg-workspace-card: rgba(14, 11, 24, 0.65); /* dark mode */
+  --border-workspace-glow: rgba(124, 58, 237, 0.22); /* dark mode */
 }
 
 /* Glassmorphic Cards & Containers (Target only major structural cards with rounded-2xl) */
@@ -536,10 +541,16 @@ h6 {
 }
 
 /* Sub-containers & inner panels */
-.journal-workspace .bg-slate-50,
-.journal-workspace .dark\:bg-\[\#121212\],
-.journal-workspace .dark\:bg-\[\#121212\]\/40,
-.journal-workspace .dark\:bg-\[\#121212\]\/30 {
+.journal-workspace .bg-slate-50 {
+  background: #f1f5f9 !important; /* light mode fallback */
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 12px !important;
+}
+
+.dark .journal-workspace .bg-slate-50,
+.dark .journal-workspace .dark\:bg-\[\#121212\],
+.dark .journal-workspace .dark\:bg-\[\#121212\]\/40,
+.dark .journal-workspace .dark\:bg-\[\#121212\]\/30 {
   background: rgba(7, 5, 15, 0.5) !important;
   border: 1px solid rgba(124, 58, 237, 0.12) !important;
   border-radius: 12px !important;
@@ -958,8 +969,8 @@ h6 {
     gap: 8px;
     padding: 12px 16px;
     overflow-x: auto;
-    background: rgba(14, 11, 24, 0.6);
-    border-bottom: 1px solid rgba(124, 58, 237, 0.15);
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
     white-space: nowrap;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
@@ -974,10 +985,10 @@ h6 {
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
     border-radius: 999px;
-    color: #c8c0e0;
+    color: var(--text-secondary);
     font-size: 0.75rem;
     font-weight: 500;
     cursor: pointer;
