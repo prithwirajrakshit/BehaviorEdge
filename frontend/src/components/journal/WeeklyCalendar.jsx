@@ -559,14 +559,14 @@ export default function WeeklyCalendar({ trades, showToast }) {
                     WebkitBackdropFilter: "blur(12px)",
                     borderColor: "var(--border-bright)", 
                     borderRadius: "12px",
-                    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                    boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
                     borderWidth: "1px",
                     padding: "8px 12px"
                   }} 
                   itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
-                  labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                  labelStyle={{ color: "var(--text-primary)", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
                 />
-                <Line type="monotone" dataKey="discipline_score" name="Discipline Score" stroke="#fb7185" strokeWidth={3.5} dot={{ r: 4, stroke: "#fb7185", strokeWidth: 1, fill: "#0e0b18" }} activeDot={{ r: 6, fill: "#fb7185", stroke: "#be123c", strokeWidth: 2 }} filter="url(#calLineGlow)" />
+                <Line type="monotone" dataKey="discipline_score" name="Discipline Score" stroke="#fb7185" strokeWidth={3.5} dot={{ r: 4, stroke: "#fb7185", strokeWidth: 1, fill: "var(--bg-card)" }} activeDot={{ r: 6, fill: "#fb7185", stroke: "#be123c", strokeWidth: 2 }} filter="url(#calLineGlow)" />
               </LineChart>
             </ResponsiveContainer>}
         </div>

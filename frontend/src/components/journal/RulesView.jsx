@@ -414,12 +414,12 @@ export default function RulesView({ trades, showToast }) {
                       WebkitBackdropFilter: "blur(12px)",
                       borderColor: "var(--border-bright)", 
                       borderRadius: "12px",
-                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
                       borderWidth: "1px",
                       padding: "8px 12px"
                     }} 
                     itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
-                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                    labelStyle={{ color: "var(--text-primary)", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
                   />
                   <Bar dataKey="Broken Rate (%)" fill="url(#rulesRedGlow)" filter="url(#rulesBarGlow)" radius={[4, 4, 0, 0]} />
                 </BarChart>

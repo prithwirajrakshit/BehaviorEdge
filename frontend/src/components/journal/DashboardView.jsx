@@ -677,16 +677,16 @@ export default function DashboardView({ showToast, onNavigate }) {
                       WebkitBackdropFilter: "blur(12px)",
                       borderColor: "var(--border-bright)", 
                       borderRadius: "12px",
-                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
                       borderWidth: "1px",
                       padding: "8px 12px"
                     }} 
                     itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
-                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                    labelStyle={{ color: "var(--text-primary)", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
                     labelClassName="font-mono text-xs"
                   />
                   <ReferenceLine y={0} stroke="#ef4444" strokeDasharray="5 5" />
-                  <Line type="monotone" dataKey="pnl" name="Cum. PnL" stroke="#38bdf8" strokeWidth={3.5} dot={{ r: 4, stroke: "#38bdf8", strokeWidth: 1, fill: "#0e0b18" }} filter="url(#lineGlow)" />
+                  <Line type="monotone" dataKey="pnl" name="Cum. PnL" stroke="#38bdf8" strokeWidth={3.5} dot={{ r: 4, stroke: "#38bdf8", strokeWidth: 1, fill: "var(--bg-card)" }} filter="url(#lineGlow)" />
                 </LineChart>
               </ResponsiveContainer>}
           </div>
@@ -727,12 +727,12 @@ export default function DashboardView({ showToast, onNavigate }) {
                       WebkitBackdropFilter: "blur(12px)",
                       borderColor: "var(--border-bright)", 
                       borderRadius: "12px",
-                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
                       borderWidth: "1px",
                       padding: "8px 12px"
                     }} 
                     itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
-                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                    labelStyle={{ color: "var(--text-primary)", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
                   />
                   <Bar dataKey="pnl" name="Daily PnL" filter="url(#dailyBarGlow)" radius={[4, 4, 0, 0]}>
                     {charts.dailyPnl.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.pnl >= 0 ? "url(#dailyGreenGlow)" : "url(#dailyRedGlow)"} />)}
@@ -773,12 +773,12 @@ export default function DashboardView({ showToast, onNavigate }) {
                     WebkitBackdropFilter: "blur(12px)",
                     borderColor: "var(--border-bright)", 
                     borderRadius: "12px",
-                    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                    boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
                     borderWidth: "1px",
                     padding: "8px 12px"
                   }} 
                   itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
-                  labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                  labelStyle={{ color: "var(--text-primary)", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
                 />
                 <Bar dataKey="winRate" name="Win Rate" fill="url(#sessionPurpleGlow)" filter="url(#sessionBarGlow)" radius={[6, 6, 0, 0]} />
               </BarChart>
@@ -821,12 +821,12 @@ export default function DashboardView({ showToast, onNavigate }) {
                       WebkitBackdropFilter: "blur(12px)",
                       borderColor: "var(--border-bright)", 
                       borderRadius: "12px",
-                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
                       borderWidth: "1px",
                       padding: "8px 12px"
                     }} 
                     itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
-                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                    labelStyle={{ color: "var(--text-primary)", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
                   />
                   <Bar dataKey="pnl" name="Setup PnL" filter="url(#setupBarGlow)" radius={[0, 4, 4, 0]}>
                     {charts.pnlBySetup.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.pnl >= 0 ? "url(#setupGreenGlow)" : "url(#setupRedGlow)"} />)}
@@ -867,12 +867,12 @@ export default function DashboardView({ showToast, onNavigate }) {
                       WebkitBackdropFilter: "blur(12px)",
                       borderColor: "var(--border-bright)", 
                       borderRadius: "12px",
-                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
                       borderWidth: "1px",
                       padding: "8px 12px"
                     }} 
                     itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
-                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                    labelStyle={{ color: "var(--text-primary)", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
                   />
                   <Bar dataKey="count" name="Frequency" fill="url(#mistakeRedGlow)" filter="url(#mistakeBarGlow)" radius={[0, 6, 6, 0]} />
                 </BarChart>
@@ -948,12 +948,12 @@ export default function DashboardView({ showToast, onNavigate }) {
                           WebkitBackdropFilter: "blur(12px)",
                           borderColor: "var(--border-bright)", 
                           borderRadius: "12px",
-                          boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                          boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
                           borderWidth: "1px",
                           padding: "8px 12px"
                         }} 
                         itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
-                        labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                        labelStyle={{ color: "var(--text-primary)", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
                       />
                     </PieChart>
                   </ResponsiveContainer>

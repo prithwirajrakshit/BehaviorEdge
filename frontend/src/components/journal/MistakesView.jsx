@@ -258,12 +258,12 @@ export default function MistakesView({ trades }) {
                       WebkitBackdropFilter: "blur(12px)",
                       borderColor: "var(--border-bright)", 
                       borderRadius: "12px",
-                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
                       borderWidth: "1px",
                       padding: "8px 12px"
                     }} 
                     itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
-                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                    labelStyle={{ color: "var(--text-primary)", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
                   />
                   <Bar dataKey="count" fill="url(#mistakeRedGlow)" filter="url(#mistakeBarGlow)" radius={[0, 4, 4, 0]} barSize={14} />
                 </BarChart>
@@ -301,14 +301,14 @@ export default function MistakesView({ trades }) {
                     WebkitBackdropFilter: "blur(12px)",
                     borderColor: "var(--border-bright)", 
                     borderRadius: "12px",
-                    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                    boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
                     borderWidth: "1px",
                     padding: "8px 12px"
                   }} 
                   itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
-                  labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                  labelStyle={{ color: "var(--text-primary)", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
                 />
-                <Line type="monotone" dataKey="winRate" stroke="#60a5fa" name="Win Rate %" strokeWidth={3.5} dot={{ r: 4, stroke: "#60a5fa", strokeWidth: 1, fill: "#0e0b18" }} activeDot={{ r: 6, fill: "#60a5fa", stroke: "#2563eb", strokeWidth: 2 }} filter="url(#confluenceLineGlow)" />
+                <Line type="monotone" dataKey="winRate" stroke="#60a5fa" name="Win Rate %" strokeWidth={3.5} dot={{ r: 4, stroke: "#60a5fa", strokeWidth: 1, fill: "var(--bg-card)" }} activeDot={{ r: 6, fill: "#60a5fa", stroke: "#2563eb", strokeWidth: 2 }} filter="url(#confluenceLineGlow)" />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -354,12 +354,12 @@ export default function MistakesView({ trades }) {
                       WebkitBackdropFilter: "blur(12px)",
                       borderColor: "var(--border-bright)", 
                       borderRadius: "12px",
-                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
                       borderWidth: "1px",
                       padding: "8px 12px"
                     }} 
                     itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
-                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                    labelStyle={{ color: "var(--text-primary)", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
                   />
                   <Bar dataKey="avgPnL" fill="url(#qualityBlueGlow)" filter="url(#qualityBarGlow)" radius={[4, 4, 0, 0]} barSize={25} />
                 </BarChart>
@@ -420,12 +420,12 @@ export default function MistakesView({ trades }) {
                       WebkitBackdropFilter: "blur(12px)",
                       borderColor: "var(--border-bright)", 
                       borderRadius: "12px",
-                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
                       borderWidth: "1px",
                       padding: "8px 12px"
                     }} 
                     itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
-                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                    labelStyle={{ color: "var(--text-primary)", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
                   />
                   <Legend verticalAlign="top" fontSize={10} wrapperStyle={{ color: "currentColor" }} />
                   <Bar dataKey="planned" name="Planned R/R" fill="url(#rrPlannedGlow)" filter="url(#rrBarGlow)" radius={[3, 3, 0, 0]} />

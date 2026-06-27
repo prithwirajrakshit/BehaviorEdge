@@ -311,7 +311,7 @@ export default function JournalWorkspace() {
       </aside>
 
       {/* Main viewport area */}
-      <main className="flex-1 min-w-0 flex flex-col overflow-hidden bg-[#07050f]/30">
+      <main className="flex-1 min-w-0 flex flex-col overflow-hidden bg-transparent dark:bg-[#07050f]/30">
         
         {/* Mobile Horizontal Sub-Navigation */}
         <div className="journal-mobile-nav">
@@ -334,9 +334,9 @@ export default function JournalWorkspace() {
         </div>
         
         {/* Header Bar */}
-        <header className="h-16 border-b border-violet-500/10 flex items-center justify-between px-6 bg-[#0e0b18]/40 shrink-0">
+        <header className="h-16 border-b border-slate-200 dark:border-violet-500/10 flex items-center justify-between px-6 bg-white/80 dark:bg-[#0e0b18]/40 backdrop-blur-md shrink-0">
           <div className="hidden md:block">
-            <h2 className="text-2xl font-medium text-white tracking-wide">{getPageTitle()}</h2>
+            <h2 className="text-2xl font-medium text-slate-800 dark:text-white tracking-wide">{getPageTitle()}</h2>
           </div>
           
           <div className="flex gap-2 items-center">

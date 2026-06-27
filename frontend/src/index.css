@@ -516,7 +516,7 @@ h6 {
 .chart-scanlines {
   position: relative;
 }
-.chart-scanlines::after {
+.dark .chart-scanlines::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -557,8 +557,17 @@ h6 {
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
   border: 1px solid var(--border-workspace-glow) !important;
-  box-shadow: 0 8px 32px 0 rgba(124, 58, 237, 0.04), inset 0 0 12px rgba(124, 58, 237, 0.04) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
   border-radius: 16px !important;
+}
+
+.dark .journal-workspace .rounded-2xl.bg-white,
+.dark .journal-workspace .rounded-2xl.dark\:bg-\[\#1a1a1a\],
+.dark .journal-workspace .rounded-2xl.dark\:bg-zinc-900\/50,
+.dark .journal-workspace .rounded-2xl.dark\:bg-zinc-950,
+.dark .journal-workspace .rounded-2xl.dark\:bg-\[\#0e0b18\]\/80,
+.dark .journal-workspace .rounded-2xl.dark\:bg-\[\#0e0b18\]\/40 {
+  box-shadow: 0 8px 32px 0 rgba(124, 58, 237, 0.04), inset 0 0 12px rgba(124, 58, 237, 0.04) !important;
 }
 
 /* Sub-containers & inner panels */

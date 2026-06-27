@@ -226,14 +226,14 @@ export default function FeesAnalytics({ showToast, trades }) {
                       WebkitBackdropFilter: "blur(12px)",
                       borderColor: "var(--border-bright)", 
                       borderRadius: "12px",
-                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
                       borderWidth: "1px",
                       padding: "8px 12px"
                     }} 
                     itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
-                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                    labelStyle={{ color: "var(--text-primary)", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
                   />
-                  <Line type="monotone" dataKey="fees" name="Total Fees" stroke="#fb7185" strokeWidth={3.5} dot={{ r: 4, stroke: "#fb7185", strokeWidth: 1, fill: "#0e0b18" }} filter="url(#feesLineGlow)" />
+                  <Line type="monotone" dataKey="fees" name="Total Fees" stroke="#fb7185" strokeWidth={3.5} dot={{ r: 4, stroke: "#fb7185", strokeWidth: 1, fill: "var(--bg-card)" }} filter="url(#feesLineGlow)" />
                 </LineChart>
               </ResponsiveContainer>}
           </div>
@@ -270,12 +270,12 @@ export default function FeesAnalytics({ showToast, trades }) {
                       WebkitBackdropFilter: "blur(12px)",
                       borderColor: "var(--border-bright)", 
                       borderRadius: "12px",
-                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
                       borderWidth: "1px",
                       padding: "8px 12px"
                     }} 
                     itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
-                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                    labelStyle={{ color: "var(--text-primary)", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
                   />
                   <Bar dataKey="fees" name="Daily Fee" fill="url(#feesRedGlow)" filter="url(#feesBarGlow)" radius={[4, 4, 0, 0]} />
                 </BarChart>
@@ -314,12 +314,12 @@ export default function FeesAnalytics({ showToast, trades }) {
                       WebkitBackdropFilter: "blur(12px)",
                       borderColor: "var(--border-bright)", 
                       borderRadius: "12px",
-                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(124, 58, 237, 0.15)",
+                      boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
                       borderWidth: "1px",
                       padding: "8px 12px"
                     }} 
                     itemStyle={{ color: "#a78bfa", fontFamily: "Inter, sans-serif", fontSize: "0.78rem" }} 
-                    labelStyle={{ color: "#ffffff", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
+                    labelStyle={{ color: "var(--text-primary)", fontFamily: "Inter, sans-serif", fontWeight: "bold", fontSize: "0.8rem", marginBottom: "4px" }} 
                   />
                   <Bar dataKey="fees" name="Fees Paid" fill="url(#instrumentRedGlow)" filter="url(#instrumentBarGlow)" radius={[0, 4, 4, 0]} />
                 </BarChart>
