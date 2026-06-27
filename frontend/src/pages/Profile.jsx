@@ -1,18 +1,18 @@
 import { useState, useEffect, useRef } from 'react'
 import {
-  getProfile, saveProfile, getRules, addRule, updateRule, deleteRule,
+  getProfile, saveProfile,
   getMe, updateMe, changePassword, uploadAvatar, deleteAvatar
 } from '../api/client'
 import {
-  Save, DollarSign, Percent, TrendingUp, CheckCircle, Plus, Trash2,
-  Pencil, X, Shield, Camera, User, Mail, MapPin, Globe, Twitter,
+  Save, DollarSign, Percent, TrendingUp, CheckCircle,
+  Camera, User, Mail, MapPin, Globe, Twitter,
   Lock, Eye, EyeOff, AlertCircle, BarChart2
 } from 'lucide-react'
 import { GlowCard } from '../components/GlowCard'
 
 const STYLES = ['Scalping', 'Day Trading', 'Swing Trading', 'Position Trading']
 const EXPERIENCE_LEVELS = ['Beginner', 'Intermediate', 'Advanced', 'Professional']
-const TABS = ['Identity', 'Risk Settings', 'Trading Rules', 'Security']
+const TABS = ['Identity', 'Risk Settings', 'Security']
 
 export default function Profile() {
   const [activeTab, setActiveTab] = useState('Identity')
@@ -33,12 +33,7 @@ export default function Profile() {
   const [riskSaved, setRiskSaved] = useState(false)
   const [riskError, setRiskError] = useState('')
 
-  // Rules state
-  const [rules, setRules] = useState([])
-  const [newRule, setNewRule] = useState('')
-  const [editingId, setEditingId] = useState(null)
-  const [editText, setEditText] = useState('')
-  const [addingRule, setAddingRule] = useState(false)
+
 
   // Password state
   const [pw, setPw] = useState({ current_password: '', new_password: '', confirm: '' })
@@ -50,9 +45,8 @@ export default function Profile() {
   const plannedRisk = (form.capital * form.risk_percent / 100).toFixed(2)
 
   useEffect(() => {
-    Promise.all([getProfile(), getRules(), getMe()]).then(([p, r, m]) => {
+    Promise.all([getProfile(), getMe()]).then(([p, m]) => {
       setForm(p.data)
-      setRules(r.data)
       setMe(m.data)
       setIdentity({
         full_name: m.data.full_name || '',
@@ -217,15 +211,10 @@ export default function Profile() {
 
           {/* Stats mini */}
           <div style={{ display: 'flex', gap: 20, flexShrink: 0 }}>
-            {[
-              { label: 'Member since', value: me?.created_at ? new Date(me.created_at).getFullYear() : '—' },
-              { label: 'Trading rules', value: rules.length },
-            ].map(({ label, value }) => (
-              <div key={label} style={{ textAlign: 'center' }}>
-                <div className="metric-num" style={{ fontSize: '1.4rem', color: 'var(--accent-light)' }}>{value}</div>
-                <div className="label" style={{ fontSize: '0.58rem', marginTop: 3 }}>{label}</div>
-              </div>
-            ))}
+            <div style={{ textAlign: 'center' }}>
+              <div className="metric-num" style={{ fontSize: '1.4rem', color: 'var(--accent-light)' }}>{me?.created_at ? new Date(me.created_at).getFullYear() : '—'}</div>
+              <div className="label" style={{ fontSize: '0.58rem', marginTop: 3 }}>Member since</div>
+            </div>
           </div>
         </div>
 
@@ -412,60 +401,7 @@ export default function Profile() {
         </GlowCard>
       )}
 
-      {/* ── TRADING RULES TAB ── */}
-      {activeTab === 'Trading Rules' && (
-        <GlowCard glowColor="purple" className="animate-fade-up" style={{ padding: 24 }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <div style={{ width: 30, height: 30, borderRadius: 8, background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Shield size={14} color="var(--green)" />
-              </div>
-              <div>
-                <div style={{ fontFamily: 'Inter', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Trading Rules</div>
-                <div className="label" style={{ fontSize: '0.58rem', marginTop: 1 }}>{rules.length} rule{rules.length !== 1 ? 's' : ''} defined</div>
-              </div>
-            </div>
-            <span className={rules.length > 0 ? 'badge-green' : 'badge-amber'}>{rules.length > 0 ? 'ACTIVE' : 'EMPTY'}</span>
-          </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>
-            {rules.length === 0 && (
-              <div style={{ textAlign: 'center', padding: '28px 0', color: 'var(--text-muted)', fontFamily: 'JetBrains Mono', fontSize: '0.75rem' }}>
-                No rules yet — add your first trading rule below
-              </div>
-            )}
-            {rules.map((rule, i) => (
-              <div key={rule.id} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '12px 14px', background: 'var(--bg-base)', border: '1px solid var(--border)', borderRadius: 10 }}>
-                <div style={{ minWidth: 22, height: 22, borderRadius: 6, marginTop: 1, background: 'var(--accent-dim)', border: '1px solid rgba(124,58,237,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'JetBrains Mono', fontSize: '0.6rem', color: 'var(--accent-light)', fontWeight: 700 }}>
-                  {i + 1}
-                </div>
-                {editingId === rule.id ? (
-                  <div style={{ flex: 1, display: 'flex', gap: 8 }}>
-                    <input value={editText} onChange={e => setEditText(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') handleEditSave(rule.id); if (e.key === 'Escape') setEditingId(null) }} className="input-field" style={{ flex: 1, padding: '6px 12px', fontSize: '0.82rem' }} autoFocus />
-                    <button onClick={() => handleEditSave(rule.id)} style={{ padding: '6px 12px', borderRadius: 7, cursor: 'pointer', border: 'none', background: 'var(--green-glow)', color: 'var(--green)', fontFamily: 'JetBrains Mono', fontSize: '0.7rem' }}>Save</button>
-                    <button onClick={() => setEditingId(null)} style={{ padding: '6px 8px', borderRadius: 7, cursor: 'pointer', border: '1px solid var(--border)', background: 'transparent', color: 'var(--text-secondary)' }}><X size={12} /></button>
-                  </div>
-                ) : (
-                  <>
-                    <span style={{ flex: 1, fontFamily: 'Inter', fontSize: '0.85rem', color: 'var(--text-primary)', lineHeight: 1.5, paddingTop: 2 }}>{rule.rule_text}</span>
-                    <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
-                      <button onClick={() => { setEditingId(rule.id); setEditText(rule.rule_text) }} style={{ width: 28, height: 28, borderRadius: 7, cursor: 'pointer', border: '1px solid var(--border)', background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)', transition: 'all 0.15s' }} onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(124,58,237,0.3)'; e.currentTarget.style.color = 'var(--accent-light)'; e.currentTarget.style.background = 'var(--accent-dim)' }} onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'transparent' }}><Pencil size={11} /></button>
-                      <button onClick={() => handleDelete(rule.id)} style={{ width: 28, height: 28, borderRadius: 7, cursor: 'pointer', border: '1px solid var(--border)', background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)', transition: 'all 0.15s' }} onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(244,63,94,0.3)'; e.currentTarget.style.color = 'var(--red)'; e.currentTarget.style.background = 'var(--red-glow)' }} onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'transparent' }}><Trash2 size={11} /></button>
-                    </div>
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
-
-          <div style={{ display: 'flex', gap: 8 }}>
-            <input value={newRule} onChange={e => setNewRule(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleAddRule()} placeholder="e.g. Never risk more than 1% per trade" className="input-field" style={{ flex: 1 }} />
-            <button onClick={handleAddRule} disabled={addingRule || !newRule.trim()} className="btn-primary" style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap' }}>
-              <Plus size={14} /> Add Rule
-            </button>
-          </div>
-        </GlowCard>
-      )}
 
       {/* ── SECURITY TAB ── */}
       {activeTab === 'Security' && (

@@ -54,7 +54,7 @@ export default function RulesView({ trades, showToast }) {
     const payload = {
       rule_text: ruleText.trim(),
       category,
-      is_active: isActive ? 1 : 0
+      is_active: isActive
     };
     const endpoint = editingId ? `/api/trading_rules/${editingId}` : "/api/trading_rules";
     const method = editingId ? "PUT" : "POST";
@@ -73,7 +73,7 @@ export default function RulesView({ trades, showToast }) {
     }
   };
   const handleToggleActive = async (rule) => {
-    const nextActive = rule.is_active === 1 ? 0 : 1;
+    const nextActive = !rule.is_active;
     try {
       const res = await authFetch(`/api/trading_rules/${rule.id}`, {
         method: "PUT",
@@ -116,7 +116,7 @@ export default function RulesView({ trades, showToast }) {
     return { label: "Frequently Broken", color: "text-red-655 dark:text-red-400 bg-red-50 dark:bg-red-500/10 border-red-200 dark:border-red-500/20" };
   };
   const computePnlWhenBroken = (ruleId) => {
-    const brokensForThisRule = ruleChecks.filter((rc) => rc.rule_id === ruleId && rc.was_followed === 0);
+    const brokensForThisRule = ruleChecks.filter((rc) => rc.rule_id === ruleId && !rc.was_followed);
     let sumPnl = 0;
     brokensForThisRule.forEach((c) => {
       const matchedTrade = trades.find((t) => t.id === c.trade_id);
@@ -155,7 +155,7 @@ export default function RulesView({ trades, showToast }) {
       const label = `Wk -${3 - idx}`;
       const checksInWeek = ruleChecks.filter((rc) => rc.date >= startStr && rc.date <= endStr);
       const totalChecked = checksInWeek.length;
-      const totalBroken = checksInWeek.filter((rc) => rc.was_followed === 0).length;
+      const totalBroken = checksInWeek.filter((rc) => !rc.was_followed).length;
       const brokenRate = totalChecked === 0 ? 0 : Math.round(totalBroken / totalChecked * 100);
       return {
         name: label,
@@ -275,7 +275,7 @@ export default function RulesView({ trades, showToast }) {
                     <div className="space-y-2">
                       {catRules.map((rule) => <div
       key={rule.id}
-      className={`p-3.5 rounded-xl border transition-all flex justify-between items-center ${rule.is_active === 1 ? "bg-slate-50 dark:bg-[#151225]/45 border-slate-150 dark:border-violet-500/15 hover:border-slate-205 dark:hover:border-violet-500/25" : "bg-slate-50/50 dark:bg-[#151225]/25 border-slate-200/50 dark:border-violet-500/10 opacity-60"}`}
+      className={`p-3.5 rounded-xl border transition-all flex justify-between items-center ${rule.is_active ? "bg-slate-50 dark:bg-[#151225]/45 border-slate-150 dark:border-violet-500/15 hover:border-slate-205 dark:hover:border-violet-500/25" : "bg-slate-50/50 dark:bg-[#151225]/25 border-slate-200/50 dark:border-violet-500/10 opacity-60"}`}
     >
                           <div className="space-y-2 max-w-[70%]">
                             <p className="text-xs text-slate-700 dark:text-gray-200 font-sans leading-relaxed font-bold">{rule.rule_text}</p>
@@ -292,9 +292,9 @@ export default function RulesView({ trades, showToast }) {
                             <button
       onClick={() => handleToggleActive(rule)}
       className="text-slate-400 hover:text-slate-705 dark:text-gray-400 dark:hover:text-white transition cursor-pointer"
-      title={rule.is_active === 1 ? "Disable rule" : "Enable rule"}
+      title={rule.is_active ? "Disable rule" : "Enable rule"}
     >
-                              {rule.is_active === 1 ? <CheckSquare className="w-4 h-4 text-green-500" /> : <XCircle className="w-4 h-4 text-slate-300 dark:text-gray-600" />}
+                              {rule.is_active ? <CheckSquare className="w-4 h-4 text-green-500" /> : <XCircle className="w-4 h-4 text-slate-300 dark:text-gray-600" />}
                             </button>
                             <button
       onClick={() => handleTriggerEdit(rule)}

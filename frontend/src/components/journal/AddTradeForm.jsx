@@ -201,7 +201,7 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
         const res = await authFetch("/api/trading_rules");
         if (res.ok) {
           const allRules = await res.json();
-          const filtered = allRules.filter((r) => r.is_active === 1);
+          const filtered = allRules.filter((r) => r.is_active);
           setActiveRules(filtered);
           const initialMap = {};
           filtered.forEach((r) => {
