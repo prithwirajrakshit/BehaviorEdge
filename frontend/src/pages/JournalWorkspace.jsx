@@ -42,7 +42,10 @@ export default function JournalWorkspace() {
   const [toastMessage, setToastMessage] = useState(null)
   const [toastType, setToastType] = useState('success')
   const [loading, setLoading] = useState(true)
-  const [capital, setCapital] = useState(10000)
+  const [capital, setCapital] = useState(() => {
+    const cached = localStorage.getItem('profile_capital')
+    return cached ? parseFloat(cached) : 10000
+  })
 
   const showToast = (message, type = 'success') => {
     setToastMessage(message)
@@ -56,6 +59,7 @@ export default function JournalWorkspace() {
         const data = await res.json()
         if (data && data.capital) {
           setCapital(data.capital)
+          localStorage.setItem('profile_capital', data.capital.toString())
         }
       }
     } catch (err) {

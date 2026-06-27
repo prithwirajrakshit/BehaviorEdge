@@ -47,6 +47,9 @@ export default function Profile() {
   useEffect(() => {
     Promise.all([getProfile(), getMe()]).then(([p, m]) => {
       setForm(p.data)
+      if (p.data && p.data.capital) {
+        localStorage.setItem('profile_capital', p.data.capital.toString())
+      }
       setMe(m.data)
       setIdentity({
         full_name: m.data.full_name || '',
@@ -100,6 +103,9 @@ export default function Profile() {
     setRiskError(''); setRiskSaving(true); setRiskSaved(false)
     try {
       await saveProfile(form)
+      if (form && form.capital) {
+        localStorage.setItem('profile_capital', form.capital.toString())
+      }
       setRiskSaved(true)
       setTimeout(() => setRiskSaved(false), 3000)
     } catch (e) { setRiskError(e.response?.data?.detail || 'Failed to save') }
