@@ -145,10 +145,10 @@ export default function GoalsView({ trades, showToast }) {
 
               <div className="sm:col-span-2 flex justify-end">
                 <button
-    type="submit"
-    disabled={saving}
-    className="btn-neon btn-neon-sm cursor-pointer disabled:opacity-50"
-  >
+                  type="submit"
+                  disabled={saving}
+                  className="w-full sm:w-auto btn-neon btn-neon-sm cursor-pointer disabled:opacity-50"
+                >
                   {saving ? "Saving..." : "Establish Weekly Goal"}
                 </button>
               </div>
@@ -156,36 +156,36 @@ export default function GoalsView({ trades, showToast }) {
           </div>
 
           {
-    /* Goal List Cards */
-  }
+            /* Goal List Cards */
+          }
           <div className="space-y-3">
             <h3 className="text-xs font-bold font-mono uppercase text-slate-400 dark:text-gray-400 tracking-wider">Weekly Benchmarks</h3>
-            {goals.length === 0 ? <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-10 rounded-2xl text-center text-xs text-slate-400 dark:text-gray-500 font-mono shadow-sm">
+            {goals.length === 0 ? <div className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-10 rounded-2xl text-center text-xs text-slate-400 dark:text-gray-550 font-mono shadow-sm">
                 No target goals recorded yet. Use the scheduler above to establish targets.
-              </div> : goals.map((g) => <div key={g.week_start} className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-5 rounded-xl shadow-md flex justify-between items-center text-slate-800 dark:text-white">
-                  <div className="space-y-1 flex-1 pr-4">
-                    <div className="flex items-center gap-2">
+              </div> : goals.map((g) => <div key={g.week_start} className="bg-white dark:bg-[#0e0b18]/65 border border-slate-200 dark:border-violet-500/15 p-4 md:p-5 rounded-xl shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-slate-800 dark:text-white">
+                  <div className="space-y-1 flex-1 pr-0 sm:pr-4 w-full">
+                    <div className="flex items-center justify-between sm:justify-start gap-2">
                       <span className="text-xs font-bold text-blue-600 dark:text-blue-400 font-mono">Week starting: {g.week_start}</span>
                       <span className={`px-2 py-0.5 rounded text-[9px] font-black font-mono uppercase ${g.status === "Achieved" ? "bg-green-50 dark:bg-green-500/10 text-green-655 dark:text-green-400" : g.status === "Failed" ? "bg-red-50 dark:bg-red-500/10 text-red-655 dark:text-red-400" : "bg-yellow-50 dark:bg-yellow-500/10 text-yellow-600 dark:text-yellow-400"}`}>
                         {g.status}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-700 dark:text-gray-300 font-bold">{g.goal_text}</p>
-                    {g.pnl_target > 0 && <span className="text-[10px] text-slate-400 dark:text-gray-500 font-mono block">Financial Target: <strong>+${g.pnl_target.toFixed(0)}</strong></span>}
+                    <p className="text-xs text-slate-700 dark:text-gray-300 font-bold mt-1">{g.goal_text}</p>
+                    {g.pnl_target > 0 && <span className="text-[10px] text-slate-450 dark:text-gray-500 font-mono block mt-1">Financial Target: <strong>+${g.pnl_target.toFixed(0)}</strong></span>}
                   </div>
 
-                  <div className="flex flex-col gap-1 sm:flex-row items-center justify-end">
+                  <div className="flex flex-row gap-2 w-full sm:w-auto justify-start sm:justify-end mt-1 sm:mt-0">
                     {g.status === "Pending" && <>
                         <button
-    onClick={() => handleUpdateStatus(g.id, "Achieved")}
-    className="px-2.5 py-1 bg-green-50 hover:bg-green-100 dark:bg-green-500/15 dark:hover:bg-green-500/30 text-green-655 dark:text-green-400 border border-green-200 dark:border-green-550/20 text-[10px] rounded-lg font-black font-mono cursor-pointer transition-colors"
-  >
+                          onClick={() => handleUpdateStatus(g.id, "Achieved")}
+                          className="px-3 py-1.5 bg-green-50 hover:bg-green-100 dark:bg-green-500/15 dark:hover:bg-green-500/30 text-green-655 dark:text-green-400 border border-green-200 dark:border-green-550/20 text-[10px] rounded-lg font-black font-mono cursor-pointer transition-colors"
+                        >
                           Achieved
                         </button>
                         <button
-    onClick={() => handleUpdateStatus(g.id, "Failed")}
-    className="px-2.5 py-1 bg-red-50 hover:bg-red-100 dark:bg-red-500/15 dark:hover:bg-red-500/30 text-red-655 dark:text-red-400 border border-red-200 dark:border-red-550/20 text-[10px] rounded-lg font-black font-mono cursor-pointer transition-colors"
-  >
+                          onClick={() => handleUpdateStatus(g.id, "Failed")}
+                          className="px-3 py-1.5 bg-red-50 hover:bg-red-100 dark:bg-red-500/15 dark:hover:bg-red-500/30 text-red-655 dark:text-red-400 border border-red-200 dark:border-red-550/20 text-[10px] rounded-lg font-black font-mono cursor-pointer transition-colors"
+                        >
                           Failed
                         </button>
                       </>}
