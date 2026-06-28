@@ -21,6 +21,78 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
   const [isCsvModalOpen, setIsCsvModalOpen] = useState(false);
   const [csvFile, setCsvFile] = useState(null);
   const [isParsing, setIsParsing] = useState(false);
+
+  const defaultWidths = {
+    date: 100,
+    pair: 180,
+    direction: 95,
+    session: 85,
+    setup: 120,
+    outcome: 95,
+    pnl: 110,
+    fee: 95,
+    netPnl: 115,
+    netDaily: 115,
+    confluences: 150,
+    mistakes: 150,
+    screenshot: 105,
+    actions: 100
+  };
+
+  const [colWidths, setColWidths] = useState({ ...defaultWidths });
+
+  const handleResizeStart = (e, colKey) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const startX = e.clientX;
+    const startWidth = colWidths[colKey];
+
+    const handleMouseMove = (moveEvent) => {
+      const deltaX = moveEvent.clientX - startX;
+      const newWidth = Math.max(45, startWidth + deltaX);
+      setColWidths((prev) => ({
+        ...prev,
+        [colKey]: newWidth
+      }));
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
+  const getColStyle = (colKey, isHeader = false) => {
+    const width = colWidths[colKey];
+    const defaultW = defaultWidths[colKey];
+    const baseFontSize = isHeader ? 11 : (['date', 'setup', 'confluences', 'mistakes', 'netDaily', 'fee'].includes(colKey) ? 12 : 13);
+    const minFontSize = 8;
+    
+    let fontSize = baseFontSize;
+    if (width < defaultW) {
+      const ratio = width / defaultW;
+      fontSize = Math.max(minFontSize, Math.round(baseFontSize * ratio));
+    }
+    
+    const isTextHeavy = ['pair', 'setup', 'confluences', 'mistakes'].includes(colKey);
+    const shouldWrap = isTextHeavy && width >= 140;
+    
+    return {
+      width: `${width}px`,
+      minWidth: `${width}px`,
+      maxWidth: `${width}px`,
+      fontSize: `${fontSize}px`,
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: shouldWrap ? 'normal' : 'nowrap',
+      wordBreak: shouldWrap ? 'break-word' : 'normal',
+      position: 'relative'
+    };
+  };
+
   useEffect(() => {
     setCurrentPage(1);
   }, [outcomeFilter, sessionFilter, setupFilter, directionFilter, dateFrom, dateTo, searchTerm, marketFilter]);
@@ -546,20 +618,62 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
           <table className="w-full text-left border-collapse min-w-[1200px]">
             <thead>
               <tr className="bg-slate-50 dark:bg-[#121212] border-b border-[#e2e8f0] dark:border-violet-500/15 text-[#475569] dark:text-gray-400 font-semibold text-xs uppercase tracking-wider">
-                <th className="py-4 px-5">Date</th>
-                <th className="py-4 px-4">Pair</th>
-                <th className="py-4 px-4 text-center">Direction</th>
-                <th className="py-4 px-4 text-center">Session</th>
-                <th className="py-4 px-4">Setup Type</th>
-                <th className="py-4 px-4 text-center">Outcome</th>
-                <th className="py-4 px-4 text-right">PnL</th>
-                <th className="py-4 px-4 text-right">Fee</th>
-                <th className="py-4 px-4 text-right">Net PnL</th>
-                <th className="py-4 px-4 text-right">Net Daily</th>
-                <th className="py-4 px-4">Confluences</th>
-                <th className="py-4 px-4">Mistakes</th>
-                <th className="py-4 px-4 text-center">Screenshot</th>
-                <th className="py-4 px-5 text-center">Actions</th>
+                <th className="py-4 px-3 select-none relative group/header text-left" style={getColStyle('date', true)}>
+                  <span>Date</span>
+                  <div onMouseDown={(e) => handleResizeStart(e, 'date')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                </th>
+                <th className="py-4 px-3 select-none relative group/header text-left" style={getColStyle('pair', true)}>
+                  <span>Pair</span>
+                  <div onMouseDown={(e) => handleResizeStart(e, 'pair')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                </th>
+                <th className="py-4 px-3 select-none relative group/header text-center" style={getColStyle('direction', true)}>
+                  <span>Direction</span>
+                  <div onMouseDown={(e) => handleResizeStart(e, 'direction')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                </th>
+                <th className="py-4 px-3 select-none relative group/header text-center" style={getColStyle('session', true)}>
+                  <span>Session</span>
+                  <div onMouseDown={(e) => handleResizeStart(e, 'session')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                </th>
+                <th className="py-4 px-3 select-none relative group/header text-left" style={getColStyle('setup', true)}>
+                  <span>Setup Type</span>
+                  <div onMouseDown={(e) => handleResizeStart(e, 'setup')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                </th>
+                <th className="py-4 px-3 select-none relative group/header text-center" style={getColStyle('outcome', true)}>
+                  <span>Outcome</span>
+                  <div onMouseDown={(e) => handleResizeStart(e, 'outcome')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                </th>
+                <th className="py-4 px-3 select-none relative group/header text-right" style={getColStyle('pnl', true)}>
+                  <span>PnL</span>
+                  <div onMouseDown={(e) => handleResizeStart(e, 'pnl')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                </th>
+                <th className="py-4 px-3 select-none relative group/header text-right" style={getColStyle('fee', true)}>
+                  <span>Fee</span>
+                  <div onMouseDown={(e) => handleResizeStart(e, 'fee')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                </th>
+                <th className="py-4 px-3 select-none relative group/header text-right" style={getColStyle('netPnl', true)}>
+                  <span>Net PnL</span>
+                  <div onMouseDown={(e) => handleResizeStart(e, 'netPnl')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                </th>
+                <th className="py-4 px-3 select-none relative group/header text-right" style={getColStyle('netDaily', true)}>
+                  <span>Net Daily</span>
+                  <div onMouseDown={(e) => handleResizeStart(e, 'netDaily')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                </th>
+                <th className="py-4 px-3 select-none relative group/header text-left" style={getColStyle('confluences', true)}>
+                  <span>Confluences</span>
+                  <div onMouseDown={(e) => handleResizeStart(e, 'confluences')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                </th>
+                <th className="py-4 px-3 select-none relative group/header text-left" style={getColStyle('mistakes', true)}>
+                  <span>Mistakes</span>
+                  <div onMouseDown={(e) => handleResizeStart(e, 'mistakes')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                </th>
+                <th className="py-4 px-3 select-none relative group/header text-center" style={getColStyle('screenshot', true)}>
+                  <span>Screenshot</span>
+                  <div onMouseDown={(e) => handleResizeStart(e, 'screenshot')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                </th>
+                <th className="py-4 px-3 select-none relative group/header text-center" style={getColStyle('actions', true)}>
+                  <span>Actions</span>
+                  <div onMouseDown={(e) => handleResizeStart(e, 'actions')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#e2e8f0] dark:divide-[#242424] text-sm text-slate-700 dark:text-gray-300">
@@ -577,128 +691,86 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
       onClick={() => onEdit(t)}
       className="hover:bg-slate-50/55 dark:hover:bg-[#202020]/60 cursor-pointer active:bg-slate-100 dark:active:bg-[#252525]/80 transition-colors group"
     >
-                      {
-      /* Date */
-    }
-                      <td className="py-3.5 px-5 font-mono text-xs text-slate-500 dark:text-gray-400">{t.date}</td>
+                      <td className="py-3 px-3 font-mono text-slate-500 dark:text-gray-400" style={getColStyle('date')}>{t.date}</td>
                       
-                      {
-      /* Pair */
-    }
-                      <td className="py-3.5 px-4 font-bold text-[#0f172a] dark:text-white tracking-tight">{t.pair_instrument}</td>
+                      <td className="py-3 px-3 font-bold text-[#0f172a] dark:text-white tracking-tight" style={getColStyle('pair')} title={t.pair_instrument}>{t.pair_instrument}</td>
                       
-                      {
-      /* Direction */
-    }
-                      <td className="py-3.5 px-4 text-center" onClick={(e) => e.stopPropagation()}>
+                      <td className="py-3 px-3 text-center" onClick={(e) => e.stopPropagation()} style={getColStyle('direction')}>
                         <DirectionBadge direction={t.direction} />
                       </td>
                       
-                      {
-      /* Session */
-    }
-                      <td className="py-3.5 px-4 text-center" onClick={(e) => e.stopPropagation()}>
+                      <td className="py-3 px-3 text-center" onClick={(e) => e.stopPropagation()} style={getColStyle('session')}>
                         <SessionBadge session={t.session} />
                       </td>
                       
-                      {
-      /* Setup */
-    }
-                      <td className="py-3.5 px-4 text-xs font-semibold text-slate-600 dark:text-gray-400">{t.setup_type || "\u2014"}</td>
+                      <td className="py-3 px-3 text-xs font-semibold text-slate-600 dark:text-gray-400" style={getColStyle('setup')} title={t.setup_type}>{t.setup_type || "\u2014"}</td>
                       
-                      {
-      /* Outcome */
-    }
-                      <td className="py-3.5 px-4 text-center" onClick={(e) => e.stopPropagation()}>
+                      <td className="py-3 px-3 text-center" onClick={(e) => e.stopPropagation()} style={getColStyle('outcome')}>
                         <OutcomeBadge outcome={t.outcome} />
                       </td>
                       
-                      {
-      /* Gross PnL */
-    }
-                      <td className={`py-3.5 px-4 text-right font-mono font-bold ${t.pnl_usd >= 0 ? "text-green-600 dark:text-green-500" : "text-red-600 dark:text-red-500"}`}>
+                      <td className={`py-3 px-3 text-right font-mono font-bold ${t.pnl_usd >= 0 ? "text-green-600 dark:text-green-500" : "text-red-600 dark:text-red-500"}`} style={getColStyle('pnl')}>
                         {t.pnl_usd >= 0 ? `+${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${t.pnl_usd.toFixed(2)}` : `-${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${Math.abs(t.pnl_usd).toFixed(2)}`}
                       </td>
                       
-                      {
-      /* Fee */
-    }
-                      <td className="py-3.5 px-4 text-right font-mono text-red-600/80 dark:text-red-550/80 text-xs">
+                      <td className="py-3 px-3 text-right font-mono text-red-600/80 dark:text-red-550/80 text-xs" style={getColStyle('fee')}>
                         {t.fee_usd > 0 ? `+${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${t.fee_usd.toFixed(2)}` : t.fee_usd < 0 ? `-${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${Math.abs(t.fee_usd).toFixed(2)}` : `${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}0.00`}
                       </td>
                       
-                      {
-      /* Net PnL */
-    }
-                      <td className={`py-3.5 px-4 text-right font-mono font-black ${netVal >= 0 ? "text-green-600 dark:text-green-500" : "text-red-600 dark:text-red-500"}`}>
+                      <td className={`py-3 px-3 text-right font-mono font-black ${netVal >= 0 ? "text-green-600 dark:text-green-500" : "text-red-600 dark:text-red-500"}`} style={getColStyle('netPnl')}>
                         {netVal >= 0 ? `+${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${netVal.toFixed(2)}` : `-${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${Math.abs(netVal).toFixed(2)}`}
                       </td>
                       
-                      {
-      /* Net Daily */
-    }
-                      <td className={`py-3.5 px-4 text-right font-mono text-xs font-semibold ${t.net_daily_amount_usd >= 0 ? "text-green-600/85 dark:text-green-500/80" : "text-red-600/85 dark:text-red-500/80"}`}>
+                      <td className={`py-3 px-3 text-right font-mono text-xs font-semibold ${t.net_daily_amount_usd >= 0 ? "text-green-600/85 dark:text-green-500/80" : "text-red-600/85 dark:text-red-500/80"}`} style={getColStyle('netDaily')}>
                         {t.net_daily_amount_usd >= 0 ? `+${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${t.net_daily_amount_usd.toFixed(2)}` : `-${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${Math.abs(t.net_daily_amount_usd).toFixed(2)}`}
                       </td>
                       
-                      {
-      /* Confluences */
-    }
-                      <td className="py-3.5 px-4 text-xs max-w-xs truncate" title={t.confluences.join(", ")}>
+                      <td className="py-3 px-3 text-xs max-w-xs" title={t.confluences.join(", ")} style={getColStyle('confluences')}>
                         {t.confluences.length > 0 ? <div className="flex gap-1 overflow-hidden select-none">
-                            {t.confluences.slice(0, 2).map((c) => <span key={c} className="bg-green-500/5 text-green-600 dark:text-green-400 border border-green-500/10 dark:border-green-500/20 px-1 py-0.2 rounded text-[10px]">
+                            {t.confluences.slice(0, 2).map((c) => <span key={c} className="bg-green-500/5 text-green-600 dark:text-green-400 border border-green-500/10 dark:border-green-500/20 px-1 py-0.2 rounded text-[10px] truncate max-w-[80px]">
                                 {c}
                               </span>)}
                             {t.confluences.length > 2 && <span className="text-gray-400 dark:text-gray-500 text-[10px] font-bold">+{t.confluences.length - 2}</span>}
                           </div> : <span className="text-gray-400 dark:text-gray-650">—</span>}
                       </td>
                       
-                      {
-      /* Mistakes */
-    }
-                      <td className="py-3.5 px-4 text-xs max-w-xs truncate" title={t.mistakes.join(", ")}>
+                      <td className="py-3 px-3 text-xs max-w-xs" title={t.mistakes.join(", ")} style={getColStyle('mistakes')}>
                         {t.mistakes.length > 0 ? <div className="flex gap-1 overflow-hidden select-none">
-                            {t.mistakes.slice(0, 2).map((m) => <span key={m} className={`bg-red-500/5 text-red-600 dark:text-red-400 border border-red-500/10 dark:border-red-500/20 px-1 py-0.2 rounded text-[10px] ${m === "No Mistake" ? "text-gray-500 dark:text-gray-400 bg-slate-100 dark:bg-neutral-900 border-slate-200 dark:border-violet-500/15" : ""}`}>
+                            {t.mistakes.slice(0, 2).map((m) => <span key={m} className={`bg-red-500/5 text-red-600 dark:text-red-400 border border-red-500/10 dark:border-red-500/20 px-1 py-0.2 rounded text-[10px] truncate max-w-[80px] ${m === "No Mistake" ? "text-gray-500 dark:text-gray-400 bg-slate-100 dark:bg-neutral-900 border-slate-200 dark:border-violet-500/15" : ""}`}>
                                 {m}
                               </span>)}
                             {t.mistakes.length > 2 && <span className="text-gray-400 dark:text-gray-500 text-[10px] font-bold">+{t.mistakes.length - 2}</span>}
                           </div> : <span className="text-gray-450 dark:text-gray-650">—</span>}
                       </td>
 
-                      {
-      /* Screenshot Link */
-    }
-                      <td className="py-3.5 px-4 text-center text-xs" onClick={(e) => e.stopPropagation()}>
+                      <td className="py-3 px-3 text-center text-xs" onClick={(e) => e.stopPropagation()} style={getColStyle('screenshot')}>
                         {t.screenshot_url ? <a
       href={t.screenshot_url}
       target="_blank"
       rel="noopener noreferrer"
       className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors p-1 bg-blue-500/5 border border-blue-500/10 dark:border-blue-500/20 hover:border-blue-500/40 rounded"
     >
-                            <Eye className="w-4 h-4 mr-1" />
+                            <Eye className="w-4 h-4 mr-1 shrink-0" />
                             <span>View</span>
                           </a> : <span className="text-gray-450 dark:text-gray-650">—</span>}
                       </td>
 
-                      {
-      /* Action buttons */
-    }
-                      <td className="py-3.5 px-5 text-center" onClick={(e) => e.stopPropagation()}>
-                        <div className="flex items-center justify-center space-x-2">
+                      <td className="py-3 px-3 text-center" onClick={(e) => e.stopPropagation()} style={getColStyle('actions')}>
+                        <div className="flex items-center justify-center space-x-1">
                           <button
       onClick={() => onEdit(t)}
-      className="p-1 px-1.5 bg-slate-50 hover:bg-slate-100 dark:bg-[#2a2a2a] dark:hover:bg-[#353535] rounded-md text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-all border border-slate-200 dark:border-violet-500/15 cursor-pointer"
+      className="p-1 bg-slate-50 hover:bg-slate-100 dark:bg-[#2a2a2a] dark:hover:bg-[#353535] rounded text-slate-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-all border border-slate-200 dark:border-violet-500/15 cursor-pointer"
       title="Edit trade record"
     >
-                            <Edit className="w-3.5 h-3.5" />
+                            <Edit className="w-3 h-3" />
                           </button>
                           <button
       id={`delete-btn-${t.id}`}
       onClick={(e) => handleDeleteClick(e, t.id)}
-      className="p-1 px-1.5 bg-red-50 hover:bg-red-500 dark:bg-red-950/20 dark:hover:bg-red-900 text-red-600 hover:text-white dark:text-red-400 dark:hover:text-white rounded-md transition-all border border-red-200 dark:border-red-900/10 hover:border-red-500/20 cursor-pointer"
+      className="p-1 bg-red-50 hover:bg-red-500 dark:bg-red-950/20 dark:hover:bg-red-900 text-red-600 hover:text-white dark:text-red-400 dark:hover:text-white rounded transition-all border border-red-200 dark:border-red-900/10 hover:border-red-500/20 cursor-pointer"
       title="Delete trade record"
     >
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Trash2 className="w-3 h-3" />
                           </button>
                         </div>
                       </td>
