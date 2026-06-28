@@ -127,6 +127,24 @@ def delete_trade(trade_id: int, user: User = Depends(get_user), db: Session = De
     trade = db.query(Trade).filter(Trade.id == trade_id, Trade.user_id == user.id).first()
     if not trade:
         raise HTTPException(status_code=404, detail="Trade not found")
+        
+    # Also delete the corresponding JournalTrade record if it exists to maintain sync
+    try:
+        from models import JournalTrade
+        
+        # Match by user, PnL amount, and date
+        jt_date = trade.timestamp.strftime("%Y-%m-%d")
+        matching_jt = db.query(JournalTrade).filter(
+            JournalTrade.user_id == user.id,
+            JournalTrade.date == jt_date,
+            JournalTrade.net_pnl_usd == trade.pnl_amount
+        ).first()
+        
+        if matching_jt:
+            db.delete(matching_jt)
+    except Exception as e:
+        print(f"Failed to delete corresponding journal trade: {e}")
+
     db.delete(trade)
     db.commit()
     return {"message": "Trade deleted"}

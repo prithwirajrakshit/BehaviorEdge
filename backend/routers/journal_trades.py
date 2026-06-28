@@ -348,12 +348,35 @@ def delete_trade(trade_id: int, user: User = Depends(get_user), db: Session = De
     trade = db.query(JournalTrade).filter(JournalTrade.id == trade_id, JournalTrade.user_id == user.id).first()
     if not trade:
         raise HTTPException(status_code=404, detail="Trade not found")
+    
+    # Also delete the corresponding platform Trade record if it exists to prevent it from being re-imported during sync
+    try:
+        from models import Trade
+        
+        # Match by user, PnL amount, and date
+        platform_trades = db.query(Trade).filter(
+            Trade.user_id == user.id,
+            Trade.pnl_amount == trade.net_pnl_usd
+        ).all()
+        
+        for pt in platform_trades:
+            if pt.timestamp.strftime("%Y-%m-%d") == trade.date:
+                db.delete(pt)
+    except Exception as e:
+        print(f"Failed to delete corresponding platform trade during sync: {e}")
+
     db.delete(trade)
     db.commit()
     return {"success": True, "message": "Trade deleted successfully"}
 
 @router.delete("/trades")
 def clear_trades(user: User = Depends(get_user), db: Session = Depends(get_db)):
+    try:
+        from models import Trade
+        db.query(Trade).filter(Trade.user_id == user.id).delete()
+    except Exception as e:
+        print(f"Failed to clear platform trades: {e}")
+        
     db.query(JournalTrade).filter(JournalTrade.user_id == user.id).delete()
     db.commit()
     return {"success": True, "message": "All trades cleared successfully"}

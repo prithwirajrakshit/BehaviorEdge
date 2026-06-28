@@ -173,7 +173,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
         <div className="flex items-center gap-3">
           <span className="text-sm text-slate-500 dark:text-gray-400 font-medium">Total Filtered:</span>
           <span className="bg-blue-500/10 border border-blue-500/20 font-mono text-blue-600 dark:text-blue-400 text-xs px-2.5 py-1 rounded-lg font-bold">
-            {filteredTrades.length} Trades Listed
+            {filteredTrades.length} {filteredTrades.length === 1 ? "Trade" : "Trades"} Listed
           </span>
         </div>
 

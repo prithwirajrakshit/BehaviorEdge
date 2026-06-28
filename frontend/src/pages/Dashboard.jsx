@@ -173,10 +173,10 @@ export default function Dashboard() {
             <LineChart data={scoreData}>
               <defs>
                 <linearGradient id="scoreGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.4} />
-                  <stop offset="95%" stopColor="#7c3aed" stopOpacity={0} />
+                  <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.4} />
+                  <stop offset="95%" stopColor="#f43f5e" stopOpacity={0} />
                 </linearGradient>
-                <filter id="lineGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <filter id="lineGlow" x="-100%" y="-100%" width="300%" height="300%">
                   <feGaussianBlur stdDeviation="4" result="blur" />
                   <feMerge>
                     <feMergeNode in="blur" />
@@ -194,10 +194,10 @@ export default function Dashboard() {
               </ReferenceLine>
               <Area type="monotone" dataKey="score" fill="url(#scoreGrad)" stroke="none" animationDuration={1200} animationEasing="ease-out" animationBegin={600} />
               <Line
-                type="monotone" dataKey="score" stroke="#a78bfa" strokeWidth={3.5}
-                dot={{ r: 4, stroke: "#a78bfa", strokeWidth: 1, fill: "#0e0b18" }}
+                type="monotone" dataKey="score" stroke="#f43f5e" strokeWidth={3.5}
+                dot={{ r: 4, stroke: "#f43f5e", strokeWidth: 1, fill: "#0e0b18" }}
                 activeDot={{
-                  r: 6, fill: '#c084fc', stroke: '#a78bfa', strokeWidth: 2,
+                  r: 6, fill: '#e11d75', stroke: '#f43f5e', strokeWidth: 2,
                   filter: 'url(#lineGlow)',
                 }}
                 filter="url(#lineGlow)"
@@ -249,7 +249,7 @@ export default function Dashboard() {
                   <stop offset="100%" stopColor="#059669" stopOpacity={0.4} />
                 </linearGradient>
                 {/* Bar glow filter — source-graphic multi-color glow */}
-                <filter id="barGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <filter id="barGlow" x="-100%" y="-100%" width="300%" height="300%">
                   <feGaussianBlur stdDeviation="3.5" result="blur" />
                   <feMerge>
                     <feMergeNode in="blur" />
