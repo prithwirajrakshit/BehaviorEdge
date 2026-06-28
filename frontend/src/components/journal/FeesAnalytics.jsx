@@ -371,21 +371,21 @@ export default function FeesAnalytics({ showToast, trades }) {
       /* Gross PnL */
     }
                       <td className={`py-3 px-4 text-right font-mono ${t.pnl_usd >= 0 ? "text-green-600 dark:text-green-500" : "text-red-600 dark:text-red-500"}`}>
-                        {t.pnl_usd >= 0 ? `+$${t.pnl_usd.toFixed(2)}` : `-$${Math.abs(t.pnl_usd).toFixed(2)}`}
+                        {t.pnl_usd >= 0 ? `+${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${t.pnl_usd.toFixed(2)}` : `-${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${Math.abs(t.pnl_usd).toFixed(2)}`}
                       </td>
 
                       {
       /* Fee in red */
     }
                       <td className="py-3 px-4 text-right font-mono text-red-600 dark:text-red-500">
-                        -${feeAbs.toFixed(2)}
+                        -${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${feeAbs.toFixed(2)}
                       </td>
 
                       {
       /* Net PnL */
     }
                       <td className={`py-3 px-4 text-right font-mono ${t.net_pnl_usd >= 0 ? "text-green-600 dark:text-green-400 font-bold" : "text-red-600 dark:text-red-400"}`}>
-                        {t.net_pnl_usd >= 0 ? `+$${t.net_pnl_usd.toFixed(2)}` : `-$${Math.abs(t.net_pnl_usd).toFixed(2)}`}
+                        {t.net_pnl_usd >= 0 ? `+${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${t.net_pnl_usd.toFixed(2)}` : `-${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${Math.abs(t.net_pnl_usd).toFixed(2)}`}
                       </td>
 
                       {

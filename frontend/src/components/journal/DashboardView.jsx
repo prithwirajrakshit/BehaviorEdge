@@ -155,8 +155,10 @@ export default function DashboardView({ showToast, onNavigate }) {
   const todayStr = (/* @__PURE__ */ new Date()).toISOString().substring(0, 10);
   const todayTrades = trades.filter((t) => t.date === todayStr);
   const todaysNetPnl = todayTrades.reduce((acc, t) => acc + (t.net_pnl_usd || 0), 0);
+  const allStockOrOptions = trades.length > 0 && trades.every(t => t.market === 'Stocks' || t.market === 'Options');
+  const currencySymbol = allStockOrOptions ? '₹' : '$';
   const dailyLossLimit = profile && profile.daily_max_loss ? profile.daily_max_loss : parseFloat(localStorage.getItem("daily_loss_limit") || "500");
-  const dailyProfitTarget = parseFloat(localStorage.getItem("daily_profit_target") || "1000");
+  const dailyProfitTarget = profile && profile.daily_profit_target ? profile.daily_profit_target : parseFloat(localStorage.getItem("daily_profit_target") || "1000");
   const lossPct = todaysNetPnl < 0 ? Math.min(100, Math.abs(todaysNetPnl) / dailyLossLimit * 100) : 0;
   const profitPct = todaysNetPnl > 0 ? Math.min(100, todaysNetPnl / dailyProfitTarget * 100) : 0;
   let todayStatus = "active";
@@ -290,7 +292,7 @@ export default function DashboardView({ showToast, onNavigate }) {
           </div>
           <div>
             <div className={`text-xl lg:text-2xl font-black font-mono tracking-tight ${summary.totalNetPnl >= 0 ? "text-green-600 dark:text-green-500" : "text-red-600 dark:text-red-500"}`}>
-              {summary.totalNetPnl >= 0 ? `+$${summary.totalNetPnl.toFixed(2)}` : `-$${Math.abs(summary.totalNetPnl).toFixed(2)}`}
+              {summary.totalNetPnl >= 0 ? `+${currencySymbol}${summary.totalNetPnl.toFixed(2)}` : `-${currencySymbol}${Math.abs(summary.totalNetPnl).toFixed(2)}`}
             </div>
             <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-1 font-sans">Accumulated earnings post margins</p>
           </div>
@@ -356,7 +358,7 @@ export default function DashboardView({ showToast, onNavigate }) {
           </div>
           <div>
             <div className="text-xl lg:text-2xl font-black font-mono text-green-600 dark:text-green-400 tracking-tight">
-              +${summary.averageWin.toFixed(2)}
+              +{currencySymbol}{summary.averageWin.toFixed(2)}
             </div>
             <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-1 font-sans">Per winning trade</p>
           </div>
@@ -372,7 +374,7 @@ export default function DashboardView({ showToast, onNavigate }) {
           </div>
           <div>
             <div className="text-xl lg:text-2xl font-black font-mono text-red-600 dark:text-red-400 tracking-tight">
-              -${Math.abs(summary.averageLoss).toFixed(2)}
+              -{currencySymbol}{Math.abs(summary.averageLoss).toFixed(2)}
             </div>
             <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-1 font-sans">Per losing trade</p>
           </div>
@@ -388,7 +390,7 @@ export default function DashboardView({ showToast, onNavigate }) {
           </div>
           <div>
             <div className="text-xl lg:text-2xl font-black font-mono text-green-600 dark:text-green-400 tracking-tight">
-              +${summary.bestTrade.toFixed(2)}
+              +{currencySymbol}{summary.bestTrade.toFixed(2)}
             </div>
             <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-1 font-sans">Record single gain</p>
           </div>
@@ -404,7 +406,7 @@ export default function DashboardView({ showToast, onNavigate }) {
           </div>
           <div>
             <div className="text-xl lg:text-2xl font-black font-mono text-red-600 dark:text-red-400 tracking-tight">
-              -${summary.totalFees.toFixed(2)}
+              -{currencySymbol}{summary.totalFees.toFixed(2)}
             </div>
             <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-1 font-sans">Abs tracking fees</p>
           </div>
@@ -448,7 +450,7 @@ export default function DashboardView({ showToast, onNavigate }) {
             <div className="flex justify-between items-end">
               <span className="text-xs text-[#475569] dark:text-gray-400 font-mono">Today's Net PnL</span>
               <span className={`text-lg font-black font-mono ${todaysNetPnl >= 0 ? "text-green-500" : "text-red-500"}`}>
-                {todaysNetPnl >= 0 ? `+$${todaysNetPnl.toFixed(2)}` : `-$${Math.abs(todaysNetPnl).toFixed(2)}`}
+                {todaysNetPnl >= 0 ? `+${currencySymbol}${todaysNetPnl.toFixed(2)}` : `-${currencySymbol}${Math.abs(todaysNetPnl).toFixed(2)}`}
               </span>
             </div>
 
@@ -457,7 +459,7 @@ export default function DashboardView({ showToast, onNavigate }) {
   }
             <div className="space-y-1">
               <div className="flex justify-between text-[11px] font-mono">
-                <span className="text-[#475569] dark:text-gray-400">Daily Loss Limit (${dailyLossLimit})</span>
+                <span className="text-[#475569] dark:text-gray-400">Daily Loss Limit ({currencySymbol}{dailyLossLimit})</span>
                 <span className="text-red-500 dark:text-red-400">{lossPct.toFixed(0)}%</span>
               </div>
               <div className="w-full bg-slate-100 dark:bg-[#151225]/45 h-2 rounded-full overflow-hidden">
@@ -473,7 +475,7 @@ export default function DashboardView({ showToast, onNavigate }) {
   }
             <div className="space-y-1">
               <div className="flex justify-between text-[11px] font-mono">
-                <span className="text-[#475569] dark:text-gray-400">Daily Profit Target (${dailyProfitTarget})</span>
+                <span className="text-[#475569] dark:text-gray-400">Daily Profit Target ({currencySymbol}{dailyProfitTarget})</span>
                 <span className="text-green-600 dark:text-green-400">{profitPct.toFixed(0)}%</span>
               </div>
               <div className="w-full bg-slate-100 dark:bg-[#151225]/45 h-2 rounded-full overflow-hidden">
@@ -540,11 +542,11 @@ export default function DashboardView({ showToast, onNavigate }) {
           <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
             <div className="bg-slate-50 dark:bg-[#151225]/45/20 py-2 px-1 rounded-lg">
               <span className="text-[9px] uppercase text-[#475569] dark:text-gray-500 block font-semibold">Peak Bal.</span>
-              <span className="text-[#0f172a] dark:text-white font-bold block mt-0.5">${drawdownMetrics.peakBalance.toFixed(0)}</span>
+              <span className="text-[#0f172a] dark:text-white font-bold block mt-0.5">{currencySymbol}{drawdownMetrics.peakBalance.toFixed(0)}</span>
             </div>
             <div className="bg-slate-50 dark:bg-[#151225]/45/20 py-2 px-1 rounded-lg">
               <span className="text-[9px] uppercase text-[#475569] dark:text-gray-500 block font-semibold">Current DD</span>
-              <span className="text-red-500 dark:text-red-400 font-bold block mt-0.5">-${drawdownMetrics.currentDrawdownUsd.toFixed(0)}</span>
+              <span className="text-red-500 dark:text-red-400 font-bold block mt-0.5">-{currencySymbol}{drawdownMetrics.currentDrawdownUsd.toFixed(0)}</span>
             </div>
             <div className="bg-slate-50 dark:bg-[#151225]/45/20 py-2 px-1 rounded-lg">
               <span className="text-[9px] uppercase text-[#475569] dark:text-gray-500 block font-semibold">Max DD %</span>

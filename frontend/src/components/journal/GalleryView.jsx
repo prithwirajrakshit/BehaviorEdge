@@ -180,7 +180,7 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
                   <div className="flex justify-between items-center text-[10px] font-mono text-slate-500 dark:text-gray-400 pt-1.5 border-t border-slate-100 dark:border-violet-500/15">
                     <span>{trade.setup_type || "No Setup"}</span>
                     <span className={trade.net_pnl_usd >= 0 ? "text-green-650 dark:text-green-500 font-bold" : "text-red-655 dark:text-red-500 font-bold"}>
-                      {trade.net_pnl_usd >= 0 ? "+" : ""}${trade.net_pnl_usd.toFixed(2)}
+                      {trade.net_pnl_usd >= 0 ? `+${trade.market === 'Stocks' || trade.market === 'Options' ? '₹' : '$'}${trade.net_pnl_usd.toFixed(2)}` : `-${trade.market === 'Stocks' || trade.market === 'Options' ? '₹' : '$'}${Math.abs(trade.net_pnl_usd).toFixed(2)}`}
                     </span>
                   </div>
 
@@ -298,7 +298,7 @@ export default function GalleryView({ trades, onNavigate, onEditTrade }) {
                 <div className="flex justify-between items-baseline">
                   <span className="text-slate-400 dark:text-gray-500 font-bold uppercase text-[8px]">Net Profits</span>
                   <span className={`text-base font-black ${currentSlideTrade.net_pnl_usd >= 0 ? "text-green-650 dark:text-green-500" : "text-red-655 dark:text-red-500"}`}>
-                    {currentSlideTrade.net_pnl_usd >= 0 ? "+" : ""}${currentSlideTrade.net_pnl_usd.toFixed(2)}
+                    {currentSlideTrade.net_pnl_usd >= 0 ? `+${currentSlideTrade.market === 'Stocks' || currentSlideTrade.market === 'Options' ? '₹' : '$'}${currentSlideTrade.net_pnl_usd.toFixed(2)}` : `-${currentSlideTrade.market === 'Stocks' || currentSlideTrade.market === 'Options' ? '₹' : '$'}${Math.abs(currentSlideTrade.net_pnl_usd).toFixed(2)}`}
                   </span>
                 </div>
               </div>

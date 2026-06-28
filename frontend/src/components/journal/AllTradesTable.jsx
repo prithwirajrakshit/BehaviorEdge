@@ -552,8 +552,8 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
                 <th className="py-4 px-4 text-center">Session</th>
                 <th className="py-4 px-4">Setup Type</th>
                 <th className="py-4 px-4 text-center">Outcome</th>
-                <th className="py-4 px-4 text-right">PnL (USD)</th>
-                <th className="py-4 px-4 text-right">Fee (USD)</th>
+                <th className="py-4 px-4 text-right">PnL</th>
+                <th className="py-4 px-4 text-right">Fee</th>
                 <th className="py-4 px-4 text-right">Net PnL</th>
                 <th className="py-4 px-4 text-right">Net Daily</th>
                 <th className="py-4 px-4">Confluences</th>
@@ -617,28 +617,28 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
       /* Gross PnL */
     }
                       <td className={`py-3.5 px-4 text-right font-mono font-bold ${t.pnl_usd >= 0 ? "text-green-600 dark:text-green-500" : "text-red-600 dark:text-red-500"}`}>
-                        {t.pnl_usd >= 0 ? `+$${t.pnl_usd.toFixed(2)}` : `-$${Math.abs(t.pnl_usd).toFixed(2)}`}
+                        {t.pnl_usd >= 0 ? `+${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${t.pnl_usd.toFixed(2)}` : `-${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${Math.abs(t.pnl_usd).toFixed(2)}`}
                       </td>
                       
                       {
       /* Fee */
     }
                       <td className="py-3.5 px-4 text-right font-mono text-red-600/80 dark:text-red-550/80 text-xs">
-                        {t.fee_usd > 0 ? `+$${t.fee_usd.toFixed(2)}` : t.fee_usd < 0 ? `-$${Math.abs(t.fee_usd).toFixed(2)}` : "$0.00"}
+                        {t.fee_usd > 0 ? `+${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${t.fee_usd.toFixed(2)}` : t.fee_usd < 0 ? `-${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${Math.abs(t.fee_usd).toFixed(2)}` : `${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}0.00`}
                       </td>
                       
                       {
       /* Net PnL */
     }
                       <td className={`py-3.5 px-4 text-right font-mono font-black ${netVal >= 0 ? "text-green-600 dark:text-green-500" : "text-red-600 dark:text-red-500"}`}>
-                        {netVal >= 0 ? `+$${netVal.toFixed(2)}` : `-$${Math.abs(netVal).toFixed(2)}`}
+                        {netVal >= 0 ? `+${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${netVal.toFixed(2)}` : `-${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${Math.abs(netVal).toFixed(2)}`}
                       </td>
                       
                       {
       /* Net Daily */
     }
                       <td className={`py-3.5 px-4 text-right font-mono text-xs font-semibold ${t.net_daily_amount_usd >= 0 ? "text-green-600/85 dark:text-green-500/80" : "text-red-600/85 dark:text-red-500/80"}`}>
-                        {t.net_daily_amount_usd >= 0 ? `+$${t.net_daily_amount_usd.toFixed(2)}` : `-$${Math.abs(t.net_daily_amount_usd).toFixed(2)}`}
+                        {t.net_daily_amount_usd >= 0 ? `+${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${t.net_daily_amount_usd.toFixed(2)}` : `-${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${Math.abs(t.net_daily_amount_usd).toFixed(2)}`}
                       </td>
                       
                       {

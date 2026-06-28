@@ -211,7 +211,9 @@ export default function WeeklyCalendar({ trades, showToast }) {
       className={`w-full text-left p-1.5 rounded-lg text-xs font-mono font-bold flex items-center justify-between transition-all hover:scale-[1.02] cursor-pointer ${outcomePillStyles[t.outcome] || outcomePillStyles.Running}`}
     >
                       <span className="truncate max-w-[64px] tracking-tight">{t.pair_instrument}</span>
-                      <span className="text-[9px] scale-90 font-black shrink-0">{t.net_pnl_usd >= 0 ? `+$${t.net_pnl_usd.toFixed(0)}` : `-$${Math.abs(t.net_pnl_usd).toFixed(0)}`}</span>
+                      <span className="text-[9px] scale-90 font-black shrink-0">
+                        {t.net_pnl_usd >= 0 ? `+${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${t.net_pnl_usd.toFixed(0)}` : `-${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${Math.abs(t.net_pnl_usd).toFixed(0)}`}
+                      </span>
                     </button>)}
               </div>
 
@@ -224,7 +226,7 @@ export default function WeeklyCalendar({ trades, showToast }) {
                       {dayTrades.length} Trade{dayTrades.length > 1 ? "s" : ""}
                     </span>
                     <span className={`font-mono text-xs font-black ${totalNetPnl >= 0 ? "text-green-600 dark:text-green-500" : "text-red-650 dark:text-red-500"}`}>
-                      {totalNetPnl >= 0 ? `+$${totalNetPnl.toFixed(2)}` : `-$${Math.abs(totalNetPnl).toFixed(2)}`}
+                      {totalNetPnl >= 0 ? `+${dayTrades.every(t => t.market === 'Stocks' || t.market === 'Options') ? '₹' : '$'}${totalNetPnl.toFixed(2)}` : `-${dayTrades.every(t => t.market === 'Stocks' || t.market === 'Options') ? '₹' : '$'}${Math.abs(totalNetPnl).toFixed(2)}`}
                     </span>
                   </div> : <span className="text-[9px] font-mono uppercase text-slate-400 dark:text-gray-600 tracking-wider">Breakeven Day</span>}
               </div>
@@ -304,19 +306,19 @@ export default function WeeklyCalendar({ trades, showToast }) {
                 <div>
                   <span className="text-[10px] text-slate-500 dark:text-gray-500 block uppercase font-sans font-bold">Gross profit/Loss</span>
                   <span className={`text-sm font-black block mt-1 ${selectedTrade.pnl_usd >= 0 ? "text-green-600 dark:text-green-500" : "text-red-655 dark:text-red-500"}`}>
-                    {selectedTrade.pnl_usd >= 0 ? `+$${selectedTrade.pnl_usd.toFixed(2)}` : `-$${Math.abs(selectedTrade.pnl_usd).toFixed(2)}`}
+                    {selectedTrade.pnl_usd >= 0 ? `+${selectedTrade.market === 'Stocks' || selectedTrade.market === 'Options' ? '₹' : '$'}${selectedTrade.pnl_usd.toFixed(2)}` : `-${selectedTrade.market === 'Stocks' || selectedTrade.market === 'Options' ? '₹' : '$'}${Math.abs(selectedTrade.pnl_usd).toFixed(2)}`}
                   </span>
                 </div>
                 <div className="border-x border-slate-150/40 dark:border-violet-500/15">
                   <span className="text-[10px] text-slate-500 dark:text-gray-500 block uppercase font-sans font-bold">Margin Fees Paid</span>
                   <span className="text-sm font-black block mt-1 text-red-655 dark:text-red-400">
-                    -${Math.abs(selectedTrade.fee_usd).toFixed(2)}
+                    -${selectedTrade.market === 'Stocks' || selectedTrade.market === 'Options' ? '₹' : '$'}${Math.abs(selectedTrade.fee_usd).toFixed(2)}
                   </span>
                 </div>
                 <div>
                   <span className="text-[10px] text-slate-500 dark:text-gray-500 block uppercase font-sans font-bold">Net Return PnL</span>
                   <span className={`text-sm font-black block mt-1 ${selectedTrade.net_pnl_usd >= 0 ? "text-green-600 dark:text-green-500" : "text-red-655 dark:text-red-500"}`}>
-                    {selectedTrade.net_pnl_usd >= 0 ? `+$${selectedTrade.net_pnl_usd.toFixed(2)}` : `-$${Math.abs(selectedTrade.net_pnl_usd).toFixed(2)}`}
+                    {selectedTrade.net_pnl_usd >= 0 ? `+${selectedTrade.market === 'Stocks' || selectedTrade.market === 'Options' ? '₹' : '$'}${selectedTrade.net_pnl_usd.toFixed(2)}` : `-${selectedTrade.market === 'Stocks' || selectedTrade.market === 'Options' ? '₹' : '$'}${Math.abs(selectedTrade.net_pnl_usd).toFixed(2)}`}
                   </span>
                 </div>
               </div>

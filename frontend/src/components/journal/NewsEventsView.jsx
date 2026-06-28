@@ -474,7 +474,7 @@ export default function NewsEventsView({ trades, showToast }) {
                           </span>
                         </td>
                         <td className={`py-2.5 text-right font-black ${t.net_pnl_usd >= 0 ? "text-green-655 dark:text-green-500" : "text-red-655 dark:text-red-500"}`}>
-                          {t.net_pnl_usd >= 0 ? "+" : ""}${t.net_pnl_usd.toFixed(2)}
+                          {t.net_pnl_usd >= 0 ? `+${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${t.net_pnl_usd.toFixed(2)}` : `-${t.market === 'Stocks' || t.market === 'Options' ? '₹' : '$'}${Math.abs(t.net_pnl_usd).toFixed(2)}`}
                         </td>
                       </tr>;
   }) : <tr>
