@@ -67,7 +67,7 @@ export default function SettingsView({ trades, onClearAll, showToast, onExportCS
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 select-none">
           {/* CSV export */}
-          <div className="p-5 border border-slate-200 dark:border-violet-500/15 bg-slate-50/50 dark:bg-[#1e1e1e]/40 rounded-2xl space-y-3 flex flex-col justify-between">
+          <div className="p-5 border border-slate-200 dark:border-violet-500/15 bg-slate-50/50 dark:bg-[#151225]/45 rounded-2xl space-y-3 flex flex-col justify-between">
             <div className="space-y-2">
               <FileSpreadsheet className="w-8 h-8 text-blue-500" />
               <h4 className="font-bold text-slate-800 dark:text-white text-sm">Local Backup Export</h4>
@@ -78,7 +78,7 @@ export default function SettingsView({ trades, onClearAll, showToast, onExportCS
             <button
               id="exportAllBtn"
               onClick={handleExportCSV}
-              className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-[#252525] border border-slate-200 dark:border-[#3c3c3c] hover:border-blue-500/30 dark:hover:bg-[#2b2b2b] text-slate-700 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-1 mt-4"
+              className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-[#151225]/50 border border-slate-200 dark:border-violet-500/20 hover:border-blue-500/30 dark:hover:bg-violet-500/10 text-slate-700 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-1 mt-4"
             >
               <FileSpreadsheet className="w-4 h-4 text-blue-500 animate-pulse" />
               <span>Export All Trades as CSV</span>
