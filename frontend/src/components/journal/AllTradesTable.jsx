@@ -620,59 +620,87 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
               <tr className="bg-slate-50 dark:bg-[#121212] border-b border-[#e2e8f0] dark:border-violet-500/15 text-[#475569] dark:text-gray-400 font-semibold text-xs uppercase tracking-wider">
                 <th className="py-4 px-3 select-none relative group/header text-left" style={getColStyle('date', true)}>
                   <span>Date</span>
-                  <div onMouseDown={(e) => handleResizeStart(e, 'date')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                  <div onMouseDown={(e) => handleResizeStart(e, 'date')} className="absolute right-0 top-1.5 bottom-1.5 w-2 cursor-col-resize group/resizer z-10 flex items-center justify-center">
+                    <div className="w-[1px] h-full bg-slate-300/40 dark:bg-violet-500/20 group-hover/resizer:bg-violet-500 group-active/resizer:bg-violet-400 transition-colors" />
+                  </div>
                 </th>
                 <th className="py-4 px-3 select-none relative group/header text-left" style={getColStyle('pair', true)}>
                   <span>Pair</span>
-                  <div onMouseDown={(e) => handleResizeStart(e, 'pair')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                  <div onMouseDown={(e) => handleResizeStart(e, 'pair')} className="absolute right-0 top-1.5 bottom-1.5 w-2 cursor-col-resize group/resizer z-10 flex items-center justify-center">
+                    <div className="w-[1px] h-full bg-slate-300/40 dark:bg-violet-500/20 group-hover/resizer:bg-violet-500 group-active/resizer:bg-violet-400 transition-colors" />
+                  </div>
                 </th>
                 <th className="py-4 px-3 select-none relative group/header text-center" style={getColStyle('direction', true)}>
                   <span>Direction</span>
-                  <div onMouseDown={(e) => handleResizeStart(e, 'direction')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                  <div onMouseDown={(e) => handleResizeStart(e, 'direction')} className="absolute right-0 top-1.5 bottom-1.5 w-2 cursor-col-resize group/resizer z-10 flex items-center justify-center">
+                    <div className="w-[1px] h-full bg-slate-300/40 dark:bg-violet-500/20 group-hover/resizer:bg-violet-500 group-active/resizer:bg-violet-400 transition-colors" />
+                  </div>
                 </th>
                 <th className="py-4 px-3 select-none relative group/header text-center" style={getColStyle('session', true)}>
                   <span>Session</span>
-                  <div onMouseDown={(e) => handleResizeStart(e, 'session')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                  <div onMouseDown={(e) => handleResizeStart(e, 'session')} className="absolute right-0 top-1.5 bottom-1.5 w-2 cursor-col-resize group/resizer z-10 flex items-center justify-center">
+                    <div className="w-[1px] h-full bg-slate-300/40 dark:bg-violet-500/20 group-hover/resizer:bg-violet-500 group-active/resizer:bg-violet-400 transition-colors" />
+                  </div>
                 </th>
                 <th className="py-4 px-3 select-none relative group/header text-left" style={getColStyle('setup', true)}>
                   <span>Setup Type</span>
-                  <div onMouseDown={(e) => handleResizeStart(e, 'setup')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                  <div onMouseDown={(e) => handleResizeStart(e, 'setup')} className="absolute right-0 top-1.5 bottom-1.5 w-2 cursor-col-resize group/resizer z-10 flex items-center justify-center">
+                    <div className="w-[1px] h-full bg-slate-300/40 dark:bg-violet-500/20 group-hover/resizer:bg-violet-500 group-active/resizer:bg-violet-400 transition-colors" />
+                  </div>
                 </th>
                 <th className="py-4 px-3 select-none relative group/header text-center" style={getColStyle('outcome', true)}>
                   <span>Outcome</span>
-                  <div onMouseDown={(e) => handleResizeStart(e, 'outcome')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                  <div onMouseDown={(e) => handleResizeStart(e, 'outcome')} className="absolute right-0 top-1.5 bottom-1.5 w-2 cursor-col-resize group/resizer z-10 flex items-center justify-center">
+                    <div className="w-[1px] h-full bg-slate-300/40 dark:bg-violet-500/20 group-hover/resizer:bg-violet-500 group-active/resizer:bg-violet-400 transition-colors" />
+                  </div>
                 </th>
                 <th className="py-4 px-3 select-none relative group/header text-right" style={getColStyle('pnl', true)}>
                   <span>PnL</span>
-                  <div onMouseDown={(e) => handleResizeStart(e, 'pnl')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                  <div onMouseDown={(e) => handleResizeStart(e, 'pnl')} className="absolute right-0 top-1.5 bottom-1.5 w-2 cursor-col-resize group/resizer z-10 flex items-center justify-center">
+                    <div className="w-[1px] h-full bg-slate-300/40 dark:bg-violet-500/20 group-hover/resizer:bg-violet-500 group-active/resizer:bg-violet-400 transition-colors" />
+                  </div>
                 </th>
                 <th className="py-4 px-3 select-none relative group/header text-right" style={getColStyle('fee', true)}>
                   <span>Fee</span>
-                  <div onMouseDown={(e) => handleResizeStart(e, 'fee')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                  <div onMouseDown={(e) => handleResizeStart(e, 'fee')} className="absolute right-0 top-1.5 bottom-1.5 w-2 cursor-col-resize group/resizer z-10 flex items-center justify-center">
+                    <div className="w-[1px] h-full bg-slate-300/40 dark:bg-violet-500/20 group-hover/resizer:bg-violet-500 group-active/resizer:bg-violet-400 transition-colors" />
+                  </div>
                 </th>
                 <th className="py-4 px-3 select-none relative group/header text-right" style={getColStyle('netPnl', true)}>
                   <span>Net PnL</span>
-                  <div onMouseDown={(e) => handleResizeStart(e, 'netPnl')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                  <div onMouseDown={(e) => handleResizeStart(e, 'netPnl')} className="absolute right-0 top-1.5 bottom-1.5 w-2 cursor-col-resize group/resizer z-10 flex items-center justify-center">
+                    <div className="w-[1px] h-full bg-slate-300/40 dark:bg-violet-500/20 group-hover/resizer:bg-violet-500 group-active/resizer:bg-violet-400 transition-colors" />
+                  </div>
                 </th>
                 <th className="py-4 px-3 select-none relative group/header text-right" style={getColStyle('netDaily', true)}>
                   <span>Net Daily</span>
-                  <div onMouseDown={(e) => handleResizeStart(e, 'netDaily')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                  <div onMouseDown={(e) => handleResizeStart(e, 'netDaily')} className="absolute right-0 top-1.5 bottom-1.5 w-2 cursor-col-resize group/resizer z-10 flex items-center justify-center">
+                    <div className="w-[1px] h-full bg-slate-300/40 dark:bg-violet-500/20 group-hover/resizer:bg-violet-500 group-active/resizer:bg-violet-400 transition-colors" />
+                  </div>
                 </th>
                 <th className="py-4 px-3 select-none relative group/header text-left" style={getColStyle('confluences', true)}>
                   <span>Confluences</span>
-                  <div onMouseDown={(e) => handleResizeStart(e, 'confluences')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                  <div onMouseDown={(e) => handleResizeStart(e, 'confluences')} className="absolute right-0 top-1.5 bottom-1.5 w-2 cursor-col-resize group/resizer z-10 flex items-center justify-center">
+                    <div className="w-[1px] h-full bg-slate-300/40 dark:bg-violet-500/20 group-hover/resizer:bg-violet-500 group-active/resizer:bg-violet-400 transition-colors" />
+                  </div>
                 </th>
                 <th className="py-4 px-3 select-none relative group/header text-left" style={getColStyle('mistakes', true)}>
                   <span>Mistakes</span>
-                  <div onMouseDown={(e) => handleResizeStart(e, 'mistakes')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                  <div onMouseDown={(e) => handleResizeStart(e, 'mistakes')} className="absolute right-0 top-1.5 bottom-1.5 w-2 cursor-col-resize group/resizer z-10 flex items-center justify-center">
+                    <div className="w-[1px] h-full bg-slate-300/40 dark:bg-violet-500/20 group-hover/resizer:bg-violet-500 group-active/resizer:bg-violet-400 transition-colors" />
+                  </div>
                 </th>
                 <th className="py-4 px-3 select-none relative group/header text-center" style={getColStyle('screenshot', true)}>
                   <span>Screenshot</span>
-                  <div onMouseDown={(e) => handleResizeStart(e, 'screenshot')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                  <div onMouseDown={(e) => handleResizeStart(e, 'screenshot')} className="absolute right-0 top-1.5 bottom-1.5 w-2 cursor-col-resize group/resizer z-10 flex items-center justify-center">
+                    <div className="w-[1px] h-full bg-slate-300/40 dark:bg-violet-500/20 group-hover/resizer:bg-violet-500 group-active/resizer:bg-violet-400 transition-colors" />
+                  </div>
                 </th>
                 <th className="py-4 px-3 select-none relative group/header text-center" style={getColStyle('actions', true)}>
                   <span>Actions</span>
-                  <div onMouseDown={(e) => handleResizeStart(e, 'actions')} className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-violet-500/40 active:bg-violet-500/60 transition-colors z-10" />
+                  <div onMouseDown={(e) => handleResizeStart(e, 'actions')} className="absolute right-0 top-1.5 bottom-1.5 w-2 cursor-col-resize group/resizer z-10 flex items-center justify-center">
+                    <div className="w-[1px] h-full bg-slate-300/40 dark:bg-violet-500/20 group-hover/resizer:bg-violet-500 group-active/resizer:bg-violet-400 transition-colors" />
+                  </div>
                 </th>
               </tr>
             </thead>
