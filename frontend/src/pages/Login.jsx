@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { login, signup, forgotPassword, verifyOtp, resetPassword } from '../api/client'
+import { login, signup, forgotPassword, verifyOtp, resetPassword, googleLogin } from '../api/client'
 import { ElegantShape } from '../components/ElegantShape'
 import logo from '../assets/behavioredge-logo.png'
 
@@ -49,6 +49,52 @@ export default function Login({ onLogin }) {
     }, 2500)
     return () => clearTimeout(timer)
   }, [view])
+
+  // ── Google Sign-in Initialization ──────────────
+  useEffect(() => {
+    const initGoogle = () => {
+      if (window.google && window.google.accounts) {
+        const client_id = import.meta.env.VITE_GOOGLE_CLIENT_ID || 'dummy-client-id.apps.googleusercontent.com'
+        window.google.accounts.id.initialize({
+          client_id: client_id,
+          callback: handleGoogleLogin,
+        })
+        
+        const btnElem = document.getElementById("google-signin-btn")
+        if (btnElem) {
+          window.google.accounts.id.renderButton(
+            btnElem,
+            { theme: "outline", size: "large", width: "100%" }
+          )
+        }
+      }
+    }
+
+    initGoogle()
+
+    const checkInterval = setInterval(() => {
+      if (window.google && window.google.accounts) {
+        initGoogle()
+        clearInterval(checkInterval)
+      }
+    }, 500)
+
+    return () => clearInterval(checkInterval)
+  }, [view])
+
+  const handleGoogleLogin = async (response) => {
+    setError('')
+    setLoading(true)
+    try {
+      const res = await googleLogin({ credential: response.credential })
+      localStorage.setItem('token', res.data.access_token)
+      localStorage.setItem('username', res.data.username || 'google_user')
+      onLogin()
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Google Authentication failed')
+    }
+    setLoading(false)
+  }
 
   // ── Helpers ───────────────────────────────────
   const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value })
@@ -398,6 +444,16 @@ export default function Login({ onLogin }) {
                 style={{ width: '100%', marginTop: 20, padding: '14px', fontSize: '0.88rem', borderRadius: 12 }}>
                 {loading ? 'Authenticating...' : view === 'signup' ? 'Create Account →' : 'Sign In →'}
               </button>
+
+              {/* Divider */}
+              <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0', gap: 10 }}>
+                <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+                <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontFamily: 'Inter' }}>OR</span>
+                <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+              </div>
+
+              {/* Google Sign-In Button */}
+              <div id="google-signin-btn" style={{ display: 'flex', justifyContent: 'center', width: '100%', minHeight: 40 }} />
 
               {/* Forgot Password link — only on login view */}
               {view === 'login' && (

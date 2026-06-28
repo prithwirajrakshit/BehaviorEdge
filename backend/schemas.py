@@ -16,6 +16,9 @@ class Token(BaseModel):
     access_token: str
     token_type: str
 
+class GoogleLoginRequest(BaseModel):
+    credential: str
+
 # ── User Identity ─────────────────────────
 class UserIdentityUpdate(BaseModel):
     full_name: Optional[str] = None

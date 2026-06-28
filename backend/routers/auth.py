@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from database import get_db
 from models import User, Rule
-from schemas import UserCreate, UserLogin, Token, ForgotPassword, VerifyOtp, ResetPassword
+from schemas import UserCreate, UserLogin, Token, ForgotPassword, VerifyOtp, ResetPassword, GoogleLoginRequest
 from passlib.context import CryptContext
 from jose import jwt
 from dotenv import load_dotenv
@@ -10,6 +10,8 @@ import os
 import datetime
 import random
 import hmac
+from google.oauth2 import id_token
+from google.auth.transport import requests
 
 load_dotenv()
 
@@ -92,6 +94,83 @@ def login(data: UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Invalid username or password")
     token = create_token({"sub": user.username})
     return {"access_token": token, "token_type": "bearer"}
+
+@router.post("/google-login")
+def google_login(data: GoogleLoginRequest, db: Session = Depends(get_db)):
+    client_id = os.getenv("GOOGLE_CLIENT_ID")
+    if not client_id:
+        raise HTTPException(
+            status_code=500,
+            detail="Google Client ID is not configured on the server"
+        )
+    
+    try:
+        # Verify the Google JWT token
+        idinfo = id_token.verify_oauth2_token(
+            data.credential, 
+            requests.Request(), 
+            client_id
+        )
+        
+        # Verify token issuer
+        if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
+            raise ValueError('Wrong issuer.')
+            
+        email = idinfo.get('email')
+        if not email:
+            raise HTTPException(status_code=400, detail="Google account has no email")
+            
+        # Check if user already exists
+        user = db.query(User).filter(User.email == email).first()
+        
+        if not user:
+            # Create a new user with a base username from the email prefix
+            base_username = email.split('@')[0]
+            username = base_username
+            
+            # De-duplicate username if already taken
+            counter = 1
+            while db.query(User).filter(User.username == username).first():
+                username = f"{base_username}{counter}"
+                counter += 1
+                
+            # Create secure random temporary password hash
+            temp_password = f"google_temp_{random.randint(100000000, 999999999)}"
+            password_hash = hash_password(temp_password)
+            
+            user = User(
+                username=username,
+                email=email,
+                password_hash=password_hash
+            )
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+            
+            # Seed 8 default trading rules for the new user (matches signup)
+            default_rules = [
+                ("Only trade during my planned session", "Session Rules"),
+                ("Never move stop loss against my position", "Risk Rules"),
+                ("Wait for market structure shift confirmation before entry", "Entry Rules"),
+                ("Never risk more than 1% per trade", "Risk Rules"),
+                ("Do not trade after 2 consecutive losses in one session", "Mindset Rules"),
+                ("Only take trades with minimum 3 confluences", "Entry Rules"),
+                ("Always have a clear target before entering", "Exit Rules"),
+                ("Do not trade during high-impact news events", "Session Rules"),
+            ]
+            for text, cat in default_rules:
+                rule = Rule(user_id=user.id, rule_text=text, category=cat, is_active=True)
+                db.add(rule)
+            db.commit()
+            
+        # Generate token
+        token = create_token({"sub": user.username})
+        return {"access_token": token, "token_type": "bearer", "username": user.username}
+        
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=f"Invalid Google token: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Authentication error: {str(e)}")
 
 # ── Forgot Password (OTP Flow) ─────────────
 

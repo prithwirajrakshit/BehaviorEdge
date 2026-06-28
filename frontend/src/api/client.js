@@ -1,8 +1,6 @@
 import axios from 'axios'
 
-export const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? 'http://localhost:8000'
-  : 'https://behavioredge-production.up.railway.app'
+export const API_BASE = 'https://behavioredge-production.up.railway.app'
 
 const api = axios.create({ baseURL: API_BASE })
 
@@ -15,6 +13,7 @@ api.interceptors.request.use((config) => {
 // Auth
 export const signup = (data) => api.post('/auth/signup', data)
 export const login = (data) => api.post('/auth/login', data)
+export const googleLogin = (data) => api.post('/auth/google-login', data)
 
 // Forgot Password (OTP Flow)
 export const forgotPassword = (data) => api.post('/auth/forgot-password', data)
