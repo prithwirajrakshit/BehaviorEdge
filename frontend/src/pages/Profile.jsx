@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import {
   getProfile, saveProfile,
-  getMe, updateMe, changePassword, uploadAvatar, deleteAvatar
+  getMe, updateMe, changePassword, uploadAvatar, deleteAvatar,
+  API_BASE
 } from '../api/client'
 import {
   Save, DollarSign, Percent, TrendingUp, CheckCircle,
@@ -141,7 +142,7 @@ export default function Profile() {
   }
 
   // ── Helpers ──
-  const avatarSrc = me?.avatar_url ? `http://127.0.0.1:8000${me.avatar_url}` : null
+  const avatarSrc = me?.avatar_url ? `${API_BASE}${me.avatar_url}` : null
   const initials = (me?.full_name || username).split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2)
 
   if (loading) return (
@@ -163,7 +164,7 @@ export default function Profile() {
 
       {/* Profile Hero Card */}
       <GlowCard glowColor="purple" className="animate-fade-up stagger-1" style={{ padding: '28px', marginBottom: 20 }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 24 }}>
+        <div className="profile-hero-content">
 
           {/* Avatar */}
           <div style={{ position: 'relative', flexShrink: 0 }}>
@@ -199,7 +200,7 @@ export default function Profile() {
 
           {/* Identity info */}
           <div style={{ flex: 1 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
+            <div className="profile-hero-name-row" style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
               <div style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontWeight: 500, fontSize: '1.6rem', color: 'var(--text-primary)' }}>
                 {me?.full_name || username}
               </div>
@@ -207,7 +208,7 @@ export default function Profile() {
             </div>
             <div style={{ fontFamily: 'JetBrains Mono', fontSize: '0.7rem', color: 'var(--accent-light)', marginBottom: 8 }}>@{username}</div>
             {me?.bio && <div style={{ fontFamily: 'Inter', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: 8, lineHeight: 1.5 }}>{me.bio}</div>}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+            <div className="profile-hero-links-row" style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
               {me?.location && <span style={{ fontFamily: 'JetBrains Mono', fontSize: '0.65rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 4 }}><MapPin size={10} />{me.location}</span>}
               {me?.experience_level && <span style={{ fontFamily: 'JetBrains Mono', fontSize: '0.65rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 4 }}><BarChart2 size={10} />{me.experience_level}</span>}
               {me?.website && <a href={me.website} target="_blank" rel="noreferrer" style={{ fontFamily: 'JetBrains Mono', fontSize: '0.65rem', color: 'var(--accent-light)', display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none' }}><Globe size={10} />{me.website.replace(/^https?:\/\//, '')}</a>}
@@ -216,7 +217,7 @@ export default function Profile() {
           </div>
 
           {/* Stats mini */}
-          <div style={{ display: 'flex', gap: 20, flexShrink: 0 }}>
+          <div className="profile-hero-stats" style={{ display: 'flex', gap: 20, flexShrink: 0 }}>
             <div style={{ textAlign: 'center' }}>
               <div className="metric-num" style={{ fontSize: '1.4rem', color: 'var(--accent-light)' }}>{me?.created_at ? new Date(me.created_at).getFullYear() : '—'}</div>
               <div className="label" style={{ fontSize: '0.58rem', marginTop: 3 }}>Member since</div>
@@ -226,7 +227,7 @@ export default function Profile() {
 
         {/* Avatar actions */}
         {avatarSrc && (
-          <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
+          <div className="profile-hero-actions" style={{ marginTop: 12, display: 'flex', gap: 8 }}>
             <button onClick={() => avatarRef.current?.click()} style={{ fontFamily: 'JetBrains Mono', fontSize: '0.65rem', color: 'var(--accent-light)', background: 'var(--accent-dim)', border: '1px solid rgba(124,58,237,0.25)', padding: '5px 12px', borderRadius: 999, cursor: 'pointer' }}>
               Change photo
             </button>
@@ -259,7 +260,7 @@ export default function Profile() {
       {activeTab === 'Identity' && (
         <GlowCard glowColor="purple" className="animate-fade-up" style={{ padding: 24 }}>
           <div className="label" style={{ marginBottom: 20 }}>Personal Information</div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          <div className="profile-form-grid">
 
             <div>
               <div className="label" style={{ marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}><User size={10} /> Full Name</div>
@@ -296,7 +297,7 @@ export default function Profile() {
 
             <div>
               <div className="label" style={{ marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}><BarChart2 size={10} /> Experience Level</div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 6 }}>
+              <div className="profile-experience-grid">
                 {EXPERIENCE_LEVELS.map(lvl => (
                   <button key={lvl} onClick={() => setIdentity(p => ({ ...p, experience_level: lvl }))} style={{
                     padding: '8px 4px', borderRadius: 8, cursor: 'pointer',
@@ -333,7 +334,7 @@ export default function Profile() {
         <GlowCard glowColor="purple" className="animate-fade-up" style={{ padding: 24 }}>
 
           {/* Live risk preview */}
-          <div style={{ padding: '14px 18px', marginBottom: 20, background: 'var(--accent-dim)', border: '1px solid rgba(124,58,237,0.15)', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 24 }}>
+          <div className="profile-risk-preview" style={{ padding: '14px 18px', marginBottom: 20, background: 'var(--accent-dim)', border: '1px solid rgba(124,58,237,0.15)', borderRadius: 10 }}>
             <div>
               <div className="label" style={{ fontSize: '0.58rem', marginBottom: 3 }}>Planned Risk Per Trade</div>
               <div className="metric-num" style={{ fontSize: '1.4rem', color: 'var(--accent-light)' }}>${plannedRisk}</div>
@@ -345,7 +346,7 @@ export default function Profile() {
           </div>
 
           <div className="label" style={{ marginBottom: 16 }}>Risk Parameters</div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
+          <div className="profile-form-grid">
             <div>
               <div className="label" style={{ marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}><DollarSign size={10} /> Capital ($)</div>
               <input name="capital" type="number" value={form.capital} onChange={handleRisk} className="input-field" min={0} step={500} />
@@ -471,7 +472,7 @@ export default function Profile() {
           {/* Account info */}
           <div style={{ marginTop: 32, padding: '14px 16px', background: 'var(--bg-base)', borderRadius: 10, border: '1px solid var(--border)' }}>
             <div className="label" style={{ marginBottom: 12, fontSize: '0.6rem' }}>Account Information</div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <div className="profile-form-grid" style={{ gap: 12 }}>
               {[
                 { label: 'Username', value: `@${username}` },
                 { label: 'Email', value: me?.email || '—' },

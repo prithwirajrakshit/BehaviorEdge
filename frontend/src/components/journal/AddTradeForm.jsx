@@ -874,22 +874,24 @@ export default function AddTradeForm({ trades = [], editingTrade, onSave, onCanc
                 {
     /* Inline custom preset add */
   }
-                <div className="mt-2.5 flex items-center gap-2 bg-slate-50/20 dark:bg-[#151225]/45 p-2.5 rounded-xl border border-slate-200/40 dark:border-violet-500/15">
+                <div className="mt-2.5 flex flex-col sm:flex-row sm:items-center gap-2 bg-slate-50/20 dark:bg-[#151225]/45 p-2.5 rounded-xl border border-slate-200/40 dark:border-violet-500/15">
                   <div className="text-[10px] font-bold font-mono text-slate-500 dark:text-gray-400 shrink-0">➕ Define Presets:</div>
-                  <input
-    type="text"
-    placeholder="e.g. A-"
-    value={newTradeQualityPreset}
-    onChange={(e) => setNewTradeQualityPreset(e.target.value)}
-    className="flex-1 px-3 py-1 bg-white dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-xs text-[#0f172a] dark:text-white outline-none focus:border-violet-500 placeholder-slate-450 dark:placeholder-gray-550"
-  />
-                  <button
-    type="button"
-    onClick={addCustomTradeQualityPreset}
-    className="btn-neon btn-neon-sm cursor-pointer"
-  >
-                    Save Preset
-                  </button>
+                  <div className="flex gap-2 flex-1 w-full">
+                    <input
+                      type="text"
+                      placeholder="e.g. A-"
+                      value={newTradeQualityPreset}
+                      onChange={(e) => setNewTradeQualityPreset(e.target.value)}
+                      className="flex-1 px-3 py-1 bg-white dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-xs text-[#0f172a] dark:text-white outline-none focus:border-violet-500 placeholder-slate-450 dark:placeholder-gray-550 min-w-0"
+                    />
+                    <button
+                      type="button"
+                      onClick={addCustomTradeQualityPreset}
+                      className="btn-neon btn-neon-sm cursor-pointer shrink-0"
+                    >
+                      Save Preset
+                    </button>
+                  </div>
                 </div>
 
                 <p className="text-[11px] text-slate-400 dark:text-gray-500 font-mono leading-relaxed mt-1">
