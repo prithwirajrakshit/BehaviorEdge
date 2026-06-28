@@ -92,7 +92,30 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
             throw new Error("Only Dhan P&L Excel statements (.xls, .xlsx) are supported.");
           }
 
-          const tradesToImport = [];
+          let equityCharges = 0;
+          let fnoCharges = 0;
+          let commodityCharges = 0;
+
+          // Parse Segment Total Charges from summary block (rows index 0 to 15)
+          for (let r = 0; r < Math.min(rows.length, 15); r++) {
+            const row = rows[r];
+            if (row && row.length > 0) {
+              const segName = row[0] ? String(row[0]).trim() : '';
+              if (segName === 'Equity') {
+                equityCharges = parseFloat(row[14] || 0);
+              } else if (segName === 'Futures and Options') {
+                fnoCharges = parseFloat(row[14] || 0);
+              } else if (segName === 'Commodities') {
+                commodityCharges = parseFloat(row[14] || 0);
+              }
+            }
+          }
+
+          const parsedEquityTrades = [];
+          const parsedFnoTrades = [];
+          const parsedCommodityTrades = [];
+          const parsedForexTrades = [];
+
           let currentSegment = null;
           let tableHeaders = null;
           let headerIndexes = {};
@@ -125,7 +148,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
               tableHeaders = null;
               continue;
             } else if (firstCell === 'Commodities Segment') {
-              currentSegment = 'Options';
+              currentSegment = 'Commodities';
               tableHeaders = null;
               continue;
             } else if (firstCell === 'Currency Segment') {
@@ -149,27 +172,56 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
               const realisedPnl = parseFloat(row[headerIndexes.realisedPnl] || 0);
 
               if (securityName && realisedPnl !== 0) {
-                const direction = "Long";
-                const feeVal = 0;
-                const netPnlVal = realisedPnl;
-                let outcomeVal = "Breakeven";
-                if (netPnlVal > 0) outcomeVal = "Win";
-                else if (netPnlVal < 0) outcomeVal = "Loss";
-
-                tradesToImport.push({
+                const tradeObj = {
                   pair_instrument: securityName,
                   date: reportDateStr,
-                  market: currentSegment,
-                  direction,
+                  direction: "Long",
                   pnl_usd: realisedPnl,
-                  fee_usd: feeVal,
-                  net_pnl_usd: netPnlVal,
-                  outcome: outcomeVal,
-                  notes: `Imported from Dhan Excel (${currentSegment} Segment)`
-                });
+                  notes: `Imported from Dhan Excel (${currentSegment === 'Commodities' ? 'Commodities' : currentSegment} Segment)`
+                };
+
+                if (currentSegment === 'Stocks') {
+                  parsedEquityTrades.push(tradeObj);
+                } else if (currentSegment === 'Options') {
+                  parsedFnoTrades.push(tradeObj);
+                } else if (currentSegment === 'Commodities') {
+                  parsedCommodityTrades.push(tradeObj);
+                } else if (currentSegment === 'Forex') {
+                  parsedForexTrades.push(tradeObj);
+                }
               }
             }
           }
+
+          // Distribute charges/fees equally per segment
+          const tradesToImport = [];
+
+          const distributeSegment = (tradesList, totalCharges, marketType) => {
+            const count = tradesList.length;
+            const feePerTrade = count > 0 ? (totalCharges / count) : 0;
+            // Fee must be negative in net PnL calculations
+            const feeVal = -feePerTrade;
+
+            tradesList.forEach(t => {
+              const netPnlVal = t.pnl_usd + feeVal;
+              let outcomeVal = "Breakeven";
+              if (netPnlVal > 0) outcomeVal = "Win";
+              else if (netPnlVal < 0) outcomeVal = "Loss";
+
+              tradesToImport.push({
+                ...t,
+                market: marketType,
+                fee_usd: parseFloat(feeVal.toFixed(4)),
+                net_pnl_usd: parseFloat(netPnlVal.toFixed(4)),
+                outcome: outcomeVal
+              });
+            });
+          };
+
+          distributeSegment(parsedEquityTrades, equityCharges, 'Stocks');
+          distributeSegment(parsedFnoTrades, fnoCharges, 'Options');
+          distributeSegment(parsedCommodityTrades, commodityCharges, 'Options'); // Commodities maps to Options in front-end
+          distributeSegment(parsedForexTrades, 0, 'Forex');
 
           if (tradesToImport.length === 0) {
             showToast("No valid closed positions found in the Dhan Excel report.", "error");
