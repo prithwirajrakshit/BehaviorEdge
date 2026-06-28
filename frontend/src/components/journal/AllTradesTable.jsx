@@ -1,10 +1,12 @@
 import { authFetch } from './utils/authFetch';
 import { useState, useEffect } from "react";
 import Papa from "papaparse";
-import { OUTCOMES, SESSIONS, DIRECTIONS } from "./utils/constants";
+import * as XLSX from "xlsx";
+import { OUTCOMES, SESSIONS, DIRECTIONS, MARKETS } from "./utils/constants";
 import { OutcomeBadge, DirectionBadge, SessionBadge } from "./Badge";
 import { Search, Filter, Trash2, Edit, Upload, Eye, FileSpreadsheet, ChevronLeft, ChevronRight, X } from "lucide-react";
 export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, showToast, onNavigate }) {
+  const [marketFilter, setMarketFilter] = useState("");
   const [outcomeFilter, setOutcomeFilter] = useState("");
   const [sessionFilter, setSessionFilter] = useState("");
   const [setupFilter, setSetupFilter] = useState("");
@@ -21,8 +23,9 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
   const [isParsing, setIsParsing] = useState(false);
   useEffect(() => {
     setCurrentPage(1);
-  }, [outcomeFilter, sessionFilter, setupFilter, directionFilter, dateFrom, dateTo, searchTerm]);
+  }, [outcomeFilter, sessionFilter, setupFilter, directionFilter, dateFrom, dateTo, searchTerm, marketFilter]);
   const filteredTrades = trades.filter((t) => {
+    if (marketFilter && t.market !== marketFilter) return false;
     if (outcomeFilter && t.outcome !== outcomeFilter) return false;
     if (sessionFilter && t.session !== sessionFilter) return false;
     if (setupFilter && t.setup_type !== setupFilter) return false;
@@ -58,89 +61,254 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
   };
   const handleCsvImport = () => {
     if (!csvFile) {
-      showToast("Please select a valid CSV file.", "error");
+      showToast("Please select a valid file to import.", "error");
       return;
     }
     setIsParsing(true);
-    Papa.parse(csvFile, {
-      header: true,
-      skipEmptyLines: true,
-      complete: async (results) => {
+
+    const fileNameLower = csvFile.name.toLowerCase();
+    const fileExt = fileNameLower.split('.').pop();
+
+    if (fileExt === 'xls' || fileExt === 'xlsx') {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
         try {
-          const rows = results.data;
-          const validRows = rows.filter((row) => {
-            const hasStatus = row["Status"] === "closed";
-            const hasRealisedPnl = row["Realised P&L"] !== void 0 && row["Realised P&L"] !== null && row["Realised P&L"] !== "";
-            const pnlNotZero = hasRealisedPnl && parseFloat(row["Realised P&L"]) !== 0;
-            return hasStatus && hasRealisedPnl && pnlNotZero;
-          });
-          if (validRows.length === 0) {
-            showToast('No valid trades found in CSV of status "closed" with non-zero Realised P&L.', "error");
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const sheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[sheetName];
+          const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: null });
+
+          let isDhan = false;
+          for (let r = 0; r < Math.min(rows.length, 30); r++) {
+            const rowStr = JSON.stringify(rows[r]);
+            if (rowStr && (rowStr.toLowerCase().includes('dhan.co') || rowStr.toLowerCase().includes('profit and loss report'))) {
+              isDhan = true;
+              break;
+            }
+          }
+
+          if (!isDhan) {
+            throw new Error("Only Dhan P&L Excel statements (.xls, .xlsx) are supported.");
+          }
+
+          const tradesToImport = [];
+          let currentSegment = null;
+          let tableHeaders = null;
+          let headerIndexes = {};
+          let reportDateStr = new Date().toISOString().substring(0, 10);
+
+          // Find date range from metadata rows
+          for (let r = 0; r < Math.min(rows.length, 10); r++) {
+            if (rows[r]) {
+              const cellText = rows[r].map(c => c ? String(c) : '').join(' ');
+              const dateMatch = cellText.match(/to\s+(\d{2})\/(\d{2})\/(\d{4})/);
+              if (dateMatch) {
+                reportDateStr = `${dateMatch[3]}-${dateMatch[2]}-${dateMatch[1]}`;
+                break;
+              }
+            }
+          }
+
+          for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            if (!row || row.length === 0) continue;
+
+            const firstCell = row[0] ? String(row[0]).trim() : '';
+
+            if (firstCell === 'Equity Segment') {
+              currentSegment = 'Stocks';
+              tableHeaders = null;
+              continue;
+            } else if (firstCell === 'F&O Segment') {
+              currentSegment = 'Options';
+              tableHeaders = null;
+              continue;
+            } else if (firstCell === 'Commodities Segment') {
+              currentSegment = 'Options';
+              tableHeaders = null;
+              continue;
+            } else if (firstCell === 'Currency Segment') {
+              currentSegment = 'Forex';
+              tableHeaders = null;
+              continue;
+            }
+
+            if (currentSegment && row.includes('Security Name') && row.includes('Realised P&L')) {
+              tableHeaders = row;
+              headerIndexes = {
+                securityName: row.indexOf('Security Name'),
+                realisedPnl: row.indexOf('Realised P&L'),
+              };
+              continue;
+            }
+
+            const srNo = parseFloat(firstCell);
+            if (currentSegment && tableHeaders && !isNaN(srNo) && srNo > 0) {
+              const securityName = row[headerIndexes.securityName];
+              const realisedPnl = parseFloat(row[headerIndexes.realisedPnl] || 0);
+
+              if (securityName && realisedPnl !== 0) {
+                const direction = "Long";
+                const feeVal = 0;
+                const netPnlVal = realisedPnl;
+                let outcomeVal = "Breakeven";
+                if (netPnlVal > 0) outcomeVal = "Win";
+                else if (netPnlVal < 0) outcomeVal = "Loss";
+
+                tradesToImport.push({
+                  pair_instrument: securityName,
+                  date: reportDateStr,
+                  market: currentSegment,
+                  direction,
+                  pnl_usd: realisedPnl,
+                  fee_usd: feeVal,
+                  net_pnl_usd: netPnlVal,
+                  outcome: outcomeVal,
+                  notes: `Imported from Dhan Excel (${currentSegment} Segment)`
+                });
+              }
+            }
+          }
+
+          if (tradesToImport.length === 0) {
+            showToast("No valid closed positions found in the Dhan Excel report.", "error");
             setIsParsing(false);
             return;
           }
+
           let importCount = 0;
           let duplicateCount = 0;
-          for (const row of validRows) {
-            const pair = (row["Contract"] || "").trim().toUpperCase();
-            const dateStr = (row["Time"] || "").substring(0, 10);
-            const marketVal = "Crypto";
-            const dirVal = row["Side"] === "buy" ? "Long" : "Short";
-            const pnlVal = parseFloat(row["Realised P&L"]);
-            const feeVal = parseFloat(row["Trading Fees"] || "0") * -1;
-            const netPnlVal = pnlVal + feeVal;
-            let outcomeVal = "Breakeven";
-            if (netPnlVal > 0) outcomeVal = "Win";
-            else if (netPnlVal < 0) outcomeVal = "Loss";
+
+          for (const t of tradesToImport) {
             const isDuplicate = trades.some(
-              (t) => t.pair_instrument === pair && t.date === dateStr && t.pnl_usd === pnlVal
+              (existing) => existing.pair_instrument === t.pair_instrument && existing.date === t.date && Math.abs(existing.pnl_usd - t.pnl_usd) < 0.01
             );
             if (isDuplicate) {
               duplicateCount++;
               continue;
             }
+
             const response = await authFetch("/api/trades", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
-                pair_instrument: pair,
-                date: dateStr,
-                market: marketVal,
-                direction: dirVal,
+                pair_instrument: t.pair_instrument,
+                date: t.date,
+                market: t.market,
+                direction: t.direction,
                 session: "",
                 setup_type: "",
                 confluences: "[]",
                 mistakes: "[]",
-                pnl_usd: pnlVal,
-                fee_usd: feeVal,
-                net_pnl_usd: netPnlVal,
+                pnl_usd: t.pnl_usd,
+                fee_usd: t.fee_usd,
+                net_pnl_usd: t.net_pnl_usd,
                 net_daily_amount_usd: 0,
-                outcome: outcomeVal,
+                outcome: t.outcome,
                 screenshot_url: "",
-                notes: ""
+                notes: t.notes
               })
             });
+
             if (response.ok) {
               importCount++;
-            } else {
-              console.error("Failed to import row: ", row);
             }
           }
-          showToast(`\u2705 Imported ${importCount} new trades! ${duplicateCount} duplicates skipped.`, "success");
+
+          showToast(`✅ Imported ${importCount} Dhan trades! ${duplicateCount} duplicates skipped.`, "success");
           setIsCsvModalOpen(false);
           setCsvFile(null);
           await onRefresh();
         } catch (err) {
-          showToast(`CSV Processing error: ${err.message}`, "error");
+          showToast(`Excel Processing error: ${err.message}`, "error");
         } finally {
           setIsParsing(false);
         }
-      },
-      error: (error) => {
-        showToast(`Failed to parse CSV file: ${error.message}`, "error");
-        setIsParsing(false);
-      }
-    });
+      };
+      reader.readAsArrayBuffer(csvFile);
+    } else {
+      // Standard CSV parsing (existing logic)
+      Papa.parse(csvFile, {
+        header: true,
+        skipEmptyLines: true,
+        complete: async (results) => {
+          try {
+            const rows = results.data;
+            const validRows = rows.filter((row) => {
+              const hasStatus = row["Status"] === "closed";
+              const hasRealisedPnl = row["Realised P&L"] !== void 0 && row["Realised P&L"] !== null && row["Realised P&L"] !== "";
+              const pnlNotZero = hasRealisedPnl && parseFloat(row["Realised P&L"]) !== 0;
+              return hasStatus && hasRealisedPnl && pnlNotZero;
+            });
+            if (validRows.length === 0) {
+              showToast('No valid trades found in CSV of status "closed" with non-zero Realised P&L.', "error");
+              setIsParsing(false);
+              return;
+            }
+            let importCount = 0;
+            let duplicateCount = 0;
+            for (const row of validRows) {
+              const pair = (row["Contract"] || "").trim().toUpperCase();
+              const dateStr = (row["Time"] || "").substring(0, 10);
+              const marketVal = "Crypto";
+              const dirVal = row["Side"] === "buy" ? "Long" : "Short";
+              const pnlVal = parseFloat(row["Realised P&L"]);
+              const feeVal = parseFloat(row["Trading Fees"] || "0") * -1;
+              const netPnlVal = pnlVal + feeVal;
+              let outcomeVal = "Breakeven";
+              if (netPnlVal > 0) outcomeVal = "Win";
+              else if (netPnlVal < 0) outcomeVal = "Loss";
+              const isDuplicate = trades.some(
+                (t) => t.pair_instrument === pair && t.date === dateStr && Math.abs(t.pnl_usd - pnlVal) < 0.01
+              );
+              if (isDuplicate) {
+                duplicateCount++;
+                continue;
+              }
+              const response = await authFetch("/api/trades", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  pair_instrument: pair,
+                  date: dateStr,
+                  market: marketVal,
+                  direction: dirVal,
+                  session: "",
+                  setup_type: "",
+                  confluences: "[]",
+                  mistakes: "[]",
+                  pnl_usd: pnlVal,
+                  fee_usd: feeVal,
+                  net_pnl_usd: netPnlVal,
+                  net_daily_amount_usd: 0,
+                  outcome: outcomeVal,
+                  screenshot_url: "",
+                  notes: ""
+                })
+              });
+              if (response.ok) {
+                importCount++;
+              } else {
+                console.error("Failed to import row: ", row);
+              }
+            }
+            showToast(`✅ Imported ${importCount} new trades! ${duplicateCount} duplicates skipped.`, "success");
+            setIsCsvModalOpen(false);
+            setCsvFile(null);
+            await onRefresh();
+          } catch (err) {
+            showToast(`CSV Processing error: ${err.message}`, "error");
+          } finally {
+            setIsParsing(false);
+          }
+        },
+        error: (error) => {
+          showToast(`Failed to parse CSV file: ${error.message}`, "error");
+          setIsParsing(false);
+        }
+      });
+    }
   };
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -149,14 +317,16 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
     e.preventDefault();
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       const file = e.dataTransfer.files[0];
-      if (file.name.endsWith(".csv")) {
+      const fileExt = file.name.split('.').pop().toLowerCase();
+      if (fileExt === "csv" || fileExt === "xls" || fileExt === "xlsx") {
         setCsvFile(file);
       } else {
-        showToast("Only CSV files are supported.", "error");
+        showToast("Only CSV and Excel files are supported.", "error");
       }
     }
   };
   const clearFilters = () => {
+    setMarketFilter("");
     setOutcomeFilter("");
     setSessionFilter("");
     setSetupFilter("");
@@ -203,99 +373,115 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-8 gap-4">
           {
-    /* Pair Search */
-  }
+            /* Pair Search */
+          }
           <div className="lg:col-span-2 relative">
             <label htmlFor="searchFilter" className="block text-[10px] uppercase font-semibold text-[#475569] dark:text-gray-500 mb-1.5 font-bold">Search Instrument / Note</label>
             <div className="relative">
               <Search className="absolute left-3 top-3 w-4 h-4 text-slate-500 dark:text-gray-650" />
               <input
-    id="searchFilter"
-    type="text"
-    placeholder="BTCUSD, notes..."
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-    className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs placeholder-slate-400 dark:placeholder-gray-600 outline-none focus:border-blue-500 font-mono"
-  />
+                id="searchFilter"
+                type="text"
+                placeholder="BTCUSD, notes..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs placeholder-slate-400 dark:placeholder-gray-600 outline-none focus:border-blue-500 font-mono"
+              />
             </div>
           </div>
 
           {
-    /* Outcome Filter */
-  }
+            /* Market Filter */
+          }
+          <div>
+            <label htmlFor="marketFilter" className="block text-[10px] uppercase font-semibold text-[#475569] dark:text-gray-500 mb-1.5 font-bold">Market</label>
+            <select
+              id="marketFilter"
+              value={marketFilter}
+              onChange={(e) => setMarketFilter(e.target.value)}
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
+            >
+              <option value="">All Markets</option>
+              {MARKETS.map((m) => <option key={m} value={m}>{m}</option>)}
+            </select>
+          </div>
+
+          {
+            /* Outcome Filter */
+          }
           <div>
             <label htmlFor="outcomeFilter" className="block text-[10px] uppercase font-semibold text-[#475569] dark:text-gray-500 mb-1.5 font-bold">Outcome</label>
             <select
-    id="outcomeFilter"
-    value={outcomeFilter}
-    onChange={(e) => setOutcomeFilter(e.target.value)}
-    className="w-full px-3 py-2 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
-  >
+              id="outcomeFilter"
+              value={outcomeFilter}
+              onChange={(e) => setOutcomeFilter(e.target.value)}
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
+            >
               <option value="">All Outcomes</option>
               {OUTCOMES.map((o) => <option key={o} value={o}>{o}</option>)}
             </select>
           </div>
 
           {
-    /* Direction Filter */
-  }
+            /* Direction Filter */
+          }
           <div>
             <label htmlFor="directionFilter" className="block text-[10px] uppercase font-semibold text-[#475569] dark:text-gray-500 mb-1.5 font-bold">Direction</label>
             <select
-    id="directionFilter"
-    value={directionFilter}
-    onChange={(e) => setDirectionFilter(e.target.value)}
-    className="w-full px-3 py-2 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
-  >
+              id="directionFilter"
+              value={directionFilter}
+              onChange={(e) => setDirectionFilter(e.target.value)}
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
+            >
               <option value="">All Directions</option>
               {DIRECTIONS.map((d) => <option key={d} value={d}>{d}</option>)}
             </select>
           </div>
 
           {
-    /* Session Filter */
-  }
+            /* Session Filter */
+          }
           <div>
             <label htmlFor="sessionFilter" className="block text-[10px] uppercase font-semibold text-[#475569] dark:text-gray-500 mb-1.5 font-bold">Session</label>
             <select
-    id="sessionFilter"
-    value={sessionFilter}
-    onChange={(e) => setSessionFilter(e.target.value)}
-    className="w-full px-3 py-2 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
-  >
+              id="sessionFilter"
+              value={sessionFilter}
+              onChange={(e) => setSessionFilter(e.target.value)}
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
+            >
               <option value="">All Sessions</option>
               {SESSIONS.map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
           </div>
 
           {
-    /* Date From */
-  }
+            /* Date From */
+          }
           <div>
             <label htmlFor="dateFromFilter" className="block text-[10px] uppercase font-semibold text-[#475569] dark:text-gray-500 mb-1.5 font-bold">Date From</label>
             <input
-    id="dateFromFilter"
-    type="date"
-    value={dateFrom}
-    onChange={(e) => setDateFrom(e.target.value)}
-    className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
-  />
+              id="dateFromFilter"
+              type="date"
+              value={dateFrom}
+              onChange={(e) => setDateFrom(e.target.value)}
+              className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
+            />
           </div>
 
           {
-    /* Date To */
-  }
+            /* Date To */
+          }
           <div>
             <label htmlFor="dateToFilter" className="block text-[10px] uppercase font-semibold text-[#475569] dark:text-gray-500 mb-1.5 font-bold">Date To</label>
             <input
-    id="dateToFilter"
-    type="date"
-    value={dateTo}
-    onChange={(e) => setDateTo(e.target.value)}
-    className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
-  />
+              id="dateToFilter"
+              type="date"
+              value={dateTo}
+              onChange={(e) => setDateTo(e.target.value)}
+              className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#151225]/45 border border-slate-200 dark:border-violet-500/15 rounded-lg text-[#0f172a] dark:text-white text-xs outline-none focus:border-blue-500 cursor-pointer"
+            />
           </div>
         </div>
       </div>
@@ -508,7 +694,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
             <div className="flex justify-between items-start mb-2">
               <h3 className="text-lg font-bold text-[#0f172a] dark:text-white flex items-center space-x-2">
                 <FileSpreadsheet className="w-5 h-5 text-blue-500 shrink-0" />
-                <span>Import Delta Exchange CSV</span>
+                <span>Import Trades Statement</span>
               </h3>
               <button
                 id="closeImportModalBtn"
@@ -522,7 +708,7 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
               </button>
             </div>
             <p className="text-xs text-slate-500 dark:text-gray-400 mb-6 leading-relaxed">
-              Drag or selector-upload your Delta Exchange export CSV. Rules: status columns must equal "closed" and have non-zero gains.
+              Drag or upload your Delta Exchange CSV export, or Dhan P&L Excel statements (.xls, .xlsx).
             </p>
 
             {
@@ -536,14 +722,14 @@ export default function AllTradesTable({ trades, onEdit, onDelete, onRefresh, sh
   >
               <Upload className="w-10 h-10 text-slate-400 group-hover:text-blue-500 mx-auto mb-3 transition-colors" />
               <p className="text-xs font-bold text-slate-600 dark:text-gray-300">
-                {csvFile ? csvFile.name : "Drag & drop trade CSV file here"}
+                {csvFile ? csvFile.name : "Drag & drop CSV or Excel statement here"}
               </p>
-              <p className="text-[10px] text-slate-400 dark:text-gray-500 mt-1">Accepts .csv files only, max 5MB</p>
+              <p className="text-[10px] text-slate-400 dark:text-gray-500 mt-1">Accepts .csv, .xls, .xlsx files, max 5MB</p>
               
               <input
     id="csvFileInput"
     type="file"
-    accept=".csv"
+    accept=".csv,.xls,.xlsx"
     className="hidden"
     onChange={(e) => {
       if (e.target.files && e.target.files.length > 0) {

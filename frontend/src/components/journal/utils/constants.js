@@ -1,4 +1,4 @@
-export const MARKETS = ["Crypto", "Forex"];
+export const MARKETS = ["Crypto", "Forex", "Stocks", "Options"];
 export const DIRECTIONS = ["Long", "Short"];
 export const SESSIONS = ["London", "New York", "Asia", "London-NY Overlap"];
 export const SETUP_TYPES = [
