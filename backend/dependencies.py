@@ -49,8 +49,8 @@ def decode_supabase_token(token: str) -> dict:
             if matching_key:
                 alg = matching_key.get("alg", "ES256")
                 return jwt.decode(token, matching_key, algorithms=[alg], audience="authenticated")
-    except Exception:
-        pass
+    except Exception as e:
+        raise Exception(f"JWK decode failed: {str(e)}")
 
     # 2. Fallback to HS256 with secret key
     return jwt.decode(token, SUPABASE_JWT_SECRET, algorithms=["HS256"], audience="authenticated")
