@@ -21,22 +21,35 @@ JWKS_LAST_FETCH = 0
 def decode_supabase_token(token: str) -> dict:
     global JWKS_CACHE, JWKS_LAST_FETCH
     
+    try:
+        headers = jwt.get_unverified_header(token)
+        token_alg = headers.get("alg")
+    except Exception as e:
+        raise Exception(f"Invalid token format: {str(e)}")
+
+    # If it is a symmetric HS256 token, bypass JWKS and decode with local secret key
+    if token_alg == "HS256":
+        return jwt.decode(token, SUPABASE_JWT_SECRET, algorithms=["HS256"], audience="authenticated")
+
     # 1. Try decoding with JWKs (supports ES256, RS256, etc.)
     try:
         current_time = time.time()
         if not JWKS_CACHE or (current_time - JWKS_LAST_FETCH > 1800): # cache for 30 mins
-            jwks_url = f"{SUPABASE_URL.rstrip('/')}/auth/v1/jwks"
-            # Pass apikey to bypass Supabase's Kong gateway block
+            jwks_url = f"{SUPABASE_URL.rstrip('/')}/auth/v1/.well-known/jwks.json"
             supabase_anon = os.getenv("SUPABASE_ANON_KEY", token)
-            headers = {"apikey": supabase_anon}
-            r = httpx.get(jwks_url, headers=headers, timeout=5.0)
+            req_headers = {"apikey": supabase_anon}
+            r = httpx.get(jwks_url, headers=req_headers, timeout=5.0)
             if r.status_code == 200:
                 JWKS_CACHE = r.json()
                 JWKS_LAST_FETCH = current_time
+            else:
+                # Fallback to fetch without headers since /.well-known/jwks.json is public
+                r = httpx.get(jwks_url, timeout=5.0)
+                if r.status_code == 200:
+                    JWKS_CACHE = r.json()
+                    JWKS_LAST_FETCH = current_time
         
         if JWKS_CACHE:
-            # Extract Key ID from token header
-            headers = jwt.get_unverified_header(token)
             kid = headers.get("kid")
             
             # Find the matching key in the JWKS keys list
@@ -47,13 +60,14 @@ def decode_supabase_token(token: str) -> dict:
                     break
             
             if matching_key:
-                alg = matching_key.get("alg", "ES256")
+                alg = matching_key.get("alg", token_alg)
                 return jwt.decode(token, matching_key, algorithms=[alg], audience="authenticated")
+            else:
+                raise Exception(f"No matching key found in JWKS for kid: {kid}")
+        else:
+            raise Exception("JWKS cache could not be loaded")
     except Exception as e:
         raise Exception(f"JWK decode failed: {str(e)}")
-
-    # 2. Fallback to HS256 with secret key
-    return jwt.decode(token, SUPABASE_JWT_SECRET, algorithms=["HS256"], audience="authenticated")
 
 def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security), db: Session = Depends(get_db)) -> User:
     token = credentials.credentials
