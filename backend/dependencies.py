@@ -32,7 +32,20 @@ def decode_supabase_token(token: str) -> dict:
                 JWKS_LAST_FETCH = current_time
         
         if JWKS_CACHE:
-            return jwt.decode(token, JWKS_CACHE, algorithms=["HS256", "RS256", "ES256"], audience="authenticated")
+            # Extract Key ID from token header
+            headers = jwt.get_unverified_header(token)
+            kid = headers.get("kid")
+            
+            # Find the matching key in the JWKS keys list
+            matching_key = None
+            for key in JWKS_CACHE.get("keys", []):
+                if key.get("kid") == kid:
+                    matching_key = key
+                    break
+            
+            if matching_key:
+                alg = matching_key.get("alg", "ES256")
+                return jwt.decode(token, matching_key, algorithms=[alg], audience="authenticated")
     except Exception:
         pass
 
