@@ -85,16 +85,10 @@ async def upload_avatar(file: UploadFile = File(...), user: User = Depends(get_u
         raise HTTPException(status_code=400, detail="Image must be under 5MB")
 
     contents = await file.read()
-    ext = file.filename.split(".")[-1].lower() if "." in file.filename else "png"
-    if ext not in ["jpg", "jpeg", "png", "webp", "gif"]:
-        ext = "png"
+    base64_data = base64.b64encode(contents).decode("utf-8")
+    mime_type = file.content_type or "image/png"
 
-    filename = f"avatar_{user.id}.{ext}"
-    filepath = os.path.join(AVATAR_DIR, filename)
-    with open(filepath, "wb") as f:
-        f.write(contents)
-
-    user.avatar_url = f"/avatars/{filename}"
+    user.avatar_url = f"data:{mime_type};base64,{base64_data}"
     db.commit()
     db.refresh(user)
     return user
@@ -102,10 +96,6 @@ async def upload_avatar(file: UploadFile = File(...), user: User = Depends(get_u
 # ── Delete avatar ─────────────────────────────────────────────────────────────
 @router.delete("/avatar", response_model=UserOut)
 def delete_avatar(user: User = Depends(get_user), db: Session = Depends(get_db)):
-    if user.avatar_url:
-        filepath = user.avatar_url.lstrip("/")
-        if os.path.exists(filepath):
-            os.remove(filepath)
     user.avatar_url = None
     db.commit()
     db.refresh(user)

@@ -142,7 +142,7 @@ export default function Profile() {
   }
 
   // ── Helpers ──
-  const avatarSrc = me?.avatar_url ? `${API_BASE}${me.avatar_url}` : null
+  const avatarSrc = me?.avatar_url ? (me.avatar_url.startsWith('data:') || me.avatar_url.startsWith('http') ? me.avatar_url : `${API_BASE}${me.avatar_url}`) : null
   const initials = (me?.full_name || username).split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2)
 
   if (loading) return (
