@@ -35,12 +35,11 @@ def create_token(data: dict):
     to_encode["exp"] = datetime.datetime.utcnow() + datetime.timedelta(days=7)
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
-SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "behavioredge-super-secret-key-2026")
+from dependencies import decode_supabase_token
 
 def get_current_user(token: str, db: Session):
     try:
-        # Supabase JWT tokens are HS256 signed with the project JWT Secret
-        payload = jwt.decode(token, SUPABASE_JWT_SECRET, algorithms=["HS256"], audience="authenticated")
+        payload = decode_supabase_token(token)
         supabase_id = payload.get("sub")
         if not supabase_id:
             raise HTTPException(status_code=401, detail="Incorrect email or password")
@@ -85,10 +84,8 @@ def get_current_user(token: str, db: Session):
             db.commit()
             
         return user
-    except Exception as e:
-        import traceback
-        traceback.print_exc()
-        raise HTTPException(status_code=401, detail=f"Auth error: {str(e)}")
+    except Exception:
+        raise HTTPException(status_code=401, detail="Incorrect email or password")
 
 
 def generate_otp() -> str:

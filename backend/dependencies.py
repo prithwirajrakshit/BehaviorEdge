@@ -9,14 +9,40 @@ from models import User
 
 security = HTTPBearer()
 
+import time
+import httpx
+
 SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "behavioredge-super-secret-key-2026")
+SUPABASE_URL = os.getenv("SUPABASE_URL", "https://ltipnuvqntfgoixdahgy.supabase.co")
+
+JWKS_CACHE = None
+JWKS_LAST_FETCH = 0
+
+def decode_supabase_token(token: str) -> dict:
+    global JWKS_CACHE, JWKS_LAST_FETCH
+    
+    # 1. Try decoding with JWKs (supports ES256, RS256, etc.)
+    try:
+        current_time = time.time()
+        if not JWKS_CACHE or (current_time - JWKS_LAST_FETCH > 1800): # cache for 30 mins
+            jwks_url = f"{SUPABASE_URL.rstrip('/')}/auth/v1/jwks"
+            r = httpx.get(jwks_url, timeout=5.0)
+            if r.status_code == 200:
+                JWKS_CACHE = r.json()
+                JWKS_LAST_FETCH = current_time
+        
+        if JWKS_CACHE:
+            return jwt.decode(token, JWKS_CACHE, algorithms=["HS256", "RS256", "ES256"], audience="authenticated")
+    except Exception:
+        pass
+
+    # 2. Fallback to HS256 with secret key
+    return jwt.decode(token, SUPABASE_JWT_SECRET, algorithms=["HS256"], audience="authenticated")
 
 def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security), db: Session = Depends(get_db)) -> User:
     token = credentials.credentials
     try:
-        # Supabase JWT tokens are HS256 signed with the project JWT Secret
-        # The audience is usually 'authenticated'
-        payload = jwt.decode(token, SUPABASE_JWT_SECRET, algorithms=["HS256"], audience="authenticated")
+        payload = decode_supabase_token(token)
         supabase_id = payload.get("sub")
         if not supabase_id:
             raise HTTPException(
