@@ -105,10 +105,10 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
             db.commit()
             
         return user
-    except JWTError:
+    except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect email or password"
+            detail=f"Auth error (deps): {str(e)}"
         )
 
 # Reusable IDOR protection dependency

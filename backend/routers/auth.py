@@ -84,8 +84,8 @@ def get_current_user(token: str, db: Session):
             db.commit()
             
         return user
-    except Exception:
-        raise HTTPException(status_code=401, detail="Incorrect email or password")
+    except Exception as e:
+        raise HTTPException(status_code=401, detail=f"Auth error (auth): {str(e)}")
 
 
 def generate_otp() -> str:
