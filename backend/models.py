@@ -8,7 +8,8 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
-    password_hash = Column(String)
+    password_hash = Column(String, nullable=True)
+    supabase_id = Column(String, unique=True, index=True, nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     # Extended user identity fields
     full_name = Column(String, nullable=True)
@@ -21,6 +22,7 @@ class User(Base):
     # Password reset OTP
     otp_code = Column(String(6), nullable=True)
     otp_expires_at = Column(DateTime, nullable=True)
+    subscription_tier = Column(String, default="free")
     trades = relationship("Trade", back_populates="user")
     profile = relationship("Profile", back_populates="user", uselist=False)
     chat_history = relationship("ChatMessage", back_populates="user")
@@ -188,3 +190,9 @@ class JournalRuleCheck(Base):
 
     trade = relationship("JournalTrade", back_populates="rule_checks")
     rule = relationship("Rule")
+
+class ProcessedEvent(Base):
+    __tablename__ = "processed_events"
+    event_id = Column(String, primary_key=True, index=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+

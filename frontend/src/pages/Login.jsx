@@ -1,9 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
-import { login, signup, forgotPassword, verifyOtp, resetPassword, googleLogin } from '../api/client'
+import { forgotPassword, verifyOtp, resetPassword } from '../api/client'
 import { ElegantShape } from '../components/ElegantShape'
+import { useAuth } from '../context/AuthContext'
 import logo from '../assets/behavioredge-logo.png'
 
 export default function Login({ onLogin }) {
+  const { loginWithPassword, signUp, loginWithGoogle } = useAuth()
+
   // ── View state machine ────────────────────────
   // 'login' | 'signup' | 'forgot' | 'verify-otp' | 'reset-password' | 'success'
   const [view, setView] = useState('login')
@@ -50,48 +53,13 @@ export default function Login({ onLogin }) {
     return () => clearTimeout(timer)
   }, [view])
 
-  // ── Google Sign-in Initialization ──────────────
-  useEffect(() => {
-    const initGoogle = () => {
-      if (window.google && window.google.accounts) {
-        const client_id = import.meta.env.VITE_GOOGLE_CLIENT_ID || 'dummy-client-id.apps.googleusercontent.com'
-        window.google.accounts.id.initialize({
-          client_id: client_id,
-          callback: handleGoogleLogin,
-        })
-        
-        const btnElem = document.getElementById("google-signin-btn")
-        if (btnElem) {
-          window.google.accounts.id.renderButton(
-            btnElem,
-            { theme: "outline", size: "large", width: "100%" }
-          )
-        }
-      }
-    }
-
-    initGoogle()
-
-    const checkInterval = setInterval(() => {
-      if (window.google && window.google.accounts) {
-        initGoogle()
-        clearInterval(checkInterval)
-      }
-    }, 500)
-
-    return () => clearInterval(checkInterval)
-  }, [view])
-
-  const handleGoogleLogin = async (response) => {
+  const handleGoogleClick = async () => {
     setError('')
     setLoading(true)
     try {
-      const res = await googleLogin({ credential: response.credential })
-      localStorage.setItem('token', res.data.access_token)
-      localStorage.setItem('username', res.data.username || 'google_user')
-      onLogin()
+      await loginWithGoogle()
     } catch (err) {
-      setError(err.response?.data?.detail || 'Google Authentication failed')
+      setError(err.message || 'Google Authentication failed')
     }
     setLoading(false)
   }
@@ -120,14 +88,25 @@ export default function Login({ onLogin }) {
     setLoading(true)
     try {
       const isSignup = view === 'signup'
-      const res = isSignup
-        ? await signup(form)
-        : await login({ username: form.username, password: form.password })
-      localStorage.setItem('token', res.data.access_token)
-      localStorage.setItem('username', form.username)
+      if (isSignup) {
+        if (!form.email || !form.password) {
+          setError('Email and password are required for sign up')
+          setLoading(false)
+          return
+        }
+        await signUp(form.email, form.password, form.username)
+      } else {
+        if (!form.username || !form.password) {
+          setError('Username/Email and password are required')
+          setLoading(false)
+          return
+        }
+        const email = form.username.includes('@') ? form.username : `${form.username}@gmail.com`
+        await loginWithPassword(email, form.password)
+      }
       onLogin()
     } catch (err) {
-      setError(err.response?.data?.detail || 'Authentication failed')
+      setError(err.message || 'Authentication failed')
     }
     setLoading(false)
   }
@@ -453,7 +432,24 @@ export default function Login({ onLogin }) {
               </div>
 
               {/* Google Sign-In Button */}
-              <div id="google-signin-btn" style={{ display: 'flex', justifyContent: 'center', width: '100%', minHeight: 40 }} />
+              <button onClick={handleGoogleClick} disabled={loading} className="btn-secondary"
+                style={{
+                  width: '100%', padding: '12px', fontSize: '0.88rem', borderRadius: 12,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+                  background: 'rgba(255,255,255,0.05)', border: '1px solid var(--border)',
+                  color: 'var(--text-primary)', cursor: 'pointer', transition: 'all 0.2s',
+                  fontFamily: 'Inter', fontWeight: 500
+                }}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}>
+                <svg width="18" height="18" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v3.92h6.69a5.74 5.74 0 0 1-2.49 3.77v3.12h4.02c2.34-2.16 3.69-5.32 3.69-8.74z"/>
+                  <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-4.02-3.12c-1.12.75-2.54 1.19-3.91 1.19-3.01 0-5.56-2.03-6.47-4.76H1.4v3.23A12.02 12.02 0 0 0 12 24z"/>
+                  <path fill="#FBBC05" d="M5.53 14.4c-.24-.7-.38-1.45-.38-2.22s.14-1.52.38-2.22V6.73H1.4A11.94 11.94 0 0 0 0 12c0 1.92.45 3.74 1.4 5.27l4.13-3.23z"/>
+                  <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.36 2.68 1.4 6.73l4.13 3.23c.91-2.73 3.46-4.76 6.47-4.76z"/>
+                </svg>
+                Sign in with Google
+              </button>
 
               {/* Forgot Password link — only on login view */}
               {view === 'login' && (

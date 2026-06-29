@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlalchemy.orm import Session
 from database import get_db
 from models import User, Rule
@@ -10,8 +10,11 @@ import os
 import datetime
 import random
 import hmac
+import time
 from google.oauth2 import id_token
 from google.auth.transport import requests
+from redis_client import redis_client, in_memory_lockouts
+from logging_config import log_auth_event
 
 load_dotenv()
 
@@ -88,10 +91,74 @@ def signup(data: UserCreate, db: Session = Depends(get_db)):
     return {"access_token": token, "token_type": "bearer"}
 
 @router.post("/login", response_model=Token)
-def login(data: UserLogin, db: Session = Depends(get_db)):
+def login(data: UserLogin, request: Request, db: Session = Depends(get_db)):
+    client_ip = request.client.host
+    lock_key = f"lockout:ip:{client_ip}"
+    attempts_key = f"attempts:ip:{client_ip}"
+    
+    # Check if locked out in Redis
+    if redis_client:
+        is_locked = redis_client.get(lock_key)
+        if is_locked:
+            raise HTTPException(
+                status_code=423, 
+                detail="Account locked due to consecutive failed login attempts. Please try again in 15 minutes."
+            )
+    else:
+        lock_info = in_memory_lockouts.get(client_ip, {})
+        lock_until = lock_info.get("lock_until", 0)
+        if time.time() < lock_until:
+            raise HTTPException(
+                status_code=423, 
+                detail="Account locked due to consecutive failed login attempts. Please try again in 15 minutes."
+            )
+
     user = db.query(User).filter(User.username == data.username).first()
-    if not user or not verify_password(data.password, user.password_hash):
-        raise HTTPException(status_code=401, detail="Invalid username or password")
+    if not user or not user.password_hash or not verify_password(data.password, user.password_hash):
+        log_auth_event(False, data.username, client_ip, "Incorrect credentials")
+        
+        # Increment failed login attempts
+        if redis_client:
+            attempts = redis_client.incr(attempts_key)
+            redis_client.expire(attempts_key, 600)  # reset after 10 mins of no failures
+            if attempts >= 5:
+                redis_client.set(lock_key, "locked", ex=900)  # 15 mins lock
+                redis_client.delete(attempts_key)
+                raise HTTPException(
+                    status_code=423, 
+                    detail="Account locked due to consecutive failed login attempts. Please try again in 15 minutes."
+                )
+            # Apply progressive delay (throttle requests)
+            time.sleep(min(8, 2 ** attempts))
+        else:
+            if client_ip not in in_memory_lockouts:
+                in_memory_lockouts[client_ip] = {"attempts": 0, "lock_until": 0}
+            in_memory_lockouts[client_ip]["attempts"] += 1
+            attempts = in_memory_lockouts[client_ip]["attempts"]
+            
+            if attempts >= 5:
+                in_memory_lockouts[client_ip]["lock_until"] = time.time() + 900
+                in_memory_lockouts[client_ip]["attempts"] = 0
+                raise HTTPException(
+                    status_code=423, 
+                    detail="Account locked due to consecutive failed login attempts. Please try again in 15 minutes."
+                )
+            time.sleep(min(8, 2 ** attempts))
+            
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password"
+        )
+        
+    # Reset attempts on successful authentication
+    if redis_client:
+        redis_client.delete(attempts_key)
+        redis_client.delete(lock_key)
+    else:
+        if client_ip in in_memory_lockouts:
+            del in_memory_lockouts[client_ip]
+            
+    log_auth_event(True, data.username, client_ip, "Successful login")
     token = create_token({"sub": user.username})
     return {"access_token": token, "token_type": "bearer"}
 
