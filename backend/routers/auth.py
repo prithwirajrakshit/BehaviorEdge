@@ -35,16 +35,59 @@ def create_token(data: dict):
     to_encode["exp"] = datetime.datetime.utcnow() + datetime.timedelta(days=7)
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
+SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "behavioredge-super-secret-key-2026")
+
 def get_current_user(token: str, db: Session):
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username = payload.get("sub")
-        user = db.query(User).filter(User.username == username).first()
+        # Supabase JWT tokens are HS256 signed with the project JWT Secret
+        payload = jwt.decode(token, SUPABASE_JWT_SECRET, algorithms=["HS256"], audience="authenticated")
+        supabase_id = payload.get("sub")
+        if not supabase_id:
+            raise HTTPException(status_code=401, detail="Incorrect email or password")
+            
+        user = db.query(User).filter(User.supabase_id == supabase_id).first()
         if not user:
-            raise HTTPException(status_code=401, detail="Invalid token")
+            # Auto-provision user record locally to preserve relational keys
+            email = payload.get("email")
+            username = email.split("@")[0] if email else f"user_{supabase_id[:8]}"
+            
+            # De-duplicate username if already taken
+            base_username = username
+            counter = 1
+            while db.query(User).filter(User.username == username).first():
+                username = f"{base_username}{counter}"
+                counter += 1
+                
+            user = User(
+                supabase_id=supabase_id,
+                email=email,
+                username=username,
+                password_hash=None
+            )
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+            
+            # Seed 8 default trading rules for the user (matches onboarding)
+            default_rules = [
+                ("Only trade during my planned session", "Session Rules"),
+                ("Never move stop loss against my position", "Risk Rules"),
+                ("Wait for market structure shift confirmation before entry", "Entry Rules"),
+                ("Never risk more than 1% per trade", "Risk Rules"),
+                ("Do not trade after 2 consecutive losses in one session", "Mindset Rules"),
+                ("Only take trades with minimum 3 confluences", "Entry Rules"),
+                ("Always have a clear target before entering", "Exit Rules"),
+                ("Do not trade during high-impact news events", "Session Rules"),
+            ]
+            for text, cat in default_rules:
+                rule = Rule(user_id=user.id, rule_text=text, category=cat, is_active=True)
+                db.add(rule)
+            db.commit()
+            
         return user
-    except:
-        raise HTTPException(status_code=401, detail="Invalid token")
+    except Exception:
+        raise HTTPException(status_code=401, detail="Incorrect email or password")
+
 
 def generate_otp() -> str:
     """Generate a random 6-digit OTP."""

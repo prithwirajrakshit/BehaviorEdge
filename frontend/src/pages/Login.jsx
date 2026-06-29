@@ -388,9 +388,9 @@ export default function Login({ onLogin }) {
               {/* Fields */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 <div>
-                  <div className="label" style={labelStyle}>Username</div>
+                  <div className="label" style={labelStyle}>Email or Username</div>
                   <input name="username" value={form.username} onChange={handle}
-                    className="input-field" placeholder="Enter username"
+                    className="input-field" placeholder="Enter email or username"
                     onKeyDown={e => e.key === 'Enter' && submitAuth()} />
                 </div>
 
