@@ -26,7 +26,10 @@ def decode_supabase_token(token: str) -> dict:
         current_time = time.time()
         if not JWKS_CACHE or (current_time - JWKS_LAST_FETCH > 1800): # cache for 30 mins
             jwks_url = f"{SUPABASE_URL.rstrip('/')}/auth/v1/jwks"
-            r = httpx.get(jwks_url, timeout=5.0)
+            # Pass apikey to bypass Supabase's Kong gateway block
+            supabase_anon = os.getenv("SUPABASE_ANON_KEY", token)
+            headers = {"apikey": supabase_anon}
+            r = httpx.get(jwks_url, headers=headers, timeout=5.0)
             if r.status_code == 200:
                 JWKS_CACHE = r.json()
                 JWKS_LAST_FETCH = current_time

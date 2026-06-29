@@ -57,7 +57,8 @@ export default function TradeLogger() {
         setForm(f => ({ ...f, emotion_before: preForm.emotion }))
       }
     } catch (e) {
-      setGateResult({ approved: false, block_reasons: ['Server error — please try again'], ai_assessment: '' })
+      const errMsg = e.response?.data?.detail || e.message || 'Server error — please try again';
+      setGateResult({ approved: false, block_reasons: [errMsg], ai_assessment: '' })
     }
     setGateLoading(false)
   }
