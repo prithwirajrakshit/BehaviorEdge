@@ -23,11 +23,11 @@ By requiring traders to pass a **Pre-Trade Psychological Gate** before logging a
 
 | Feature ID | Category | Feature Name | Description | Priority |
 | :--- | :--- | :--- | :--- | :--- |
-| **FR-01** | Auth | Two-Factor OTP Reset | Allows forgotten passwords to be reset using a 6-digit email OTP (SMTP/Resend). | High |
+| **FR-01** | Auth | Two-Factor OTP Reset | Allows forgotten passwords to be reset using a 6-digit email OTP (SMTP/Resend) on the local database level, while primary login session authentication relies on the Supabase client. | High |
 | **FR-02** | Gate | Psychological Check | Multi-input checklist, emotional self-report, and setup confidence index slider. | Critical |
 | **FR-03** | Gate | Decision Engine | Algorithmic gate evaluation: blocks trade if revenge trading is detected or rules are unsatisfied. | Critical |
 | **FR-04** | Log | Manual Trade Entry | Logs pair, market, direction, session, setup type, confluences, mistakes, gross P&L, and fees. | High |
-| **FR-05** | Log | Statement Importer | Auto-detects and imports closed-position records from Delta Exchange CSVs and Dhan Excel sheets. | High |
+| **FR-05** | Log | Statement Importer | Auto-detects and imports closed-position records from Dhan Excel sheets (.xls, .xlsx). (Note: Delta Exchange CSV statements are planned but not currently implemented in the frontend client). | High |
 | **FR-06** | Log | Fee Distribution | Dynamically divides segment-level charges equally across all imported trades. | High |
 | **FR-07** | Stats | Analytics Dashboard | Computes Win Rate, Profit Factor, Cumulative PnL, and current streaks. | High |
 | **FR-08** | Coach | AI Coach Chat | Direct prompt interface allowing conversation with the AI coach. | Medium |
@@ -58,14 +58,19 @@ By requiring traders to pass a **Pre-Trade Psychological Gate** before logging a
 ## 🛠️ Part 2: Technical Requirements Document (TRD)
 
 ### 1. Architectural Architecture
-BehaviorEdge utilizes a decoupled client-server architecture:
+BehaviorEdge utilizes a decoupled client-server hybrid architecture:
 
 ```
-[React App (Vite 7)] <----> CORS HTTPS <----> [FastAPI Server (Uvicorn)] <----> SQLAlchemy ORM <----> [PostgreSQL / SQLite]
-       ^                                                 ^
-       |                                                 |
-       +------ SheetJS Binary Parser (Local)             +------ SMTP / Resend API (Email OTP)
-                                                         +------ Google Gemini Generative API (AI Coach)
+[React App (Vite 7)] <────────────────────────────────> [Supabase Auth (JWT Provider)]
+       │                                                          │
+       │ (CORS HTTPS / API Requests + Supabase JWT)               │ (JWKS Token Public Keys)
+       ▼                                                          ▼
+[FastAPI Server (Uvicorn)] <──────────────────────────────────────┘
+       │
+       ├─► SQLAlchemy ORM <─► [PostgreSQL / SQLite]
+       ├─► SMTP / Resend API (Email OTP)
+       ├─► Google Gemini Generative API (AI Coach)
+       └─► XLSX / SheetJS (Local Binary Dhan Spreadsheet Parsers)
 ```
 
 ---
@@ -77,7 +82,8 @@ Stores user authentication details and extended profile metadata.
 * `id` (INTEGER, Primary Key, Auto-Increment)
 * `username` (VARCHAR, Unique, Indexed)
 * `email` (VARCHAR, Unique, Indexed)
-* `password_hash` (VARCHAR)
+* `password_hash` (VARCHAR, Nullable) -- Stored for custom local backend password setups
+* `supabase_id` (VARCHAR, Unique, Indexed, Nullable) -- Primary UUID mapping to Supabase session store
 * `full_name` (VARCHAR, Nullable)
 * `bio` (TEXT, Nullable)
 * `avatar_url` (VARCHAR, Nullable)
@@ -87,6 +93,7 @@ Stores user authentication details and extended profile metadata.
 * `experience_level` (VARCHAR, Default: `"Intermediate"`)
 * `otp_code` (VARCHAR(6), Nullable)
 * `otp_expires_at` (TIMESTAMP, Nullable)
+* `subscription_tier` (VARCHAR, Default: `"free"`)
 * `created_at` (TIMESTAMP, Default: UTC Now)
 
 #### Table 2: `profiles`
@@ -166,6 +173,19 @@ Maps check outcomes for rules validated against journal entries.
 * `was_followed` (BOOLEAN, Default: `TRUE`)
 * `date` (VARCHAR, Format: `YYYY-MM-DD`)
 * `created_at` (TIMESTAMP, Default: UTC Now)
+
+---
+
+### 2.5 Hybrid Authentication & Token Verification Flow
+BehaviorEdge operates on a hybrid authentication model:
+* **Frontend Authentication:** Handled exclusively via the Supabase Client SDK (`@supabase/supabase-js`). Upon login or OAuth (Google), Supabase issues a JWT access token.
+* **API Middleware Verification:** The Axios client interceptor attaches the Supabase JWT token in the `Authorization: Bearer <token>` header of all requests.
+* **FastAPI Backend Decoder (`dependencies.get_current_user`):**
+  * Reads the JWT header algorithm (`alg`).
+  * If the token uses `HS256`, it decodes it symmetrically using the local `SUPABASE_JWT_SECRET`.
+  * If the token uses an asymmetric signature (e.g. `RS256`), it fetches public keys from Supabase's public JWKS endpoint (`https://<project>.supabase.co/auth/v1/.well-known/jwks.json`), caches them for 30 minutes, and performs signature verification.
+  * Extracted `sub` claim maps to `User.supabase_id`. If a user with this ID does not exist in the local SQL database, a local record is automatically provisioned and seeded with 8 default rules.
+* **Legacy Backend Auth Routes:** The backend maintains traditional local username/password endpoints (`/auth/signup`, `/auth/login`, `/auth/google-login`) and custom OTP password reset flows (`/auth/forgot-password`, `/auth/verify-otp`, `/auth/reset-password`), but these are bypassed by the React client.
 
 ---
 
